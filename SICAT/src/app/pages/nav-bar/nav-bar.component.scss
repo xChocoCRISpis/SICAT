@@ -1,0 +1,165 @@
+* {
+    font-family: 'Montserrat', sans-serif;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+h4{
+    margin: 10px;
+    font-size: large;
+    font-weight: bold;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+header {
+    background-color: #5A0A18;
+    color: #a3753a;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    position: fixed;
+    top: 0;
+    z-index: 1;
+}
+
+#app {
+    display: flex;
+    flex: 1;
+}
+
+
+.icon_menu {
+    cursor: pointer;
+    color: #a3753a;
+    display: flex;
+    align-items: center;
+    height: 75px;
+}
+
+.icon_menu i {
+    display: flex;
+    justify-content: center;
+    margin-right: center;
+    width: 100px;
+    height:50px;
+    display: flex;
+    align-items: center;
+}
+
+.icon_menu i:hover {
+    background-color: #810c20;
+}
+
+.menu_side {
+    position: fixed;
+    top: 75px; /* Ajusta según la altura de tu header */
+    bottom: 0;
+    left: 0;
+    width: 300px; /* Ajusta este valor según sea necesario */
+    transform: translateX(-300px);
+    transition: transform 0.3s ease-in-out;
+    z-index: 1;
+    overflow-y:auto;/* Añadido para manejar el desbordamiento */
+    background-color: #5A0A18;
+}
+
+.menu_side.active {
+    transform: translateX(0);
+}
+
+#content-wrapper {
+    flex: 1;
+    margin-top: 75px; /* Debe coincidir con la altura del header */
+    margin-left: 0;
+    transition: margin-left 0.3s ease-in-out;
+    overflow-y: auto;
+    height: calc(100% - 75px); /* Resta la altura del header */
+}
+
+#content-wrapper.shifted {
+    margin-left: 250px;
+}
+
+#main_content {
+    padding: 70px;
+    height: 100%;
+}
+
+.name_page {
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    background: #5A0A18;
+    color: #a3753a;
+}
+
+.options_menu .option {
+    display: flex;
+    align-items: center;
+    color: #a3753a;
+    text-decoration: none;
+    padding: 10px;
+    margin-top: 5px;
+}
+
+.options_menu .option i {
+    margin-right: 15px;
+}
+
+.options_menu .option:hover {
+    background: #444;
+    color: #fff;
+}
+
+.options_menu .selected {
+    background: #444;
+    color: #fff;
+}
+
+.submenu {
+    display: none;
+    padding-left: 20px;
+}
+
+.submenu.active {
+    display: block;
+}
+
+.option {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    padding: 15px 20px;
+    color: #a3753a;
+    text-decoration: none;
+    transition: background 0.3s;
+}
+
+.option:hover {
+    background: #444;
+    color: #fff;
+}
+
+.option i {
+    margin-right: 15px;
+}
+
+.option.unfunctional{
+    color: black;
+    background-color: white;
+}
+
+.option.option.unfuctional:hover{
+    background: white;
+}
+
+.bi{
+    color:#a3753a;
+}

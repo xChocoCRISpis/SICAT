@@ -1,0 +1,191 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: #fff5e1;
+    overflow-x: hidden;
+}
+
+header {
+    position: fixed;
+    width: 100%;
+    background-color: #5A0A18;
+    color: white;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    z-index: 1000;
+}
+
+.icon_menu {
+    display: flex;
+    align-items: center;
+}
+
+.icon_menu i {
+    font-size: 24px;
+    cursor: pointer;
+    color: #a3753a;
+}
+
+.menu_side {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 250px;
+    height: 100%;
+    background-color: #5A0A18;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+}
+
+.menu_side.active {
+    transform: translateX(0);
+}
+
+.name_page, .options_menu {
+    padding: 20px;
+    color: white;
+}
+
+.option {
+    margin: 10px 0;
+}
+
+.option i {
+    margin-right: 10px;
+    color: #a3753a;
+}
+
+.option h4 {
+    display: inline-block;
+    color: #fff5e1;
+}
+
+main {
+    margin-left: 0;
+    padding: 20px;
+    transition: margin-left 0.3s ease;
+    width: 100%;
+}
+
+.menu_side.active + main {
+    margin-left: 250px;
+}
+
+.content {
+    max-width: 1170px;
+    margin: auto;
+    padding: 1.5em;
+    margin-top: 10%;
+}
+
+.logo {
+    text-align: center;
+    font-size: 3em;
+}
+
+.logo span {
+    color: #5A0A18;
+}
+
+.contact-wrapper {
+    box-shadow: 0 0 20px 0 #5A0A18;
+}
+
+.contact-wrapper > * {
+    padding: 1em;
+}
+
+.contact-form {
+    background: #FFF5E1;
+}
+
+.contact-form form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.contact-form form .block {
+    grid-column: 1 / 3;
+}
+
+.contact-form form p {
+    margin: 0;
+    padding: 1em;
+}
+
+.contact-form form button,
+.contact-form form input,
+.contact-form form textarea {
+    width: 100%;
+    padding: .7em;
+    border: none;
+    background: none;
+    outline: 0;
+    color: black;
+    border-bottom: 1px solid #5A0A18;
+}
+
+.contact-form form button {
+    background: #5A0A18;
+    border: 0;
+    text-transform: uppercase;
+    padding: 1em;
+}
+
+.contact-form form button:hover,
+.contact-form form button:focus {
+    background: #b93c34;
+    color: #181818;
+    transition: background-color 1s ease-out;
+    outline: 0;
+}
+
+.actividad h2 {
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 50px;
+    color: #5A0A18;
+    font-size: 3rem;
+    font-family: 'Didact Gothic';
+}
+
+.slider-frame {
+    width: 60%;
+    margin: 50px auto;
+    overflow: hidden;
+    align-items: center;
+    text-align: center;
+}
+
+.slider-frame ul {
+    display: flex;
+    padding: 0;
+    width: 400%;
+    animation: slide 16s infinite alternate ease-in-out;
+}
+
+.slider-frame li {
+    list-style: none;
+    width: 100%;
+}
+
+.slider-frame img {
+    width: 100%;
+    height: auto;
+}
+
+@keyframes slide {
+    0% { margin-left: 0%; }
+    20% { margin-left: 0%; }
+    25% { margin-left: -100%; }
+    45% { margin-left: -100%; }
+    50% { margin-left: -200%; }
+    70% { margin-left: -200%; }
+    75% { margin-left: -300%; }
+    95% { margin-left: -300%; }
+}
