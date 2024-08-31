@@ -4,6 +4,7 @@ import { AppService } from './app.service';
 import { AlumnosModule } from './alumnos/alumnos.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { MysqlService } from './db/mysql/mysql.service';
 
 configService: ConfigService;
 
@@ -28,6 +29,6 @@ configService: ConfigService;
     // Otros módulos
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, MysqlService],
 })
 export class AppModule {}
