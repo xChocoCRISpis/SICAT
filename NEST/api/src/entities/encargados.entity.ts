@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany, JoinColumn } from 'typeorm';
 import { Usuario } from './usuarios.entity';
 import { EncargadoDetalle } from './encargados_detalle.entity';
 
@@ -17,8 +17,10 @@ export class Encargado {
   Ap_materno: string;
 
   @ManyToOne(() => Usuario, usuario => usuario.encargados)
+  @JoinColumn({name: 'Id_usuarios_fk'})
   usuario: Usuario;
 
   @OneToMany(() => EncargadoDetalle, detalle => detalle.encargado)
+  @JoinColumn({name:'Id_encargado_fk'})
   detalles: EncargadoDetalle[];
 }

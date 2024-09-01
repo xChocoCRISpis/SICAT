@@ -5,8 +5,12 @@ import {
   Param,
   ParseIntPipe,
   Post,
+  ValidationPipe,
 } from '@nestjs/common';
 import { AlumnosService } from './alumnos.service';
+import { CreateAlumnoDto } from './dtos/create-alumno.dto';
+import { ValidationTypes, Validator } from 'class-validator';
+
 
 @Controller('alumnos')
 export class AlumnosController {
@@ -25,7 +29,8 @@ export class AlumnosController {
   }
 
   @Post()
-  createAlumno(@Body() body: any) {
-    return { ...body, method: 'post' };
+  createAlumno(@Body() createAlumnoDto:CreateAlumnoDto) {
+    const alumno = this.alumnosService.createAlumno(createAlumnoDto);
+    return alumno;
   }
 }
