@@ -11,6 +11,17 @@ services:
     volumes:
       - mysql-data:/var/lib/mysql
 
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb-sicat
+    ports:
+      - "3308:27017"
+    volumes:
+      - mongodb-data:/data/db
+
 volumes:
   mysql-data:
-    external: true  # Asegúrate de que el volumen se cree y se maneje por Docker Compose
+    external: true
+  mongodb-data:
+    external: false
+# Asegúrate de que el volumen se cree y se maneje por Docker Compose

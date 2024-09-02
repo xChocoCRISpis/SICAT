@@ -15,6 +15,15 @@ export class Usuario {
   @Column({ type: 'int' })
   Tipo: number;
 
+  @Column({type:'text'})
+  Cadena_qr:string;
+
+  @Column({type:'text'})
+  Imagen_qr:string;
+
+  @Column({type:'varchar',length:150})
+  Correo:string;
+
   @OneToMany(() => Encargado, encargado => encargado.usuario)
   encargados: Encargado[];
 }
