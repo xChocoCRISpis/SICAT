@@ -1,12 +1,28 @@
-:: Script: import-docker-volume.bat
 @echo off
+
+:: Importar mysql-data
 set volumeName=mysql-data
-set importPath=./docker-volumes/mysql/docker-volume.tar.gz
+set importPath=%cd%\docker-volumes\mysql\docker-volume.tar.gz
 
-:: Crear el volumen Docker si no existe
-docker volume create %volumeName%
+if exist "%importPath%" (
+    echo Importando %volumeName%...
+    docker run --rm -v %volumeName%:/volume -v "%importPath%":/backup/docker-volume.tar.gz alpine sh -c "tar xzvf /backup/docker-volume.tar.gz -C /volume"
+    echo Volumen %volumeName% importado desde %importPath%
+) else (
+    echo Error: No se encontró el archivo %importPath%
+)
 
-:: Importar el volumen Docker desde el archivo
-docker run --rm -v %volumeName%:/volume -v %cd%:/backup alpine sh -c "tar xzf /backup/%importPath% -C /volume"
+:: Importar api_mongodb-data
+set volumeName=api_mongodb-data
+set importPath=%cd%\docker-volumes\api_mongodb\docker-volume.tar.gz
 
-echo Volumen %volumeName% importado desde %importPath%
+if exist "%importPath%" (
+    echo Importando %volumeName%...
+    docker run --rm -v %volumeName%:/volume -v "%importPath%":/backup/docker-volume.tar.gz alpine sh -c "tar xzvf /backup/docker-volume.tar.gz -C /volume"
+    echo Volumen %volumeName% importado desde %importPath%
+) else (
+    echo Error: No se encontró el archivo %importPath%
+)
+
+pause
+
