@@ -15,6 +15,6 @@ import { AuthService } from './auth.service';
     LoginComponent,
     InitComponent // Asegúrate de que AppRoutingModule esté aquí
   ],
-  providers: [AuthService]
+  providers: [AuthService],
 })
 export class AppModule { }
