@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, HttpException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Alumno } from '../entities/alumnos.entity';
@@ -16,24 +16,43 @@ export class AlumnosService {
 
   // Método para obtener todos los alumnos
   async findAll(){
-    return await this.alumnosRepository.find();
+    const alumnos = await this.alumnosRepository.find();
+    if(!alumnos) throw new NotFoundException('No se encotraron alumnos');
+
+    alumnos.map(alumno=>alumno.Foto = `${process.env.FILE_PATH}alumnos/${alumno.Foto}`)
+    return alumnos
+
   }
 
   // Método para obtener un alumno por ID
-  async findOne(id: number){
-    const alumno = await this.alumnosRepository.findOneBy({ Id_alumno_pk: id });
-    if(!alumno) throw new NotFoundException('No se encontró el alumno con el id proporcionado');
+  async findOne(num_control: string){
+    const alumno = await this.alumnosRepository.findOneBy({ Num_control:num_control });
+    if(!alumno) throw new NotFoundException('No se encontró el alumno con el numero de control proporcionado');
 
+    alumno.Foto = `${process.env.FILE_PATH}alumnos/${alumno.Foto}`;
+    console.log("Alumno por numero de control");
     return alumno; 
   }
 
   // Método para crear un nuevo alumno y guardar la imagen
   async createAlumno(createAlumnoDto: CreateAlumnoDto, imagen: Express.Multer.File) {
     // Cargar la carrera asociada usando el ID del DTO
-    const carrera = await this.carrerasRepository.findOneBy({ Id_carrera_pk: createAlumnoDto.carrera });
+
+    //Cuando se usa el array en el where con un mismo objeto se comporta como un AND
+    //En objetos distintos los trata como un OR
+    const existAlumno = await this.alumnosRepository
+      .findOne({where:
+        [{Num_control: createAlumnoDto.Num_control},
+        {Correo: createAlumnoDto.Correo}]});
+    
+    if(existAlumno) 
+      throw new BadRequestException (`Ya existe este numero de control y/o email`);
+
+    const carrera = await this.carrerasRepository
+      .findOneBy({ Id_carrera_pk: createAlumnoDto.carrera });
     
     if (!carrera) {
-      throw new Error(`Carrera con ID ${createAlumnoDto.carrera} no encontrada`);
+      throw new BadRequestException(`Carrera con ID ${createAlumnoDto.carrera} no encontrada`);
     }
 
     // Crear una nueva instancia de Alumno con los datos del DTO
@@ -51,10 +70,10 @@ export class AlumnosService {
   }
 
   // Método para actualizar un alumno
-  async update(id: number, alumno: Partial<Alumno>): Promise<Alumno> {
+  /* async update(id: number, alumno: Partial<Alumno>): Promise<Alumno> {
     await this.alumnosRepository.update(id, alumno);
     return this.findOne(id);
-  }
+  } */
 
   // Método para eliminar un alumno
   async remove(id: number): Promise<void> {

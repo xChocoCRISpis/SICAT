@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { CreateAuthDto } from './dto/create-auth.dto';
 import { UpdateAuthDto } from './dto/update-auth.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -26,35 +26,34 @@ export class AuthService {
       const login= await this.usuarioRepository
       .createQueryBuilder('usuario')
       .where('usuario.nombre = :nombre',{nombre:Nombre})
-      .andWhere('usuario.contrasena = :contrasena',{contrasena:Contrasena})
       .getOne();
-
-      if(!login) return {login:false,id:-1}
-
-      const jwtToken=this.generateJwtToken(login.Correo,login.Nombre);
-      const updateToken=await this.usuarioRepository.update(login.Id_usuario_pk, { Token: jwtToken });
       
-      if(updateToken.affected < 1) throw new BadRequestException('No se pudo guardar el login');
-    
-      return {login:true,id:login.Id_usuario_pk}
+      return this.verifyLogin(login,Contrasena);
     }
     else if(loginDto.Correo){
       const login= await this.usuarioRepository
       .createQueryBuilder('usuario')
       .where('usuario.correo = :correo',{correo:Correo})
-      .andWhere('usuario.contrasena = :contrasena',{contrasena:Contrasena})
       .getOne();
 
-      if(!login) return {login:false,id:-1}
+      return this.verifyLogin(login,Contrasena);  
+    }
+    else throw new NotFoundException(`Login necesita nombre de usuario o correo de usuario`)
+  }
+
+  async verifyLogin(login:Usuario,Contrasena:string){
+    if(!login) return {login:false,id:-1}
 
       const jwtToken=this.generateJwtToken(login.Correo,login.Nombre);
       const updateToken=await this.usuarioRepository.update(login.Id_usuario_pk, { Token: jwtToken });
       
       if(updateToken.affected < 1) throw new BadRequestException('No se pudo guardar el login');
-      
+
+      const match = await bcrypt.compare(Contrasena,login.Contrasena)
+
+      if(!match) throw new UnauthorizedException('Contraseña incorrecta y/o Usuario incorrecto')
+    
       return {login:true,id:login.Id_usuario_pk}
-    }
-    else throw new NotFoundException(`Login necesita nombre de usuario o correo de usuario`)
   }
 
   async createUser(createAuthDto: CreateAuthDto): Promise<{ token: string }> {

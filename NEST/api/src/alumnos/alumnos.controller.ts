@@ -5,6 +5,7 @@ import {
   Param,
   ParseIntPipe,
   Post,
+  Query,
   UploadedFile,
   UseInterceptors,
   ValidationPipe,
@@ -26,9 +27,12 @@ export class AlumnosController {
     return this.alumnosService.findAll();
   }
 
-  @Get('/:id')
-  getByIdAlumnos(@Param('id', ParseIntPipe) id: number) {
-    const alumno = this.alumnosService.findOne(id);
+  @Get('/buscar')
+  getByIdAlumnos(@Query('num_control') num_control: string) {
+    if (!num_control) {
+      return { message: "num_control es obligatorio" };  // Retornar un mensaje si no se pasa el parámetro
+    }
+    const alumno = this.alumnosService.findOne(num_control);
     console.log(alumno);
     return alumno;
   }
