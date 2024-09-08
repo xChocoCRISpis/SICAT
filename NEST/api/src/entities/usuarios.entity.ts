@@ -9,16 +9,19 @@ export class Usuario {
   @Column({ type: 'varchar', length: 50 })
   Nombre: string;
 
-  @Column({ type: 'varchar', length: 50 })
+  @Column({ type: 'varchar', length: 150 })
   Contrasena: string;
+
+  @Column({type:'varchar',length:300, nullable:true})
+  Token:string;
 
   @Column({ type: 'int' })
   Tipo: number;
 
-  @Column({type:'text'})
+  @Column({type:'text', nullable:true})
   Cadena_qr:string;
 
-  @Column({type:'text'})
+  @Column({type:'text', nullable:true})
   Imagen_qr:string;
 
   @Column({type:'varchar',length:150})

@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   mysqldb:
-    image: mysql:latest
+    image: mysql:lts
     container_name: myslq-sicat
     environment:
       MYSQL_ROOT_PASSWORD: root
@@ -17,11 +17,12 @@ services:
     ports:
       - "3308:27017"
     volumes:
-      - mongodb-data:/data/db
+      - api_mongodb-data:/data/db
 
 volumes:
   mysql-data:
     external: true
-  api_mongodb-data:
+  api_mongodb-data: # Corrección del nombre del volumen
     external: true
+
 # Asegúrate de que el volumen se cree y se maneje por Docker Compose

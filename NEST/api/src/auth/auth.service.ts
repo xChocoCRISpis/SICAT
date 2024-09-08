@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateAuthDto } from './dto/create-auth.dto';
 import { UpdateAuthDto } from './dto/update-auth.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -8,6 +8,9 @@ import { Bitacora } from 'src/schemas/bitacora/bitacora.schema';
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { LoginDto } from './dto/login.dto';
+import * as bcrypt from 'bcrypt';
+import * as jwt from 'jsonwebtoken';
+
 
 @Injectable()
 export class AuthService {
@@ -27,6 +30,12 @@ export class AuthService {
       .getOne();
 
       if(!login) return {login:false,id:-1}
+
+      const jwtToken=this.generateJwtToken(login.Correo,login.Nombre);
+      const updateToken=await this.usuarioRepository.update(login.Id_usuario_pk, { Token: jwtToken });
+      
+      if(updateToken.affected < 1) throw new BadRequestException('No se pudo guardar el login');
+    
       return {login:true,id:login.Id_usuario_pk}
     }
     else if(loginDto.Correo){
@@ -37,13 +46,51 @@ export class AuthService {
       .getOne();
 
       if(!login) return {login:false,id:-1}
+
+      const jwtToken=this.generateJwtToken(login.Correo,login.Nombre);
+      const updateToken=await this.usuarioRepository.update(login.Id_usuario_pk, { Token: jwtToken });
+      
+      if(updateToken.affected < 1) throw new BadRequestException('No se pudo guardar el login');
+      
       return {login:true,id:login.Id_usuario_pk}
     }
     else throw new NotFoundException(`Login necesita nombre de usuario o correo de usuario`)
   }
 
-  create(createAuthDto: CreateAuthDto) {
-    return 'This action adds a new auth';
+  async createUser(createAuthDto: CreateAuthDto): Promise<{ token: string }> {
+    const { Nombre, Contrasena, Correo, Tipo } = createAuthDto;
+
+    // Verificar si el correo ya está registrado
+    const emailUser = await this.usuarioRepository.findOne({ where: {Correo}});
+    const nameUser =  await this.usuarioRepository.findOne({ where: {Nombre}});
+
+    if (emailUser) throw new BadRequestException('Correo ya registrado');
+    if (nameUser) throw new BadRequestException('Nombre de usuario ya registrado');
+
+    // Encriptar la contraseña
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(Contrasena, salt);
+
+    // Generar el JWT token
+    const token = this.generateJwtToken(Correo,Nombre);
+
+    // Crear el nuevo usuario
+    const newUser = this.usuarioRepository.create({
+      Nombre,
+      Contrasena: hashedPassword, // Guardar la contraseña encriptada
+      Correo,
+      Tipo,
+      Token: token,
+    });
+
+    await this.usuarioRepository.save(newUser);
+
+    return { token };
+  }
+
+  private generateJwtToken(correo: string, usuario:string ): string {
+    const payload = { correo,usuario };
+    return jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '4h' });
   }
 
   findAll() {

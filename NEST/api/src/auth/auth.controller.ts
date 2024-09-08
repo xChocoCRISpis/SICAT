@@ -12,9 +12,9 @@ export class AuthController {
   login(@Body() loginDto:LoginDto){
     return this.authService.login(loginDto);
   }
-  @Post()
+  @Post("/createUser")
   create(@Body() createAuthDto: CreateAuthDto) {
-    return this.authService.create(createAuthDto);
+    return this.authService.createUser(createAuthDto);
   }
 
   @Get()
