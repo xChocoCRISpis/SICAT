@@ -27,26 +27,27 @@ export class AlumnosService {
     return alumno; 
   }
 
-  // Método para crear un nuevo alumno
-  async createAlumno(createAlumnoDto: CreateAlumnoDto){
-     // Cargar la carrera asociada usando el ID del DTO
-     const carrera = await this.carrerasRepository.findOneBy({Id_carrera_pk: createAlumnoDto.carrera,});
+  // Método para crear un nuevo alumno y guardar la imagen
+  async createAlumno(createAlumnoDto: CreateAlumnoDto, imagen: Express.Multer.File) {
+    // Cargar la carrera asociada usando el ID del DTO
+    const carrera = await this.carrerasRepository.findOneBy({ Id_carrera_pk: createAlumnoDto.carrera });
     
-     if (!carrera) {
-       throw new Error(`Carrera con ID ${createAlumnoDto.carrera} no encontrada`);
-     }
- 
-     // Crear una nueva instancia de Alumno con los datos del DTO
-     const newAlumno = this.alumnosRepository.create({
-       ...createAlumnoDto,
-       carrera,  // Asignar la entidad Carrera en lugar del ID
-     });
- 
-     // Guardar la nueva entidad en la base de datos
-     const savedAlumno = await this.alumnosRepository.save(newAlumno);
- 
-     // Devolver el alumno guardado
-     return {message:"alumno creado correctamente",success:"true"};
+    if (!carrera) {
+      throw new Error(`Carrera con ID ${createAlumnoDto.carrera} no encontrada`);
+    }
+
+    // Crear una nueva instancia de Alumno con los datos del DTO
+    const newAlumno = this.alumnosRepository.create({
+      ...createAlumnoDto,
+      carrera, // Asignar la entidad Carrera en lugar del ID
+      Foto: imagen?.filename, // Guardar el nombre de la imagen
+    });
+
+    // Guardar la nueva entidad en la base de datos
+    const savedAlumno = await this.alumnosRepository.save(newAlumno);
+
+    // Devolver el alumno guardado
+    return { message: 'Alumno creado correctamente', success: true, alumno: savedAlumno };
   }
 
   // Método para actualizar un alumno

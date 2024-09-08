@@ -1,3 +1,4 @@
+import { Type } from "class-transformer";
 import { IsNumber, Length, Validator, IsString, IsOptional, IsIn, IsEmail, IsInt, IsDateString } from "class-validator";
 
 export class CreateAlumnoDto{
@@ -27,9 +28,11 @@ export class CreateAlumnoDto{
     readonly Fecha_nac: string;
 
     @IsInt()
+    @Type(()=>Number)
     readonly Semestre: number;
 
     @IsInt()
+    @Type(()=>Number)
     readonly Nivel: number;
 
     @IsOptional()
@@ -44,6 +47,7 @@ export class CreateAlumnoDto{
     readonly Correo: string;
 
     @IsInt()
+    @Type(()=>Number)
     readonly carrera: number;
 
 }
