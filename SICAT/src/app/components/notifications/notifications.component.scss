@@ -1,0 +1,98 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Define CSS variables for dynamic properties */
+.notification {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, 300%);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+
+    /* Dynamic background, border, and text colors using CSS variables */
+    background-color: var(--notification-background, #d9edf7); /* Default to info */
+    border-left: 5px solid var(--notification-border-color, #5bc0de); /* Default to info */
+    color: var(--notification-color, #333); /* Default text color */
+
+    font-size: 16px;
+    max-width: 400px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.notification .close-button {
+    margin-left: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    cursor: pointer;
+
+    /* Dynamic close button background */
+    background-color: var(--notification-close-bg, #f2f2f2); /* Default button background */
+
+    transition: background-color 0.2s ease;
+}
+
+.notification .close-button:hover {
+    background-color: var(--notification-hover-bg, #1d1111); /* Dynamic hover background */
+}
+
+.notification .close-button .close {
+    font-size: 18px;
+    color: var(--notification-close-color, #666); /* Dynamic close icon color */
+    line-height: 24px;
+    z-index: 2;
+}
+
+.notification .icon {
+    font-size: 24px;
+    margin-right: 15px;
+}
+
+.notification .content {
+    flex-grow: 1;
+}
+
+.notification .content p {
+    margin: 0;
+    font-size: 14px;
+    color: var(--notification-text-color, #666); /* Dynamic text color */
+}
+
+/* Info Notification Styling */
+.notification.info {
+    background-color: var(--notification-background, #d9edf7);
+    border-left: 5px solid var(--notification-border-color, #5bc0de);
+}
+
+/* Responsive styling */
+@media (max-width: 768px) {
+    .notification {
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%) translateY(300%);
+        width: 50%;
+        height: 12%;
+        max-height: 400px;
+        max-width: 400px;
+        font-size: 14px;
+        padding: 10px;
+    }
+
+    .notification .close-button {
+        width: 20px;
+        height: 20px;
+        font-size: 14px;
+    }
+}

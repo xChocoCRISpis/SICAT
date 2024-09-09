@@ -38,6 +38,7 @@ export class NavBarComponent {
   }
 
   logout():void{
+    localStorage.clear();
     this.router.navigate([""]);
   }
 

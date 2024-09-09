@@ -3,13 +3,15 @@ import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
 import { environment } from '../../environments/environment.development';
-
+import {LoginServiceService} from './login-services/login-service.service'
+import { NotificationsComponent } from "../components/notifications/notifications.component";
+import { NotificationsService } from '../components/notifications/notifications.service';
 
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, NotificationsComponent],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
@@ -20,7 +22,8 @@ export class LoginComponent implements OnInit {
     constructor(
         private builder:FormBuilder,
         private authService: AuthService,
-        private router: Router) 
+        private router: Router,
+        private notificationService: NotificationsService) 
     {
         this.formulario = this.builder.group({
             usuario:["",Validators.required],
@@ -35,14 +38,26 @@ export class LoginComponent implements OnInit {
     login(): void {
         if (this.formulario.valid) {
           const { usuario, contrasena } = this.formulario.value;
-          console.log(usuario, contrasena);
           this.authService.login({ usuario, contrasena }).subscribe(
             response => {
-              console.log('Login successful', response);
+              localStorage.setItem('auth_token', response.token);
               this.router.navigate(["sicat"]);
+              console.log({Token:localStorage.getItem('auth_token')});
+
+              this.notificationService.notify({
+                type:'check',
+                title:"Inicio de sesión",
+                message:`Bienvenido ${response.Nombre}`})
             },
             error => {
+
               console.error('Login failed', error);
+              this.notificationService.notify({
+                type:'error',
+                title:"Inicio de sesión inválido",
+                message:"Usuario y/o contraseña incorrectos"})
+
+                this.formulario.reset();
               // Manejar el error
             }
           );

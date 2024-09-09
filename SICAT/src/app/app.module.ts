@@ -5,6 +5,7 @@ import { AppRoutingModule } from './app.routes'; // Importa el módulo de enruta
 import { LoginComponent } from './login/login.component';
 import { InitComponent } from './pages/init/init.component';
 import { AuthService } from './auth.service';
+import { HttpClient } from '@angular/common/http';
 
 
 @NgModule({
@@ -13,7 +14,7 @@ import { AuthService } from './auth.service';
     AppRoutingModule,
     AppComponent,
     LoginComponent,
-    InitComponent // Asegúrate de que AppRoutingModule esté aquí
+    InitComponent,
   ],
   providers: [AuthService],
 })
