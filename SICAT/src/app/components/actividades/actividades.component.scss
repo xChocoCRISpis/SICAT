@@ -1,0 +1,42 @@
+body {
+    font-family: 'Montserrat', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: #fff5e1;
+    overflow-x: hidden;
+}
+
+.actividad {
+    background-color: blue;
+    display: flex;
+    flex-direction: column; /* Organiza en columna */
+    justify-content: center; /* Centrar verticalmente */
+    align-items: left; /* Centrar horizontalmente */
+    height: 15vh;
+    width: 25vh;
+    border-radius: 5px;
+    margin: 2%;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2); /* Sombra para darle efecto */
+}
+
+.text {
+    background-color: green;
+    width: 70%;
+    height: 100%;
+    border-radius: 5px;
+    text-align: center; /* Centrar el texto */
+    padding: 5px;
+}
+
+.imagen {
+    background-color: magenta;
+    width: 100%;
+    display: flex;
+    justify-content: center; /* Centrar la imagen horizontalmente */
+}
+
+.imagen img {
+    max-width: 100%; /* Asegurarse de que la imagen no exceda su contenedor */
+    height: 70%;
+}
