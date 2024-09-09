@@ -42,10 +42,12 @@ export class AuthService {
   }
 
   async verifyLogin(login:Usuario,Contrasena:string){
-    if(!login) return {login:false,id:-1}
+    if(!login) throw new UnauthorizedException('Contraseña incorrecta y/o Usuario incorrecto')
 
       const jwtToken=this.generateJwtToken(login.Correo,login.Nombre);
       const updateToken=await this.usuarioRepository.update(login.Id_usuario_pk, { Token: jwtToken });
+
+      console.log(updateToken);
       
       if(updateToken.affected < 1) throw new BadRequestException('No se pudo guardar el login');
 
@@ -53,7 +55,7 @@ export class AuthService {
 
       if(!match) throw new UnauthorizedException('Contraseña incorrecta y/o Usuario incorrecto')
     
-      return {login:true,id:login.Id_usuario_pk}
+      return {login:true,id:login.Id_usuario_pk,token:jwtToken,Nombre:login.Nombre}
   }
 
   async createUser(createAuthDto: CreateAuthDto): Promise<{ token: string }> {
