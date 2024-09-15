@@ -2,17 +2,14 @@ import {
   Body,
   Controller,
   Get,
-  Param,
-  ParseIntPipe,
   Post,
   Query,
   UploadedFile,
   UseInterceptors,
-  ValidationPipe,
 } from '@nestjs/common';
 
 import { FileInterceptor } from '@nestjs/platform-express';
-import { diskStorage } from 'multer';
+import { diskStorage, Multer } from 'multer';
 import { extname } from 'path';
 import { CreateAlumnoDto } from './dtos/create-alumno.dto';
 import { AlumnosService } from './alumnos.service';

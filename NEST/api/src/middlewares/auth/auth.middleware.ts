@@ -23,7 +23,7 @@ export class AuthMiddleware implements NestMiddleware {
     const token = authHeader.split(' ')[1];
 
     try{
-      const decoded:jwt = jwt.verify(token,process.env.JWT_SECRET);
+      const decoded:any = jwt.verify(token,process.env.JWT_SECRET);
       const usuario = await this.usuarioRepository.findOneBy({Id_usuario_pk:decoded.id});
 
       if(!usuario) throw new UnauthorizedException('Token inválido');

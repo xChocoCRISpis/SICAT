@@ -12,6 +12,7 @@ import { BitacoraModule } from './bitacora/bitacora.module'
 import { BitacoraController } from './bitacora/bitacora.controller';
 import { BitacoraService } from './bitacora/bitacora.service';
 import { AuthModule } from './auth/auth.module';
+import { ActividadesModule } from './actividades/actividades.module';
 
 @Module({
   imports: [
@@ -38,7 +39,8 @@ import { AuthModule } from './auth/auth.module';
     ChecadorSchemaModule,
     BitacoraSchemaModule,
     BitacoraModule,
-    AuthModule
+    AuthModule,
+    ActividadesModule
   ],
   controllers: [AppController, BitacoraController],
   providers: [AppService],
