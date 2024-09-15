@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
 import { NavBarComponent } from "../nav-bar/nav-bar.component";
 import { ActividadesComponent } from '../../components/actividades/actividades.component';
-import {NavBarService} from '../../services/nav-bar.service';
+import {NavBarService,Pages} from '../../services/nav-bar.service';
 
-type Pages = 'init'|'actividades';
 
 @Component({
   selector: 'app-init',

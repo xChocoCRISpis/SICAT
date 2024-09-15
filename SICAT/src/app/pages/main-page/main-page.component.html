@@ -4,9 +4,14 @@
             <app-init>
             </app-init>
         }
-        @case ('actividades'){
-            <h3>Actividades</h3>
-            <actividades>
+        @case ('dep'){
+            <h3>Actividades deportivas</h3>
+            <actividades [tipo]="'dep'">
+            </actividades>
+        }
+        @case ('cul'){
+            <h3>Actividades culturales</h3>
+            <actividades [tipo]="'cul'">
             </actividades>
         }
         @default {

@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { NavBarService } from '../../services/nav-bar.service'
+import { NavBarService,Pages } from '../../services/nav-bar.service'
 
-type Pages = 'init'|'actividades';
 
 @Component({
   selector: 'app-nav-bar',

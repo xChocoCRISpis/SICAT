@@ -13,7 +13,9 @@ export class NavBarService {
   loadComponent(componentName:Pages):void{
     this.pageEmitter.emit(componentName);
   }
+
+
   
 }
 
-type Pages = 'init'|'actividades';
+export type Pages = 'init'|'dep'|'cul';
