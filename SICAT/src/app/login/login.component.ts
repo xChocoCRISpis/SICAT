@@ -25,6 +25,7 @@ export class LoginComponent implements OnInit {
         private router: Router,
         private notificationService: NotificationsService) 
     {
+      localStorage.clear();
         this.formulario = this.builder.group({
             usuario:["",Validators.required],
             contrasena:["",Validators.required]
@@ -32,7 +33,7 @@ export class LoginComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        
+
     }
 
     login(): void {
@@ -57,6 +58,7 @@ export class LoginComponent implements OnInit {
                 title:"Inicio de sesión inválido",
                 message:"Usuario y/o contraseña incorrectos"})
 
+                localStorage.clear();
                 this.formulario.reset();
               // Manejar el error
             }

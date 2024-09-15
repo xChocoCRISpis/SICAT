@@ -1,0 +1,17 @@
+<app-nav-bar>
+    @switch (page) {
+        @case ('init') {
+            <app-init>
+            </app-init>
+        }
+        @case ('actividades'){
+            <h3>Actividades</h3>
+            <actividades>
+            </actividades>
+        }
+        @default {
+            {{notFound()}}
+        }
+    }
+</app-nav-bar>
+

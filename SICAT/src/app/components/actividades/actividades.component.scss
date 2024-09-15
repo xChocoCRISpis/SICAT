@@ -1,42 +1,41 @@
-body {
-    font-family: 'Montserrat', sans-serif;
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    background-color: #fff5e1;
-    overflow-x: hidden;
+*{
+    background-color: #fcefd5;
 }
 
 .actividad {
-    background-color: blue;
     display: flex;
-    flex-direction: column; /* Organiza en columna */
-    justify-content: center; /* Centrar verticalmente */
-    align-items: left; /* Centrar horizontalmente */
-    height: 15vh;
-    width: 25vh;
-    border-radius: 5px;
-    margin: 2%;
-    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2); /* Sombra para darle efecto */
-}
-
-.text {
-    background-color: green;
-    width: 70%;
-    height: 100%;
-    border-radius: 5px;
-    text-align: center; /* Centrar el texto */
-    padding: 5px;
-}
-
-.imagen {
-    background-color: magenta;
-    width: 100%;
-    display: flex;
-    justify-content: center; /* Centrar la imagen horizontalmente */
-}
-
-.imagen img {
-    max-width: 100%; /* Asegurarse de que la imagen no exceda su contenedor */
-    height: 70%;
-}
+    align-items: center;
+    justify-content: flex-start;
+    padding: 20px;
+    margin-bottom: 20px;
+    background-color: #fcefd5; /* Fondo claro */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  
+    &:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+  
+    .text {
+      margin-right: 20px;
+      
+      h5 {
+        font-size: 1.2rem;
+        color: #5A0A18; /* Texto marrón oscuro */
+        margin: 0;
+      }
+    }
+  
+    .imagen {
+      img {
+        width: 100px;
+        height: 100px;
+        object-fit: cover;
+        border-radius: 10px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+    }
+  }
+  

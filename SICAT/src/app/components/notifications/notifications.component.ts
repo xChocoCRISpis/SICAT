@@ -116,11 +116,21 @@ export class NotificationsComponent implements OnInit, OnDestroy{
     } else {
       console.error('Notification element not found');
     }},1);
+
+    setTimeout(() => {
+      this.close();
+    }, 3000);
   }
 
 
   public close() {
-    this.isEnabled = false;
-    console.log('Notification closed:', this.isEnabled);
+    const element = this.elementRef.nativeElement.querySelector('.notification');
+    if (element) {
+      this.renderer.addClass(element, 'hidden');
+      setTimeout(() => {
+        this.isEnabled = false;  // Oculta la notificación después de la animación
+        console.log('Notification closed:', this.isEnabled);
+      }, 500);
+    }
   }
 }

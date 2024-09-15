@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { NavBarComponent } from "../nav-bar/nav-bar.component";
 import { ActividadesComponent } from '../../components/actividades/actividades.component';
+import {NavBarService} from '../../services/nav-bar.service';
+
+type Pages = 'init'|'actividades';
 
 @Component({
   selector: 'app-init',
@@ -10,5 +13,10 @@ import { ActividadesComponent } from '../../components/actividades/actividades.c
   styleUrl: './init.component.scss'
 })
 export class InitComponent {
-  page:string = "i";
+  constructor(public pages:NavBarService){
+  }
+
+  changePage(page:Pages){
+    this.pages.loadComponent(page);
+  }
 }

@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { NavBarService } from '../../services/nav-bar.service'
 
+type Pages = 'init'|'actividades';
 
 @Component({
   selector: 'app-nav-bar',
@@ -10,13 +12,17 @@ import { Router } from '@angular/router';
   styleUrl: './nav-bar.component.scss'
 })
 export class NavBarComponent {
+  isMenuOpened = false;
 
-  constructor(private router: Router){}
+  constructor(private router: Router,
+    private pages:NavBarService
+  ){}
   toggleMenu(): void {
     const menuSide = document.getElementById('menu_side');
-    const contentWrapper = document.getElementById('content-wrapper');
-    if (menuSide) menuSide.classList.toggle('active');
-    if (contentWrapper) contentWrapper.classList.toggle('shifted');
+    this.isMenuOpened = !this.isMenuOpened;
+    if (menuSide) {
+      menuSide.classList.toggle('active');
+    }
   }
 
   /* navigateTo(url: string): void {
@@ -42,4 +48,7 @@ export class NavBarComponent {
     this.router.navigate([""]);
   }
 
+  changePage(page:Pages){
+    this.pages.loadComponent(page);
+  }
 }
