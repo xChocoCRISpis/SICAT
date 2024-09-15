@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Req } from '@nestjs/common';
 import { ActividadesService } from './actividades.service';
 import { CreateActividadeDto } from './dto/create-actividade.dto';
 import { UpdateActividadeDto } from './dto/update-actividade.dto';
@@ -13,8 +13,9 @@ export class ActividadesController {
   }
 
   @Get()
-  findAll() {
-    return this.actividadesService.findAll();
+  findAll(@Req() req:Request) {
+    const usuario = req['Usuario'];
+    return this.actividadesService.findAll(usuario.Id_usuario_pk);
   }
 
   @Get(':id')

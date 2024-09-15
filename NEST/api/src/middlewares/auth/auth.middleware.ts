@@ -24,14 +24,22 @@ export class AuthMiddleware implements NestMiddleware {
 
     try{
       const decoded:any = jwt.verify(token,process.env.JWT_SECRET);
-      const usuario = await this.usuarioRepository.findOneBy({Id_usuario_pk:decoded.id});
+
+      const usuario = await this.usuarioRepository.findOne({where:{
+        Nombre:decoded.nombre,Correo:decoded.correo
+      }});
 
       if(!usuario) throw new UnauthorizedException('Token inválido');
 
-      req['Nombre'] = usuario;
+      req['Usuario'] = usuario;
+      
+      console.log(decoded);
+      console.log(req['Usuario']);
+      
 
       next();
     }catch(error){
+      console.log(error);
       throw new UnauthorizedException('Error al verificar el Token');
     }
   }
