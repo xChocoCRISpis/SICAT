@@ -14,6 +14,10 @@
             <actividades [tipo]="'cul'">
             </actividades>
         }
+        @case('profile'){
+            <profile>
+            </profile>
+        }
         @default {
             {{notFound()}}
         }

@@ -4,17 +4,17 @@ import { InitComponent } from "../init/init.component";
 import { Router } from '@angular/router';
 import { ActividadesComponent } from "../../components/actividades/actividades.component";
 import {NavBarService} from "../../services/nav-bar.service";
+import { ProfileComponent } from '../profile/profile.component';
 
 @Component({
   selector: 'app-main-page',
   standalone: true,
-  imports: [NavBarComponent, InitComponent, ActividadesComponent],
+  imports: [NavBarComponent, InitComponent, ActividadesComponent,ProfileComponent],
   templateUrl: './main-page.component.html',
   styleUrl: './main-page.component.scss'
 })
 export class MainPageComponent {
   public page : string = 'init';
-  
   
   constructor(
     private router: Router,

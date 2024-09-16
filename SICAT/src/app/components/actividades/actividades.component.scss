@@ -1,5 +1,7 @@
+
 *{
-    background-color: #fcefd5;
+  --background_color:#ece9e2;
+  background-color: var(--background_color);
 }
 
 .actividad {
@@ -8,7 +10,7 @@
     justify-content: flex-start;
     padding: 20px;
     margin-bottom: 20px;
-    background-color: #fcefd5; /* Fondo claro */
+    background-color: var(--background_color); /* Fondo claro */
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease, box-shadow 0.3s ease;

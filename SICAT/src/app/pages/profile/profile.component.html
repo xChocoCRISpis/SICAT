@@ -1,0 +1,50 @@
+<div class="profile-container"> 
+    <!-- Información del usuario en horizontal -->
+    <div class="usuario-section">
+      <h2>Perfil de Usuario</h2>
+      <div class="usuario-info">
+        <div>
+          <p><strong>ID:</strong>{{encargado.id_encargado_pk}}</p>
+          <p><strong>Username:</strong> {{usuario.username}}</p>
+          <p><strong>Correo:</strong> {{usuario.correo}}</p>
+          <p><strong>Nombre:</strong> {{encargado.nombre}} {{encargado.ap_paterno}} {{encargado.ap_materno}}</p>
+          <p><strong>Tipo:</strong>{{encargado.tipo}}</p>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Código QR alineado a la derecha -->
+    <div class="qr-container">
+      <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.codeqrcode.com%2Fblog%2Fwp-content%2Fuploads%2F2018%2F03%2FQR-code-on-BusinessCard-good.png&f=1&nofb=1&ipt=50644151b2f1a55e8f645fbc9053a4918f505478bef829650c2f9e13004aae92&ipo=images" alt="Código QR" class="qr-image">
+    </div>
+  
+    <!-- Información de los horarios en tabla -->
+    <div class="horarios-section">
+      <h2>Horarios</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Día de la Semana</th>
+            <th>Actividades</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Agrupar horarios por día de la semana -->
+          @for (group of groupedHorarios; track $index) {
+            <tr>
+              <td>{{ group.dia_semana }}</td>
+              <td>
+                <!-- Listar actividades del mismo día -->
+                @for (actividad of group.actividades; track $index) {
+                  <strong>{{ actividad.nombre }} ({{ actividad.tipo }})</strong><br>
+                  Hora: {{ actividad.hora_inicio }} - {{ actividad.hora_fin }}<br>
+                  Semestre: {{ actividad.semestre }} {{ actividad.ano }}<br><br>
+                }
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+  

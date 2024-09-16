@@ -1,0 +1,80 @@
+.profile-container {
+    position: relative;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.usuario-section {
+    margin-bottom: 20px;
+    padding-right: 200px; /* Dejar espacio para el QR */
+}
+
+.usuario-info {
+    position: relative; /* Hacer el contenedor relativo para que el QR se posicione dentro */
+}
+
+.qr-container {
+    position: absolute;
+    top: 10%;
+    right: 10%;
+    width: 150px;
+}
+
+.qr-image {
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+}
+
+.horarios-section {
+    margin-top: 40px;
+}
+
+/* Ajustar el ancho de la columna del día */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background-color: #5A0A18;
+    color: white;
+}
+
+/* Reducir el ancho de la columna del día */
+th:first-child,
+td:first-child {
+    width: 15%;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+/* Hover por actividad en lugar de por fila completa */
+td .actividad-item {
+    padding: 5px 0;
+    transition: background-color 0.3s;
+}
+
+td .actividad-item:hover {
+    background-color: #ddd;
+}
+
+/* Hover de la fila sin afectar todas las actividades */
+tr:hover td .actividad-item {
+    background-color: transparent;
+}

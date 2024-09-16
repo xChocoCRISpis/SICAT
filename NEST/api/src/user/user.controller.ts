@@ -16,14 +16,29 @@ export class UserController {
     try {
       const user = req['Usuario'];
       const data = await this.userService.profile(user.Id_usuario_pk, year, semestre);
-  
+      let tipo:string;
+
+      switch(user.Tipo){
+        case(1):
+          tipo="Encargado de actividades extraescolares";
+          break;
+        case(2):
+          tipo ="Encargado secundario";
+          break;
+        case(3):
+          tipo = "Profesor";
+          break;
+        default:
+          tipo = "Default";
+          break;
+      }
       const usuario = {
         usuario: {
           username: user.Nombre,
           correo: user.Correo,
           qr: user.Imagen_qr,
         },
-        encargado: data.encargado,
+        encargado: {...data.encargado, tipo},
         horarios: data.horarios,
       };
   

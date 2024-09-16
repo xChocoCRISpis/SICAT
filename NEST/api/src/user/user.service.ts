@@ -28,17 +28,24 @@ export class UserService {
 
     // Buscar el encargado por ID de usuario
     const encargado = await this.encargadoRepo
-      .createQueryBuilder('e')
-      .select(['e.Nombre', 'e.Ap_paterno', 'e.Ap_materno', 'e.Id_encargado_pk'])
-      .where('e.Id_usuarios_fk = :id_usuario', { id_usuario })
-      .getOne();
+    .createQueryBuilder('e')
+    .select([
+      'e.Nombre as nombre',
+      'e.Ap_paterno as ap_paterno',
+      'e.Ap_materno as ap_materno',
+      'e.Id_encargado_pk as id_encargado_pk'
+    ])
+    .where('e.Id_usuarios_fk = :id_usuario', { id_usuario })
+    .getRawOne();
+
+    console.log(encargado)
 
     // Si no se encuentra el encargado, lanzar excepción
     if (!encargado) {
       throw new NotFoundException(`Encargado no encontrado para el usuario con ID ${id_usuario}.`);
     }
 
-    const { Id_encargado_pk: id_encargado } = encargado;
+    const { id_encargado_pk: id_encargado } = encargado;
 
     // Obtener los horarios filtrados
     const horario = await this.horarios(id_encargado, year, semestre);
