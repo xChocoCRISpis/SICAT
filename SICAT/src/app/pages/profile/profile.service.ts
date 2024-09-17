@@ -16,9 +16,8 @@ export class ProfileService {
 
   public profile(year:string,semestre:string):Observable<any>{
     const headers:HttpHeaders = new HttpHeaders({'Authorization':`Bearer ${localStorage.getItem('auth_token')}`})
-    const response = this.http.get(`${environment.server}/user/profile?year=${year}&semestre=${semestre}`, {headers:headers}
-    )
-
+    const response = this.http.get(`${environment.server}/user/profile?year=${year}&semestre=${semestre}`, {headers:headers});
+    console.log(headers);
     return response;
   }
 }

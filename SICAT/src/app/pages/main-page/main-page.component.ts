@@ -5,11 +5,12 @@ import { Router } from '@angular/router';
 import { ActividadesComponent } from "../../components/actividades/actividades.component";
 import {NavBarService} from "../../services/nav-bar.service";
 import { ProfileComponent } from '../profile/profile.component';
+import { AlumnosComponent } from "../alumnos/alumnos.component";
 
 @Component({
   selector: 'app-main-page',
   standalone: true,
-  imports: [NavBarComponent, InitComponent, ActividadesComponent,ProfileComponent],
+  imports: [NavBarComponent, InitComponent, ActividadesComponent, ProfileComponent, AlumnosComponent],
   templateUrl: './main-page.component.html',
   styleUrl: './main-page.component.scss'
 })

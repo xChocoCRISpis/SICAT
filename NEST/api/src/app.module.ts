@@ -14,6 +14,8 @@ import { BitacoraService } from './bitacora/bitacora.service';
 import { AuthModule } from './auth/auth.module';
 import { ActividadesModule } from './actividades/actividades.module';
 import { UserModule } from './user/user.module';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
 
 @Module({
   imports: [
@@ -35,6 +37,10 @@ import { UserModule } from './user/user.module';
       process.env.MONGO_CONNECTION_URI,
       { connectionName: 'sicat_nest' }
     ),
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'uploads'), // Ruta de tu carpeta con archivos estáticos
+      serveRoot: '/uploads', // Ruta pública desde la cual se acceden los archivos
+    }),
     AlumnosModule,
     AsistenciaSchemaModule,
     ChecadorSchemaModule,

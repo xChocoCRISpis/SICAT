@@ -1,0 +1,76 @@
+<div class="filter-section">
+  <h2>Filtrar Alumnos</h2>
+  <div>
+    <label>
+      Sexo:
+      <select (change)="applyFilter('sexo', $event)">
+        <option value="">Todos</option>
+        <option value="Masculino">Masculino</option>
+        <option value="Femenino">Femenino</option>
+      </select>
+    </label>
+    <label>
+      Num Control:
+      <input type="text" (input)="applyFilter('num_control', $event)">
+    </label>
+    <label>
+      Nombre:
+      <input type="text" (input)="applyFilter('nombre', $event)">
+    </label>
+    <label>
+      Ap. Paterno:
+      <input type="text" (input)="applyFilter('ap_paterno', $event)">
+    </label>
+    <label>
+      Semestre:
+      <input type="number" (input)="applyFilter('semestre', $event)">
+    </label>
+    <label>
+      Carrera:
+      <input type="text" (input)="applyFilter('nombre_corto', $event)">
+    </label>
+  </div>
+</div>
+
+<div class="alumnos-section">
+  <table>
+    <thead>
+      <tr>
+        <th>Num Control</th>
+        <th>Nombre</th>
+        <th>Ap. Paterno</th>
+        <th>Ap. Materno</th>
+        <th>Sexo</th>
+        <th>Semestre</th>
+        <th>Carrera</th>
+        <th>Nombre Corto Carrera</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (alumno of paginatedAlumnos; track $index) {
+        <tr (click)="showAlumnoDetails(alumno.id_alumno)">
+          <td>{{ alumno.num_control }}</td>
+          <td>{{ alumno.nombre }}</td>
+          <td>{{ alumno.ap_paterno }}</td>
+          <td>{{ alumno.ap_materno }}</td>
+          <td>{{ alumno.sexo }}</td>
+          <td>{{ alumno.semestre }}</td>
+          <td>{{ alumno.carrera.nombre }}</td>
+          <td>{{ alumno.carrera.nombre_corto }}</td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>
+
+<div class="pagination">
+  <button (click)="prevPage()" [disabled]="currentPage === 1">Anterior</button>
+  <span>Página {{ currentPage }} de {{ totalPages }}</span>
+  <button (click)="nextPage()" [disabled]="currentPage === totalPages">Siguiente</button>
+</div>
+
+<alumno-detalle 
+  [open]="modalOpen" 
+  [id_alumno]="selectedAlumnoId"
+  (closeModal)="closeModal()">
+</alumno-detalle>

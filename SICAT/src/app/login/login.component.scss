@@ -11,10 +11,11 @@ body {
     justify-content: center;
     height: 100vh;
     background-color: #5A0A18;
-    }
+}
 
 .container-form {
     display: flex;
+    flex-direction: row;
     border-radius: 20px;
     box-shadow: 10px 10px 10px black;
     height: 400px;
@@ -22,33 +23,32 @@ body {
     transition: all 1s;
     margin: 10px;
 }
+
 /* LADO ROJO */
 .design {
     display: flex;
     align-items: center;
+    justify-content: center;
     background-color: #98313C;
     border-top-right-radius: 20px;
     border-bottom-right-radius: 20px;
     text-align: center;
+    padding: 20px;
 }
 
 .design img {
-    display: flex;
-    margin: 10px;
-    align-items: center;
-    justify-content: center;
     height: 200px;
+    margin: 10px;
 }
 
 .design h2 {
     font-size: 3rem;
     color: #a3753a;
+    margin: 10px 0;
 }
 
-/* LADO ROJO */
-
 /* LADO BLANCO */
-.info{
+.info {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -56,32 +56,27 @@ body {
     width: 60%;
     background-color: #fff;
     border-top-left-radius: 20px;
-    border-bottom-left-radius: 18px;
+    border-bottom-left-radius: 20px;
+    padding: 20px;
 }
 
 .info-items {
     padding: 0 30px;
-    align-items: center;
-    justify-content: center;
+    text-align: center;
 }
 
-.info-items h2{
+.info-items h2 {
     width: 100%;
     font-size: 1.85rem;
     color: #5A0A18;
 }
 
-.i {
-    margin: 15px 0;
-}
-
 /* INPUTS */
 .form {
     margin-top: 40px;
-
 }
 
-.form label{
+.form label {
     display: flex;
     align-items: center;
     background-color: #fff;
@@ -91,7 +86,7 @@ body {
     box-shadow: 0 5px 7px black;
 }
 
-.form label input{
+.form label input {
     width: 100%;
     padding: 15px;
     border: none;
@@ -99,7 +94,7 @@ body {
     outline: none;
 }
 
-.form input[type="submit"]{
+.form input[type="submit"] {
     background-color: #5A0A18;
     border-radius: 20px;
     padding: 10px 15px;
@@ -113,90 +108,74 @@ body {
     font-size: 0.95rem;
 }
 
-.form input[type="submit"]:hover{
+.form input[type="submit"]:hover {
     background-color: #98313C;
 }
 
-/* LADO ROJO */
-
-/* LADO BLANCO */
-.info{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    width: 60%;
-    background-color: #fff;
-    border-top-left-radius: 20px;
-    border-bottom-left-radius: 18px;
-}
-
-.info-items {
-    padding: 0 30px;
-    align-items: center;
-    justify-content: center;
-}
-
-.info-items h2{
-    width: 100%;
-    font-size: 1.85rem;
-    color: #5A0A18;
-}
-
-.i {
-    margin: 15px 0;
-}
-
-/* INPUTS */
-.form {
-    margin-top: 40px;
-}
-
-.form label{
-    display: flex;
-    align-items: center;
-    background-color: #fff;
-    margin-bottom: 35px;
-    border-radius: 20px;
-    padding: 0 10px;
-    box-shadow: 0 5px 7px black;
-}
-
-.form label input{
-    width: 100%;
-    padding: 15px;
-    border: none;
-    border-radius: 20px;
-    outline: none;
-}
-
-.form input[type="submit"]{
-    background-color: #5A0A18;
-    border-radius: 20px;
-    padding: 10px 15px;
-    width: 70%;
-    border: none;
-    cursor: pointer;
-    margin-top: 10px;
-    box-shadow: 0 5px 7px black;
-    color: #fff;
-    font-family: 'Montserrat', sans-serif;
-    font-size: 0.95rem;
-}
-
-.form input[type="submit"]:hover{
-    background-color: #98313C;
-}
-
-input{
+input {
     font-size: small;
     font-weight: 500;
 }
 
-h2{
+h2 {
     font-weight: 700;
 }
 
-.bi{
+.bi {
     color: #5A0A18;
 }
+
+/* Estilos para dispositivos móviles */
+@media (max-width: 768px) {
+    .container-form {
+        flex-direction: column;
+        max-width: 90%;
+        height: auto;
+    }
+
+    .design, .info {
+        width: 100%;
+        border-radius: 20px;
+    }
+
+    .design img {
+        height: 150px;
+    }
+
+    .design h2 {
+        font-size: 2rem;
+    }
+
+    .info-items h2 {
+        font-size: 1.5rem;
+    }
+
+    .form label {
+        margin-bottom: 20px;
+        padding: 10px;
+    }
+
+    .form input[type="submit"] {
+        width: 90%;
+    }
+}
+
+/* Estilos para pantallas pequeñas */
+@media (max-width: 480px) {
+    .design img {
+        height: 100px;
+    }
+
+    .design h2 {
+        font-size: 1.5rem;
+    }
+
+    .form label input {
+        padding: 8px;
+    }
+
+    .form input[type="submit"] {
+        padding: 8px;
+    }
+}
+

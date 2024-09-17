@@ -20,18 +20,29 @@ export class AlumnosController {
   constructor(private readonly alumnosService: AlumnosService) {}
 
   @Get()
-  getAllAlumnos() {
-    return this.alumnosService.findAll();
-  }
+getAllAlumnos(
+  @Query('num_control') num_control?: string,
+  @Query('nombre') nombre?: string,
+  @Query('ap_paterno') ap_paterno?: string,
+  @Query('sexo') sexo?: string,
+  @Query('semestre') semestre?: number,
+  @Query('nombre_corto') nombre_corto?: string,
+  @Query('page') page?:number
+) {
+  return this.alumnosService.findAllWithCarreras(
+    num_control,
+    nombre,
+    ap_paterno,
+    sexo,
+    semestre,
+    nombre_corto,
+    page
+  );
+}
 
   @Get('/buscar')
-  getByIdAlumnos(@Query('num_control') num_control: string) {
-    if (!num_control) {
-      return { message: "num_control es obligatorio" };  // Retornar un mensaje si no se pasa el parámetro
-    }
-    const alumno = this.alumnosService.findOne(num_control);
-    console.log(alumno);
-    return alumno;
+  getByIdAlumnos(@Query('id') id: number) {
+    return this.alumnosService.getAlumnoDetail(id);
   }
 
   @UseInterceptors(

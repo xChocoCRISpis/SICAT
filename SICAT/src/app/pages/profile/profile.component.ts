@@ -56,6 +56,9 @@ export class ProfileComponent {
         this.encargado = res.encargado;
         this.usuario = res.usuario;
         this.groupHorariosByDay();
+      },error => {
+        console.error('Error en la petición:', error);
+        console.log('Texto de la respuesta:', error.error?.text);
       });
   }
 
