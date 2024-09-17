@@ -1,3 +1,8 @@
+.table-container {
+  width: 100%;
+  overflow-x: auto; /* Permite el scroll horizontal si es necesario */
+}
+
 .alumnos-container {
     max-width: 1000px;
     margin: 0 auto;
@@ -92,3 +97,67 @@
   tr:hover{
     background-color: #af7f87;
   }
+
+  /* Media queries para pantallas pequeñas (max-width: 768px) */
+@media (max-width: 768px) {
+  .alumnos-container {
+    padding: 15px;
+    margin: 0 10px;
+  }
+
+  .filters {
+    flex-direction: column; /* Hacer que los filtros se apilen verticalmente */
+    gap: 5px;
+  }
+
+  .filters input {
+    width: 100%; /* Ajustar el ancho de los inputs al 100% */
+  }
+
+  table {
+    font-size: 14px; /* Reducir el tamaño del texto en la tabla */
+  }
+
+  th, td {
+    padding: 8px;
+  }
+
+  button {
+    width: 100%; /* Botones ocupan el ancho completo en móviles */
+    padding: 10px;
+  }
+
+  .pagination {
+    flex-direction: column;
+    align-items: center; /* Centrar los botones de paginación */
+  }
+}
+
+/* Media queries para pantallas muy pequeñas (max-width: 480px) */
+@media (max-width: 480px) {
+  .alumnos-container {
+    padding: 10px;
+    margin: 0 5px;
+  }
+
+  table {
+    font-size: 12px; /* Reducir más el tamaño de la tabla */
+  }
+
+  th, td {
+    padding: 6px;
+  }
+
+  .filters input {
+    padding: 8px;
+  }
+
+  button {
+    padding: 8px;
+    font-size: 14px;
+  }
+
+  .pagination {
+    gap: 10px;
+  }
+}

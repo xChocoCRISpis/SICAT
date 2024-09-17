@@ -78,3 +78,65 @@ td .actividad-item:hover {
 tr:hover td .actividad-item {
     background-color: transparent;
 }
+
+/* Media queries para pantallas pequeñas (max-width: 768px) */
+@media (max-width: 768px) {
+    .profile-container {
+        padding: 15px;
+        margin: 0 10px;
+        box-shadow: none; /* Eliminar sombra en pantallas pequeñas */
+    }
+
+    .usuario-section {
+        padding-right: 0; /* Eliminar espacio extra en pantallas pequeñas */
+    }
+
+    .qr-container {
+        position: static; /* Hacer que el QR se coloque debajo de la información */
+        margin: 20px 0;
+        width: 100px; /* Reducir tamaño del QR */
+    }
+
+    .qr-image {
+        width: 100%;
+        height: auto;
+    }
+
+    table {
+        font-size: 14px; /* Reducir tamaño de texto en tablas */
+    }
+
+    th, td {
+        padding: 8px;
+    }
+
+    th:first-child,
+    td:first-child {
+        width: auto; /* Ajustar ancho de la columna del día */
+    }
+}
+
+/* Media queries para pantallas muy pequeñas (max-width: 480px) */
+@media (max-width: 480px) {
+    .profile-container {
+        padding: 10px;
+        margin: 0 5px;
+    }
+
+    .qr-container {
+        width: 80px; /* Reducir aún más el tamaño del QR */
+        margin: 15px 0;
+    }
+
+    table {
+        font-size: 12px; /* Reducir aún más el tamaño de la tabla */
+    }
+
+    th, td {
+        padding: 6px;
+    }
+
+    .horarios-section {
+        margin-top: 20px; /* Reducir espacio en secciones */
+    }
+}

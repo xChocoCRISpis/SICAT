@@ -153,3 +153,113 @@ main.menu-opened {
 body{
     background-color: #fcefd5;
 }
+
+/* Media queries para pantallas pequeñas (max-width: 768px) */
+@media (max-width: 768px) {
+    header {
+        padding: 0 12px; /* Reducir el padding en pantallas pequeñas */
+        height: 50px; /* Reducir altura del header en móviles */
+    }
+
+    .icon_menu {
+        height: 50px; /* Ajustar altura del icono en móviles */
+    }
+
+    .icon_menu i {
+        width: 30px; /* Reducir tamaño del icono en pantallas pequeñas */
+        height: 30px;
+        font-size: 20px;
+    }
+
+    .menu_side {
+        width: 200px; /* Reducir ancho del menú lateral en pantallas pequeñas */
+        top: 50px; /* Ajustar para que coincida con la altura del header */
+    }
+
+    #content-wrapper {
+        margin-top: 50px; /* Ajustar el margen superior para no superponerse al header */
+    }
+
+    #content-wrapper.shifted {
+        margin-left: 200px; /* Ajuste cuando el menú está abierto en pantallas pequeñas */
+    }
+
+    main.menu-opened {
+        margin-left: 200px; /* Ajustar el contenido cuando el menú está abierto */
+    }
+
+    .pagination {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+    }
+
+    .pagination button {
+        padding: 10px 15px;
+        font-size: 14px;
+    }
+
+    .pagination span {
+        font-size: 14px;
+        margin: 0 10px;
+    }
+
+    .alumno-info {
+        font-size: 14px; /* Reducir el tamaño de texto en la información del alumno */
+    }
+
+    .modal-content {
+        padding: 15px;
+        max-width: 90%; /* Aumentar el ancho máximo del modal para pantallas pequeñas */
+    }
+}
+
+/* Media queries para pantallas muy pequeñas (max-width: 480px) */
+@media (max-width: 480px) {
+    header {
+        padding: 0 8px; /* Más reducción del padding para pantallas muy pequeñas */
+        height: 45px; /* Reducir aún más la altura del header */
+    }
+
+    .icon_menu {
+        height: 45px; /* Ajustar la altura del icono */
+    }
+
+    .icon_menu i {
+        width: 25px; /* Hacer el icono más pequeño en pantallas muy pequeñas */
+        height: 25px;
+        font-size: 18px;
+    }
+
+    .menu_side {
+        width: 180px; /* Menú lateral más estrecho en pantallas pequeñas */
+        top: 45px; /* Ajustar el top del menú para que coincida con el header */
+    }
+
+    #content-wrapper {
+        margin-top: 45px; /* Asegurar que el contenido no se superponga con el header */
+    }
+
+    #content-wrapper.shifted {
+        margin-left: 180px; /* Ajuste cuando el menú está abierto */
+    }
+
+    main.menu-opened {
+        margin-left: 180px; /* Ajustar el contenido cuando el menú está abierto */
+    }
+
+    .modal-content {
+        padding: 10px;
+        max-width: 95%; /* Hacer el modal más ancho en pantallas pequeñas */
+    }
+
+    .pagination button {
+        padding: 8px 10px;
+        font-size: 12px;
+    }
+
+    .pagination span {
+        font-size: 12px;
+        margin: 0 5px;
+    }
+}

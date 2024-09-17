@@ -16,6 +16,8 @@ import { ActividadesModule } from './actividades/actividades.module';
 import { UserModule } from './user/user.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
+import { AsistenciaModule } from './asistencia/asistencia.module';
+import { ChecadorModule } from './checador/checador.module';
 
 @Module({
   imports: [
@@ -48,7 +50,9 @@ import { join } from 'path';
     BitacoraModule,
     AuthModule,
     ActividadesModule,
-    UserModule
+    UserModule,
+    AsistenciaModule,
+    ChecadorModule
   ],
   controllers: [AppController, BitacoraController],
   providers: [AppService],

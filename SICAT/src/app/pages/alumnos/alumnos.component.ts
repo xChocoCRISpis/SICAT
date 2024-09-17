@@ -18,8 +18,9 @@ export class AlumnosComponent {
   paginatedAlumnos: any[] = [];
   filters: any = {};
   currentPage = 1;
-  itemsPerPage = 5;
+  itemsPerPage = 50;
   totalPages = 1;
+  totalAlumnos = 0; // Para saber cuántos alumnos hay en total en la base de datos
   selectedAlumnoId: number | null = null;
   modalOpen = false;
 
@@ -28,9 +29,15 @@ export class AlumnosComponent {
   }
 
   loadAlumnos() {
-    this.alumnosService.getAlumnos(this.filters).subscribe((res: any) => {
-      this.alumnos = res.alumnos;
+    const params = new HttpParams()
+      .set('page', this.currentPage)
+      .set('limit', this.itemsPerPage)
+      .set('filters', JSON.stringify(this.filters)); // Puedes ajustar esto según el formato de tu API.
+
+    this.alumnosService.getAlumnos(params).subscribe((res: any) => {
+      this.alumnos = [...this.alumnos, ...res.alumnos]; // Añadir más alumnos a la lista
       this.filteredAlumnos = this.alumnos;
+      this.totalAlumnos = res.total; // Total de alumnos que hay en la base de datos
       this.updatePagination();
     });
   }
@@ -56,7 +63,7 @@ export class AlumnosComponent {
   }
 
   updatePagination() {
-    this.totalPages = Math.ceil(this.filteredAlumnos.length / this.itemsPerPage);
+    this.totalPages = Math.ceil(this.totalAlumnos / this.itemsPerPage);
     this.paginate();
   }
 
@@ -76,7 +83,7 @@ export class AlumnosComponent {
   nextPage() {
     if (this.currentPage < this.totalPages) {
       this.currentPage++;
-      this.paginate();
+      this.loadAlumnos(); // Hacer otra solicitud para cargar más alumnos
     }
   }
 
