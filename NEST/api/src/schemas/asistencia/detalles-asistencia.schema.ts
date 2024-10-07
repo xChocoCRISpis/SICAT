@@ -6,8 +6,8 @@ export class DetallesAsistencia extends Document {
   @Prop({ type: Number, required: true })
   id_encargado: number;
 
-  @Prop({ type: String, required: true })
-  fecha: string;
+  @Prop({ type: Date, required: true })
+  fecha: Date;
 
   @Prop({ type: Number, required: true })
   horas: number;

@@ -7,10 +7,10 @@ export class BitacoraDetalles{
     fecha:Date;
 
     @Prop({type: String, require: true})
-    hora: String;
+    hora: string;
 
     @Prop({type:String, require:true})
-    accion:String;
+    accion:string;
 
 }
 

@@ -16,7 +16,11 @@ import { AuthMiddleware } from 'src/middlewares/auth/auth.middleware';
 export class AsistenciaModule {
   configure(consumer: MiddlewareConsumer) {
     consumer.apply(AuthMiddleware).forRoutes(
-      {path:"asistencia",method:RequestMethod.GET},
+      {path:"asistencia/crear",method:RequestMethod.POST},
+      {path:"asistencia/traer",method:RequestMethod.GET},
+      {path:"asistencia/actualizar",method:RequestMethod.PUT},
+      {path:"asistencia/eliminar",method:RequestMethod.DELETE},
+      {path:"asistencia/horas",method:RequestMethod.GET},
     )
   }
 }

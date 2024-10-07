@@ -6,7 +6,7 @@ import {BitacoraDetalles,BitacoraDetallesSchema} from './bitacora-detalles.schem
 @Schema({ collection: 'bitacora'})
 export class Bitacora extends Document {
     @Prop({ type: Number, required: true })
-    id_usuario: Number;
+    id_usuario: number;
 
     @Prop({ type: [BitacoraDetallesSchema], required: true })
     bitacora_detalle: BitacoraDetalles[];
