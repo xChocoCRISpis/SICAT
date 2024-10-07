@@ -8,6 +8,7 @@ import { EncargadoDetalle } from 'src/entities/encargados_detalle.entity';
 import { Horario } from 'src/entities/horarios.entity';
 import { Actividad } from 'src/entities/actividades.entity';
 
+
 @Injectable()
 export class UserService {
 

@@ -15,6 +15,9 @@ import { InjectModel } from "@nestjs/mongoose";
 import { LoginDto } from "./dto/login.dto";
 import * as bcrypt from "bcrypt";
 import * as jwt from "jsonwebtoken";
+import * as QRCode from 'qrcode';
+import * as crypto from 'crypto';
+
 
 @Injectable()
 export class AuthService {
@@ -99,6 +102,8 @@ export class AuthService {
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(Contrasena, salt);
 
+    const [qrPath,encodeData] = await this.generateQr(Contrasena);
+
     // Generar el JWT token
     const token = this.generateJwtToken(Correo, Nombre);
 
@@ -106,6 +111,8 @@ export class AuthService {
     const newUser = this.usuarioRepository.create({
       Nombre,
       Contrasena: hashedPassword, // Guardar la contraseña encriptada
+      Cadena_qr:encodeData,
+      Imagen_qr:qrPath,
       Correo,
       Tipo,
       Token: token,
@@ -119,6 +126,32 @@ export class AuthService {
   private generateJwtToken(correo: string, usuario: string): string {
     const payload = { correo, usuario };
     return jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: "4h" });
+  }
+
+  private async generateQr(cadena:string):Promise<[path:string, encodeData:string]>{
+    // Encriptar la contraseña
+    try{
+      const salt = await bcrypt.genSalt(10);
+      const hashedData = await bcrypt.hash(cadena, salt);
+      const name:string = `${crypto.randomBytes(8).toString('hex')}-${crypto.randomBytes(8).toString('hex')}-${crypto.randomBytes(8).toString('hex')}-${crypto.randomBytes(6).toString('hex')}`
+      const path:string = `${process.env.FILE_PATH}/encargados/qr/${name}.png`;
+      console.log(path);
+
+      await QRCode.toFile(path,hashedData,{
+        type:"png" as const,
+        width:500,
+        margin:4,
+        errorCorrectionLevel:"H" as const,
+        color:{
+          dark:"5A0A18",
+          light:"FFFFFF",
+        }
+      });
+      return [name,hashedData];
+
+    }catch(error){
+      throw new Error(`Error al generar el QR: ${error}`);
+    }
   }
 
   findAll() {
