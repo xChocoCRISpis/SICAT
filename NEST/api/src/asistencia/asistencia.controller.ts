@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Query, Req, Put, ParseIntPipe, BadRequestException } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query, Req, Put, ParseIntPipe, BadRequestException, Res } from '@nestjs/common';
 import { AsistenciaService } from './asistencia.service';
 import { CreateAsistenciaDto } from './dto/create-asistencia.dto';
 import { UpdateAsistenciaDto } from './dto/update-asistencia.dto';
@@ -11,13 +11,18 @@ export class AsistenciaController {
 
    // Crear Asistencia
    @Post('crear')
-   async crearAsistencia(@Body() createAsistenciaDto: CreateAsistenciaDto, @Req() req: Request) {
+   async crearAsistencia(
+      @Body() createAsistenciaDto: CreateAsistenciaDto,
+      @Req() req: Request) {
     //id pertenece es del alumno
     const usuario = req['Usuario'];
      const { asistencia } = createAsistenciaDto;
-     return this.asistenciaService.crearAsistencia(createAsistenciaDto.id_pertenece,usuario.Id_usuario_pk, asistencia[0]);
-   }
- 
+     const crearAsistencia = await this.asistenciaService.crearAsistencia(createAsistenciaDto.id_pertenece,usuario.Id_usuario_pk, asistencia[0]);
+     req['logMessage'] = `Registro asistencia en la fecha ${asistencia[0].fecha} con ${asistencia[0].horas} horas para el alumno ${createAsistenciaDto.id_pertenece}`;
+        console.log(crearAsistencia);
+        return crearAsistencia;
+      }
+
    // Traer todas las asistencias
    @Get('traer')
    async traerTodas(

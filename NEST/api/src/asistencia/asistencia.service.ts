@@ -20,46 +20,13 @@ export class AsistenciaService {
     }
     const { horas,fecha } = detallesAsistenciaDto;
 
-    // Buscar si ya existe una asistencia para el id_pertenece
-    let asistenciaIn = await this.asistenciaModel.findOne({ id_pertenece });
-
-    if (asistenciaIn) {
-      // Si el documento ya existe, creamos un nuevo subdocumento de asistencia
-      const nuevoDetalle = {
-        id_encargado,
-        fecha,
-        horas,
-      };
-
-      // Empujar el nuevo detalle al array de asistencia_detalle
-      asistenciaIn.asistencia_detalle.push(nuevoDetalle as DetallesAsistencia);
-
-      // Guardar el documento actualizado
       try {
-        return await asistenciaIn.save();
-      } catch (error) {
-        if (error.name === 'ValidationError') {
-          console.error('Error de validación:', error.message);
-          throw new Error('Error de validación al guardar la asistencia');
-        }
-        throw error;
-      }
-    } else {
-      // Si no existe el documento, creamos uno nuevo con el array de detalles de asistencia
-      const nuevoDetalle = new this.asistenciaDetallesModel({
-        id_encargado,
-        fecha,
-        horas,
-      });
-
-      asistenciaIn = new this.asistenciaModel({
-        id_pertenece,
-        asistencia_detalle: [nuevoDetalle],
-      });
-
-      try {
-        return await asistenciaIn.save();
-      } catch (error) {
+        return await this.asistenciaModel.findOneAndUpdate(
+          { id_pertenece }, // Condición de búsqueda
+          { $push: { asistencia_detalle: {id_encargado,fecha,horas} as DetallesAsistencia} }, // Actualización (añadir detalle)
+          { upsert: true, new: true } // Crea un nuevo registro si no existe, devuelve el documento actualizado
+        );  
+      } catch (error) {                                                                                                                         
         if (error.name === 'ValidationError') {
           console.error('Error de validación:', error.message);
           throw new Error('Error de validación al guardar la asistencia');
@@ -67,7 +34,6 @@ export class AsistenciaService {
         throw error;
       }
     }
-  }
 
 
   // Traer todas las asistencias
