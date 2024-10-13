@@ -21,8 +21,8 @@ services:
 
 volumes:
   mysql-data:
-    external: false
+    external: true
   api_mongodb-data: # Corrección del nombre del volumen
-    external: false
+    external: true
 
 # Asegúrate de que el volumen se cree y se maneje por Docker Compose

@@ -12,10 +12,7 @@ export class NavBarService {
 
   loadComponent(componentName:Pages):void{
     this.pageEmitter.emit(componentName);
-  }
-
-
-  
+  } 
 }
 
 export type Pages = 'init'|'dep'|'cul'|'profile'|'alumnos';
