@@ -5,7 +5,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Usuario } from 'src/entities/usuarios.entity';
 import { AsistenciaSchemaModule } from 'src/schemas/asistencia/asistencia-schema.module';
 import { AuthMiddleware } from 'src/middlewares/auth/auth.middleware';
-import { LogMiddleware } from 'src/middlewares/logs_folder/logs.middleware';
+import { LogMiddleware } from 'src/middlewares/logs/logs.middleware';
 import { BitacoraSchemaModule } from 'src/schemas/bitacora/bitacora-schema.module';  // Importa BitacoraSchemaModule
 
 @Module({
