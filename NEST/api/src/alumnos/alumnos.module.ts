@@ -10,11 +10,12 @@ import { Pertenece } from 'src/entities/pertenece.entity';
 import { Participa } from 'src/entities/participa.entity';
 import { Evento } from 'src/entities/eventos.entity';
 import { Actividad } from 'src/entities/actividades.entity';
+import { ImgBBService } from 'src/services/imgbb/imgbb.service';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Alumno,Carrera,Usuario,Pertenece,Participa,Evento,Carrera,Actividad])],
   controllers: [AlumnosController],
-  providers: [AlumnosService],
+  providers: [AlumnosService,ImgBBService],
   exports:[AlumnosService]
 })
 export class AlumnosModule {

@@ -18,6 +18,7 @@ import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 import { AsistenciaModule } from './asistencia/asistencia.module';
 import { ChecadorModule } from './checador/checador.module';
+import { ImgBBService } from './services/imgbb/imgbb.service';
 
 @Module({
   imports: [
@@ -36,7 +37,7 @@ import { ChecadorModule } from './checador/checador.module';
       entities: [__dirname + '/**/*.entity{.ts,.js}']
     }),
     MongooseModule.forRoot(
-      process.env.MONGO_CONNECTION_URI,
+      process.env.MONGO_CONNECTION_URI_ATLAS,
       { connectionName: 'sicat_nest' }
     ),
     ServeStaticModule.forRoot({
@@ -55,6 +56,6 @@ import { ChecadorModule } from './checador/checador.module';
     ChecadorModule
   ],
   controllers: [AppController, BitacoraController],
-  providers: [AppService],
+  providers: [AppService, ImgBBService],
 })
 export class AppModule {}

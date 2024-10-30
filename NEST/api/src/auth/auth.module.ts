@@ -5,12 +5,13 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Usuario } from 'src/entities/usuarios.entity';
 import { BitacoraSchemaModule } from 'src/schemas/bitacora/bitacora-schema.module';
 import { AuthMiddleware } from 'src/middlewares/auth/auth.middleware';
+import { ImgBBService } from 'src/services/imgbb/imgbb.service';
 
 @Module({
   imports:[TypeOrmModule.forFeature([Usuario]),
   BitacoraSchemaModule],
   controllers: [AuthController],
-  providers: [AuthService],
+  providers: [AuthService,ImgBBService],
   exports:[AuthService]
 })
 export class AuthModule implements NestModule{
