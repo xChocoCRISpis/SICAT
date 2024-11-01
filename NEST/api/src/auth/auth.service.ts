@@ -104,12 +104,12 @@ export class AuthService {
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(Contrasena, salt);
 
-     // Generar el QR directamente en base64 para subirlo a ImgBB
-     const [qrBase64, encodeData] = await this.generateQrBase64(Contrasena);
-     const imgbbResponse = await this.imgbbService.uploadImage(qrBase64);
-     const qrUrl = imgbbResponse.url;
+    // Generar el QR directamente en base64 para subirlo a ImgBB
+    const [qrBase64, encodeData] = await this.generateQrBase64(Contrasena);
+    const imgbbResponse = await this.imgbbService.uploadImage(qrBase64);
+    const qrUrl = imgbbResponse.url;
 
-     console.log(imgbbResponse);
+    console.log(imgbbResponse);
 
     // Generar el JWT token
     const token = this.generateJwtToken(Correo, Nombre);
@@ -131,24 +131,27 @@ export class AuthService {
   }
 
   private async convertImageToBase64(filePath: string): Promise<string> {
-    const fs = await import('fs/promises');
-    
-    try {
-        await fs.access(filePath); // Verificar si el archivo existe
-        const image = await fs.readFile(filePath);
-        return image.toString('base64');
-    } catch (error) {
-        throw new Error(`Error al leer el archivo QR en ${filePath}: ${error.message}`);
-    }
-}
+    const fs = await import("fs/promises");
 
+    try {
+      await fs.access(filePath); // Verificar si el archivo existe
+      const image = await fs.readFile(filePath);
+      return image.toString("base64");
+    } catch (error) {
+      throw new Error(
+        `Error al leer el archivo QR en ${filePath}: ${error.message}`,
+      );
+    }
+  }
 
   private generateJwtToken(correo: string, usuario: string): string {
     const payload = { correo, usuario };
     return jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: "4h" });
   }
 
-  private async generateQrBase64(cadena: string): Promise<[base64: string, encodeData: string]> {
+  private async generateQrBase64(
+    cadena: string,
+  ): Promise<[base64: string, encodeData: string]> {
     try {
       const salt = await bcrypt.genSalt(10);
       const hashedData = await bcrypt.hash(cadena, salt);
