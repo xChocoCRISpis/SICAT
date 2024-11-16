@@ -18,18 +18,19 @@ export class ActividadesController {
     return this.actividadesService.findAll(usuario.Id_usuario_pk);
   }
 
-  @Get(':id')
+ /*  @Get(':id')
   findOne(@Param('id') id: string) {
     return this.actividadesService.findOne(+id);
+  } */
+
+  @Patch('')
+  update(@Body() updateActividadeDto: UpdateActividadeDto) {
+    return this.actividadesService.update(updateActividadeDto);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateActividadeDto: UpdateActividadeDto) {
-    return this.actividadesService.update(+id, updateActividadeDto);
-  }
 
-  @Delete(':id')
+/*   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.actividadesService.remove(+id);
-  }
+  } */
 }

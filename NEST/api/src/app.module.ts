@@ -19,6 +19,7 @@ import { join } from "path";
 import { AsistenciaModule } from "./asistencia/asistencia.module";
 import { ChecadorModule } from "./checador/checador.module";
 import { ImgBBService } from "./services/imgbb/imgbb.service";
+import { EventosModule } from './eventos/eventos.module';
 
 @Module({
   imports: [
@@ -49,6 +50,7 @@ import { ImgBBService } from "./services/imgbb/imgbb.service";
     UserModule,
     AsistenciaModule,
     ChecadorModule,
+    EventosModule,
   ],
   controllers: [AppController, BitacoraController],
   providers: [AppService, ImgBBService],

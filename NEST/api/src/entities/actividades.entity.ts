@@ -1,5 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
 import { Pertenece } from './pertenece.entity';
+import { Evento } from './eventos.entity';
+
 import { EncargadoDetalle } from './encargados_detalle.entity';
 
 @Entity('tb_actividades')
@@ -18,5 +20,8 @@ export class Actividad {
 
   @OneToMany(() => EncargadoDetalle, detalle => detalle.actividad)
   detalles: EncargadoDetalle[];
+
+  @OneToMany(() => Evento, evento => evento.actividad)
+  eventos: Evento[];
 }
 
