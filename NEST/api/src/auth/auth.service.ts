@@ -214,7 +214,7 @@ export class AuthService {
         <h2>${process.env.FRONT_URL}/change-password?pass-code=${usuario.Code_change_password}</h2>`
     );
 
-    return { message: "Código generado y correo enviado exitosamente" };
+    return { message: "Código generado y correo enviado exitosamente", Correo:usuario.Correo };
   }
 
   generateRandomCode(useLetters: boolean = true, useNumbers: boolean = true, length: number = 45): string {
@@ -239,16 +239,26 @@ export class AuthService {
   }
 
 
-  async updatePassword(updatePassword:UpdatePasswordDto){
-    const usuario = await this.usuarioRepository.findOneBy({Code_change_password:updatePassword.Code});
-    if(!usuario)
-      throw new NotFoundException("No se encontro ningun usuario con ese código de cambio");
-
-    usuario.Code_change_password = null;
-    usuario.Contrasena = updatePassword.Contrasena;
-
+  async updatePassword(updatePassword: UpdatePasswordDto) {
+    // Buscar al usuario por el código de cambio de contraseña
+    const usuario = await this.usuarioRepository.findOneBy({ Code_change_password: updatePassword.Code });
+    
+    if (!usuario) {
+      throw new NotFoundException('No se encontró ningún usuario con ese código de cambio');
+    }
+  
+    // Encriptar la nueva contraseña antes de guardarla
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(updatePassword.Contrasena, salt);
+  
+    // Actualizar los campos del usuario
+    usuario.Code_change_password = null; // Invalidar el código de cambio
+    usuario.Contrasena = hashedPassword; // Guardar la contraseña encriptada
+  
+    // Guardar los cambios en la base de datos
     await this.usuarioRepository.save(usuario);
-    return {message:"Contraseña cambida correctamente"};
+  
+    return { message: 'Contraseña cambiada correctamente' };
   }
 
   findAll() {

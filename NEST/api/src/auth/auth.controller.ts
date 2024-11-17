@@ -22,6 +22,7 @@ export class AuthController {
 
   @Post("/changePassword")
   changePassword(@Body() changePasswordDto: ChangePasswordDto) {
+    console.log(changePasswordDto);
     if (changePasswordDto.Correo && changePasswordDto.Nombre) {
       throw new BadRequestException("Se necesita una propiedad 'Correo' o 'Nombre'");
     }
@@ -31,6 +32,7 @@ export class AuthController {
 
   @Patch("/password")
   updatePassword(@Body() updatePasswordDto:UpdatePasswordDto){
+    console.log(updatePasswordDto);
     return this.authService.updatePassword(updatePasswordDto);
   }
 
