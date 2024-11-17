@@ -20,6 +20,8 @@ import { AsistenciaModule } from "./asistencia/asistencia.module";
 import { ChecadorModule } from "./checador/checador.module";
 import { ImgBBService } from "./services/imgbb/imgbb.service";
 import { EventosModule } from './eventos/eventos.module';
+import { MailService } from './common/mail/mail.service';
+import { MailModule } from './common/mail/mail.module';
 
 @Module({
   imports: [
@@ -51,8 +53,9 @@ import { EventosModule } from './eventos/eventos.module';
     AsistenciaModule,
     ChecadorModule,
     EventosModule,
+    MailModule,
   ],
   controllers: [AppController, BitacoraController],
-  providers: [AppService, ImgBBService],
+  providers: [AppService, ImgBBService, MailService],
 })
 export class AppModule {}
