@@ -20,5 +20,15 @@ module.exports = {
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/explicit-module-boundary-types': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
+    '@typescript-eslint/no-unused-vars': [
+      'warn', // Cambia a "off" si no quieres advertencias para variables no usadas
+      { 
+        argsIgnorePattern: '^_', // Ignora argumentos que comienzan con "_"
+        varsIgnorePattern: '^_', // Ignora variables que comienzan con "_"
+        caughtErrorsIgnorePattern: '^_', // Ignora errores atrapados que comienzan con "_"
+      },
+    ],
+    'no-unused-vars': 'off', // Desactiva la regla base de ESLint para evitar conflictos con TypeScript
   },
 };
+
