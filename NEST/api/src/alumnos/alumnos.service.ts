@@ -265,4 +265,73 @@ export class AlumnosService {
       alumnos: alumnos.map(alumno => this.mapAlumnoWithCarrera(alumno)),
     };
   }
+
+  async findAllFilterByEncargado(
+    usuarioId: number, // ID del encargado actual
+    actividadId?: number, // ID de la actividad (opcional, puede ser dinámico)
+    num_control?: string,
+    nombre?: string,
+    ap_paterno?: string,
+    sexo?: string,
+    semestre?: number,
+    nombre_corto?: string,
+    page: number = 1, // Página actual, por defecto 1
+    limit: number = 50 // Número de resultados por página, por defecto 50
+  ) {
+    console.log(usuarioId, actividadId, num_control, nombre, ap_paterno, sexo, semestre, nombre_corto, page, limit);
+    const query = this.alumnoRepository
+      .createQueryBuilder("alumno")
+      .leftJoinAndSelect("alumno.carrera", "carrera") // Relación con carrera
+      .innerJoin("alumno.pertenencias", "pertenencia", "pertenencia.Activo = 1") // Solo alumnos activos
+      .innerJoin("pertenencia.actividad", "actividad") // Relación con actividad
+      .innerJoin("actividad.detalles", "detalle") // Relación con detalles (EncargadoDetalle)
+      .innerJoin("detalle.encargado", "encargado") // Relación con encargado
+      .innerJoin("encargado.usuario", "usuario", "usuario.Id_usuario_pk = :usuarioId", { usuarioId }); // Relación con usuario
+
+      console.log(query.getSql());
+      // Si se proporciona actividadId, filtrar por ella
+    if (actividadId) {
+      query.andWhere("actividad.Id_actividad_pk = :actividadId", { actividadId });
+    }
+
+    console.log(`where actividad=${actividadId}\ln`, query[0]);
+
+    // Aplicar los filtros opcionales
+    if (num_control) {
+      query.andWhere("alumno.Num_control = :num_control", { num_control });
+    }
+    if (nombre) {
+      query.andWhere("alumno.Nombre LIKE :nombre", { nombre: `%${nombre}%` });
+    }
+    if (ap_paterno) {
+      query.andWhere("alumno.Ap_paterno LIKE :ap_paterno", { ap_paterno: `%${ap_paterno}%` });
+    }
+    if (sexo) {
+      query.andWhere("alumno.Sexo = :sexo", { sexo });
+    }
+    if (semestre) {
+      query.andWhere("alumno.Semestre = :semestre", { semestre });
+    }
+    if (nombre_corto) {
+      query.andWhere("carrera.Nombre_corto LIKE :nombre_corto", { nombre_corto: `%${nombre_corto}%` });
+    }
+
+    // Aplicar paginación
+    query.skip((page - 1) * limit).take(limit);
+
+    // Ejecutar la consulta
+    const [alumnos, total] = await query.getManyAndCount();
+
+    if (!alumnos || alumnos.length === 0) {
+      throw new NotFoundException("No se encontraron alumnos");
+    }
+
+    // Retornar la información paginada
+    return {
+      total,
+      currentPage: page,
+      totalPages: Math.ceil(total / limit),
+      alumnos: alumnos.map(alumno => this.mapAlumnoWithCarrera(alumno)),
+    };
+  }
 }
