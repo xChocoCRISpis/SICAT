@@ -2,6 +2,7 @@ import {
   Body,
   Controller,
   Get,
+  ParseIntPipe,
   Post,
   Query,
   UploadedFile,
@@ -18,6 +19,38 @@ import { AlumnosService } from './alumnos.service';
 @Controller('alumnos')
 export class AlumnosController {
   constructor(private readonly alumnosService: AlumnosService) {}
+
+  @Get('actividad')
+  getAllByActividad(
+    @Query('id') actividad?:number,
+    @Query('num_control') num_control?: string,
+    @Query('nombre') nombre?: string,
+    @Query('ap_paterno') ap_paterno?: string,
+    @Query('sexo') sexo?: string,
+    @Query('semestre') semestre?: string,
+    @Query('page', ParseIntPipe) page: number = 1,
+    @Query('limit', ParseIntPipe) limit: number = 50
+  ) {
+    console.log("FindAllByActividad");
+    console.log(actividad,num_control,
+      nombre,
+      ap_paterno,
+      sexo,
+      semestre,
+      page);
+      console.log("___________________________");
+    return this.alumnosService.findAllFromActividad(
+      actividad,
+      num_control,
+      nombre,
+      ap_paterno,
+      sexo,
+      semestre ? parseInt(semestre, 10) : undefined,
+      page,
+      limit
+    );
+  }
+
 
   @Get()
 getAllAlumnos(

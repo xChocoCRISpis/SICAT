@@ -1,6 +1,7 @@
 import { Component, Input, Output } from '@angular/core';
 import {ActividadesService} from './actividades.service'
 import { timeInterval } from 'rxjs';
+import { AlumnosActividadComponent } from '../../pages/alumnos-actividad/alumnos-actividad.component';
 
 interface Actividad {
   Id_actividad_pk: number;
@@ -12,7 +13,7 @@ interface Actividad {
 @Component({
   selector: 'actividades',
   standalone: true,
-  imports: [],
+  imports: [AlumnosActividadComponent],
   templateUrl: './actividades.component.html',
   styleUrl: './actividades.component.scss'
 })
@@ -20,6 +21,9 @@ export class ActividadesComponent {
   @Input()
   tipo:string = ""
   actividades:Actividad[]=[];
+
+  id:number = 0;
+  name:string = '';
 
   constructor(private actService:ActividadesService){
     

@@ -21,4 +21,10 @@ export class AlumnosService {
     const headers:HttpHeaders = new HttpHeaders({'Authorization':`Bearer ${localStorage.getItem('auth_token')}`})
     return this.http.get<any>(`${this.apiUrl}/buscar`, { params:{id:id},headers:headers });
   }
+
+  getAlumnosByActividad(params:HttpParams):Observable<any>{
+    console.log(params);
+    const headers:HttpHeaders = new HttpHeaders({'Authorization':`Bearer ${localStorage.getItem('auth_token')}`})
+    return this.http.get<any>(`${this.apiUrl}/actividad`, { params:params,headers:headers });
+  }
 }

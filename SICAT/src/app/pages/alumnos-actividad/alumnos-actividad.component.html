@@ -1,0 +1,89 @@
+<h1>{{ name_actividad }}</h1>
+
+<div *ngIf="errorMessage" class="error-message">
+  {{ errorMessage }}
+</div>
+
+<div *ngIf="loading" class="loading">
+  Cargando alumnos...
+</div>
+
+<div *ngIf="!loading && !errorMessage">
+  <div class="table-container">
+    <div class="button">Agregar alumno</div>
+    <div class="filter-section">
+      <h2>Filtrar Alumnos</h2>
+      <div>
+        <label>
+          Sexo:
+          <select (change)="applyFilter('sexo', $event)">
+            <option value="">Todos</option>
+            <option value="M">Masculino</option>
+            <option value="F">Femenino</option>
+          </select>
+        </label>
+        <label>
+          Num Control:
+          <input type="text" (input)="applyFilter('num_control', $event)" />
+        </label>
+        <label>
+          Nombre:
+          <input type="text" (input)="applyFilter('nombre', $event)" />
+        </label>
+        <label>
+          Ap. Paterno:
+          <input type="text" (input)="applyFilter('ap_paterno', $event)" />
+        </label>
+        <label>
+          Semestre:
+          <input type="number" (input)="applyFilter('semestre', $event)" />
+        </label>
+        <label>
+          Carrera:
+          <input type="text" (input)="applyFilter('nombre_corto', $event)" />
+        </label>
+      </div>
+    </div>
+
+    <div class="pagination">
+      <button (click)="prevPage()" [disabled]="currentPage === 1">Anterior</button>
+      <span>Página {{ currentPage }} de {{ totalPages }}</span>
+      <button (click)="nextPage()" [disabled]="currentPage === totalPages">Siguiente</button>
+    </div>
+
+    <div class="alumnos-section">
+      <table>
+        <thead>
+          <tr>
+            <th>Num Control</th>
+            <th>Nombre</th>
+            <th>Ap. Paterno</th>
+            <th>Ap. Materno</th>
+            <th>Sexo</th>
+            <th>Semestre</th>
+            <th>Carrera</th>
+            <th>Nombre Corto Carrera</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let alumno of paginatedAlumnos">
+            <td>{{ alumno.num_control }}</td>
+            <td>{{ alumno.nombre }}</td>
+            <td>{{ alumno.ap_paterno }}</td>
+            <td>{{ alumno.ap_materno }}</td>
+            <td>{{ alumno.sexo }}</td>
+            <td>{{ alumno.semestre }}</td>
+            <td>{{ alumno.carrera?.nombre }}</td>
+            <td>{{ alumno.carrera?.nombre_corto }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="pagination">
+      <button (click)="prevPage()" [disabled]="currentPage === 1">Anterior</button>
+      <span>Página {{ currentPage }} de {{ totalPages }}</span>
+      <button (click)="nextPage()" [disabled]="currentPage === totalPages">Siguiente</button>
+    </div>
+  </div>
+</div>

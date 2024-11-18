@@ -23,6 +23,7 @@ export class AlumnosModule {
     consumer.apply(AuthMiddleware).forRoutes(
       {path:"alumnos",method:RequestMethod.GET},
       {path:"alumnos/buscar",method:RequestMethod.GET},
+      {path:"alumnos/actividad",method:RequestMethod.GET}
     )
   }
 }
