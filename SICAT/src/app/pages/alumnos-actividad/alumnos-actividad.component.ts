@@ -2,11 +2,12 @@ import { HttpParams } from '@angular/common/http';
 import { Component, Input } from '@angular/core';
 import { AlumnosService } from '../alumnos/alumnos.service';
 import { CommonModule } from '@angular/common';
+import { AddAlumnoActividadComponent } from '../add-alumno-actividad/add-alumno-actividad.component';
 
 @Component({
   selector: 'app-alumnos-actividad',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule,AddAlumnoActividadComponent],
   templateUrl: './alumnos-actividad.component.html',
   styleUrls: ['./alumnos-actividad.component.scss'],
 })
@@ -24,6 +25,7 @@ export class AlumnosActividadComponent {
 
   @Input() id_actividad: number | null = null;
   @Input() name_actividad: string = '';
+  @Input() open_add_actividad:boolean=false;
 
   constructor(private alumnosService: AlumnosService) {}
 
@@ -33,6 +35,14 @@ export class AlumnosActividadComponent {
     } else {
       this.errorMessage = 'No se proporcionó un ID de actividad válido.';
     }
+  }
+
+  openDialog(): void {
+    this.open_add_actividad = true;
+  }
+
+  closeDialog(): void {
+    this.open_add_actividad = false;
   }
 
   loadAlumnosByActividad(idActividad: number) {

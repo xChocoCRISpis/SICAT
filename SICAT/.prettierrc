@@ -1,0 +1,25 @@
+{
+    "singleQuote": false,
+    "trailingComma": "es5",
+    "printWidth": 120,
+    "tabWidth": 2,
+    "useTabs": false,
+    "semi": true,
+    "bracketSpacing": true,
+    "arrowParens": "avoid",
+    "endOfLine": "auto",
+    "proseWrap": "always",
+    "embeddedLanguageFormatting": "auto",
+    "overrides": [
+        {
+            "files": "*.html",
+            "options": {
+                "printWidth":500,          
+                "tabWidth": 4,            
+                "singleQuote": true,      
+                "proseWrap": "preserve",  
+                "bracketSpacing": true   
+            }
+        }
+    ]
+}
