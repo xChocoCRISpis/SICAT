@@ -11,7 +11,6 @@
         <add-user></add-user>
     }
 
-
     <!-- Mensaje de error -->
     <div *ngIf="errorMessage" class="error">
         {{ errorMessage }}
@@ -26,8 +25,8 @@
                 <th>Apellido Paterno</th>
                 <th>Apellido Materno</th>
                 <th>Correo</th>
-                <th>Acciones</th>
-            </tr>
+<!--                 <th>Acciones</th>
+ -->            </tr>
         </thead>
         <tbody>
             <tr *ngFor="let encargado of encargados" (click)="showDetails(encargado)" class="hoverable">
@@ -36,9 +35,9 @@
                 <td>{{ encargado.Ap_paterno }}</td>
                 <td>{{ encargado.Ap_materno }}</td>
                 <td>{{ encargado.usuario?.Correo || 'Sin asignar' }}</td>
-                <td>
+<!--                 <td>
                     <button class="btn btn-delete" (click)="deleteEncargado(encargado.Id_encargado_pk, $event)">Eliminar</button>
-                </td>
+                </td> -->
             </tr>
         </tbody>
     </table>
@@ -59,7 +58,13 @@
             <p><strong>Apellido Materno:</strong> {{ selectedEncargado.Ap_materno }}</p>
             <p><strong>Correo:</strong> {{ selectedEncargado.usuario?.Correo || 'Sin asignar' }}</p>
 
-            <h3>Horarios y Actividades</h3>
+            <div class="horarios-actividades">
+                <h3>Horarios y Actividades</h3>
+                <button (click)="openAddHorario = !openAddHorario">Agregar horario</button>
+            </div>
+            @if (openAddHorario) {
+                <add-user-horario (onClose)="openAddHorario = false" [idEncargado]="selectedEncargado.Id_encargado_pk"></add-user-horario>
+            }
             <ul>
                 <li *ngFor="let detalle of selectedEncargado.detalles">
                     <p>

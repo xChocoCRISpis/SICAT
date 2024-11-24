@@ -1,0 +1,57 @@
+<div class="modal">
+    <div class="modal-content">
+        <button class="close-btn" (click)="closeModal()">×</button>
+
+        <h2>Crear Horario</h2>
+
+        <!-- Mensaje de éxito -->
+        <div *ngIf="successMessage" class="success">
+            {{ successMessage }}
+        </div>
+
+        <!-- Mensaje de error -->
+        <div *ngIf="errorMessage" class="error">
+            {{ errorMessage }}
+        </div>
+
+        <div class="form-group">
+            <label for="actividad">Actividad</label>
+            <select id="actividad" [(ngModel)]="horario.Id_actividad_fk" class="form-control" required>
+                <option *ngFor="let actividad of actividades" [value]="actividad.Id_actividad_pk">
+                    {{ actividad.Nombre }}
+                </option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="dia">Día</label>
+            <div class="select-group">
+                <select id="dia-semana" [(ngModel)]="selectedDia" class="form-control" required>
+                    <option *ngFor="let dia of diasSemana" [value]="dia">{{ dia }}</option>
+                </select>
+
+                <select id="año" [(ngModel)]="selectedAno" class="form-control" required>
+                    <option *ngFor="let ano of anos" [value]="ano">{{ ano }}</option>
+                </select>
+
+                <select id="semestre" [(ngModel)]="selectedSemestre" class="form-control" required>
+                    <option *ngFor="let semestre of semestres" [value]="semestre.value">
+                        {{ semestre.label }}
+                    </option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="hora-inicio">Hora de Inicio</label>
+            <input type="time" id="hora-inicio" [(ngModel)]="horario.Hora_inicio" class="form-control" required />
+        </div>
+
+        <div class="form-group">
+            <label for="hora-fin">Hora de Fin</label>
+            <input type="time" id="hora-fin" [(ngModel)]="horario.Hora_fin" class="form-control" required />
+        </div>
+
+        <button class="btn btn-primary" (click)="createHorario()">Crear Horario</button>
+    </div>
+</div>
