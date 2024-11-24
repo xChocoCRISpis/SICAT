@@ -25,6 +25,8 @@ export class EncargadosModule {
       {path:"encargados/actividad",method:RequestMethod.POST},
       {path:"encargados/actividad",method:RequestMethod.DELETE},
       {path:"encargados/horario",method:RequestMethod.DELETE},
+      {path:"encargados/avaliable-users",method:RequestMethod.GET},
+      {path:"encargados/",method:RequestMethod.GET},
     )
     consumer.apply(CheckPermissionsMiddleware).forRoutes(
       {path:"encargados/actividad",method:RequestMethod.DELETE},

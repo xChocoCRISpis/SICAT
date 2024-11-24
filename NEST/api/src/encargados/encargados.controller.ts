@@ -9,9 +9,13 @@ import { UpdateHorarioDto } from './dto/update-horario.dto';
 export class EncargadosController {
   constructor(private readonly encargadosService: EncargadosService) {}
 
+  @Get("avaliable-users")
+  avaliableUsers(){
+    return this.encargadosService.availableUsers();
+  }
+
   @Post()
   create(@Body() createEncargadoDto: CreateEncargadoDto, @Req() req: Request) {
-
     const usuario = req['Usuario'];
     if(usuario.Tipo === 1 || usuario.Tipo === 2) {  
       return this.encargadosService.create(createEncargadoDto);

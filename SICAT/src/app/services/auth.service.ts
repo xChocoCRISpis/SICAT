@@ -14,6 +14,22 @@ export class AuthService {
   private apiUrl = `${environment.server}/auth`;
 
   constructor(private http: HttpClient) {}
+  private handleError(error: any): Observable<never> {
+    let errorMessage = 'Ocurrió un error desconocido';
+    if (error.error instanceof ErrorEvent) {
+      // Error del cliente
+      errorMessage = `Error del cliente: ${error.error.message}`;
+    } else {
+      // Error del servidor
+      errorMessage = `Error del servidor: ${error.status} - ${error.statusText}`;
+      if (error.error?.message) {
+        errorMessage += ` - Detalles: ${error.error.message}`;
+      }
+    }
+    console.error(errorMessage);
+    return throwError(() => new Error(errorMessage));
+  }
+
 
   login(credentials: {usuario:string, contrasena: string}): Observable<any> {
 
@@ -95,6 +111,20 @@ export class AuthService {
         console.error('Error al actualizar la contraseña:', error);
         return throwError(() => new Error('No se pudo actualizar la contraseña. Por favor, intente más tarde.'));
       })
+    );
+  }
+
+
+  createUser(userData: { Nombre: string; Contrasena: string; Correo: string; Tipo: number }): Observable<any> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+    });
+
+    const token =localStorage.getItem("auth_token");
+    if(!token) return throwError(() => new Error("Token de autenticación no encontrado. Inicie sesión."));
+
+    return this.http.post<any>(`${this.apiUrl}/createUser`, userData, {headers:{Authorization:`Bearer ${token}`}}).pipe(
+      catchError(this.handleError)
     );
   }
 

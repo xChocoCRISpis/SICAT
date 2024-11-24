@@ -2,12 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { EncargadosService } from '../../services/encargados.service';
 import { CommonModule } from '@angular/common';
 import { HorarioFormatter } from '../../common/horario-formatter';
+import { AddEncargadoComponent } from '../../components/add-encargado/add-encargado.component';
+import { AddUserComponent } from '../../components/add-user/add-user.component';
 
 
 @Component({
   selector: 'encargados',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, AddEncargadoComponent, AddUserComponent],
   templateUrl: './encargados.component.html',
   styleUrl: './encargados.component.scss'
 })
@@ -15,6 +17,8 @@ export class EncargadosComponent implements OnInit {
   encargados: any[] = [];
   selectedEncargado: any = null;
   errorMessage: string = '';
+  showAddEncargado: boolean = false;
+  showAddUser: boolean = false;
 
   constructor(private encargadosService: EncargadosService) {}
 

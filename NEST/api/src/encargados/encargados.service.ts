@@ -275,4 +275,17 @@ export class EncargadosService {
       );
     }
   }
+
+  async availableUsers() {
+    const users = await this.usuarioRepository
+      .createQueryBuilder('u') // Alias para la tabla `usuarios`
+      .leftJoinAndSelect('u.encargados', 'e') // LEFT JOIN con la tabla `encargados`
+      .where('e.Id_usuarios_fk IS NULL') // Filtro para usuarios no asociados
+      .select(['u.Id_usuario_pk as Id_usuario', 'u.Nombre as Nombre', 'u.Correo as Correo']) // Selección de campos específicos
+      .getRawMany(); // Devuelve los resultados como objetos planos (raw)
+  
+    return users;
+  }
+  
+  
 }

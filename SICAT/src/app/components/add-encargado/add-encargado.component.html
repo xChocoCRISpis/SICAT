@@ -1,0 +1,39 @@
+<div class="container">
+    <h2 class="title">Asignar Encargado</h2>
+
+    <!-- Mensaje de éxito -->
+    <div *ngIf="successMessage" class="success">
+        {{ successMessage }}
+    </div>
+
+    <!-- Mensaje de error -->
+    <div *ngIf="errorMessage" class="error">
+        {{ errorMessage }}
+    </div>
+
+    <form (ngSubmit)="addEncargado()" #encargadoForm="ngForm" class="form">
+        <div class="form-group">
+            <label for="nombre">Nombre del Encargado</label>
+            <input type="text" id="nombre" name="nombre" [(ngModel)]="encargado.Nombre" class="form-control" required />
+        </div>
+
+        <div class="form-group">
+            <label for="ap_paterno">Apellido Paterno</label>
+            <input type="text" id="ap_paterno" name="ap_paterno" [(ngModel)]="encargado.Ap_paterno" class="form-control" required />
+        </div>
+
+        <div class="form-group">
+            <label for="ap_materno">Apellido Materno</label>
+            <input type="text" id="ap_materno" name="ap_materno" [(ngModel)]="encargado.Ap_materno" class="form-control" required />
+        </div>
+
+        <div class="form-group">
+            <label for="id_usuario">Selecciona un Usuario</label>
+            <select id="id_usuario" name="id_usuario" [(ngModel)]="encargado.Id_usuarios_fk" class="form-control" required>
+                <option *ngFor="let user of availableUsers" [value]="user.Id_usuario">{{ user.Nombre }} ({{ user.Correo }})</option>
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-submit" [disabled]="encargadoForm.invalid">Asignar Encargado</button>
+    </form>
+</div>
