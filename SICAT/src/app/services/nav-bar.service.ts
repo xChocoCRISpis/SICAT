@@ -15,4 +15,4 @@ export class NavBarService {
   } 
 }
 
-export type Pages = 'init'|'dep'|'cul'|'profile'|'alumnos'|'eventos';
+export type Pages = 'init'|'dep'|'cul'|'profile'|'alumnos'|'eventos'|'encargados';

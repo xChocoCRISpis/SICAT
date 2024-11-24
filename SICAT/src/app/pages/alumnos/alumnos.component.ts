@@ -18,7 +18,7 @@ export class AlumnosComponent {
   paginatedAlumnos: any[] = [];
   filters: any = {};
   currentPage = 1;
-  itemsPerPage = 50;
+  itemsPerPage = 10;
   totalPages = 1;
   totalAlumnos = 0; // Para saber cuántos alumnos hay en total en la base de datos
   selectedAlumnoId: number | null = null;

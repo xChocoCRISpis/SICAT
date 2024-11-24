@@ -1,8 +1,8 @@
 <div class="registration-container">
     <div class="registration-card">
         <h2>Registro de Usuario</h2>
-        <form [formGroup]="registrationForm" (ngSubmit)="registerUser()">
-            <div class="form-group">
+<!--         <form [formGroup]="registrationForm" (ngSubmit)="registerUser()">
+ -->            <div class="form-group">
                 <label for="Nombre">Nombre</label>
                 <input id="Nombre" formControlName="Nombre" type="text" placeholder="Ingrese su nombre" />
             </div>
@@ -21,7 +21,7 @@
                     <option value="Usuario">Usuario</option>
                 </select>
             </div>
-            <button type="submit" [disabled]="registrationForm.invalid">Registrarse</button>
+            <!-- <button type="submit" [disabled]="registrationForm.invalid">Registrarse</button> -->
         </form>
     </div>
 </div>

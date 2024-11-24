@@ -7,6 +7,7 @@ import { NavBarService } from '../../services/nav-bar.service';
 import { ProfileComponent } from '../profile/profile.component';
 import { AlumnosComponent } from '../alumnos/alumnos.component';
 import { EventosComponent } from '../eventos/eventos.component';
+import { EncargadosComponent } from '../encargados/encargados.component';
 
 @Component({
   selector: 'app-main-page',
@@ -18,6 +19,7 @@ import { EventosComponent } from '../eventos/eventos.component';
     ProfileComponent,
     AlumnosComponent,
     EventosComponent,
+    EncargadosComponent,
   ],
   templateUrl: './main-page.component.html',
   styleUrl: './main-page.component.scss',
