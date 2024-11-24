@@ -22,6 +22,7 @@ import { ImgBBService } from "./services/imgbb/imgbb.service";
 import { EventosModule } from './eventos/eventos.module';
 import { MailService } from './common/mail/mail.service';
 import { MailModule } from './common/mail/mail.module';
+import { EncargadosModule } from './encargados/encargados.module';
 
 @Module({
   imports: [
@@ -54,6 +55,7 @@ import { MailModule } from './common/mail/mail.module';
     ChecadorModule,
     EventosModule,
     MailModule,
+    EncargadosModule,
   ],
   controllers: [AppController, BitacoraController],
   providers: [AppService, ImgBBService, MailService],
