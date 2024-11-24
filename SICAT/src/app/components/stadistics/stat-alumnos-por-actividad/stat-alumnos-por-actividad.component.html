@@ -1,0 +1,23 @@
+<div class="chart-container">
+    <h2>Alumnos por Actividad</h2>
+
+    <!-- Botones para cambiar el tipo de gráfica -->
+    <div class="button-group">
+        <button (click)="cambiarTipo('bar')">Barras</button>
+        <button (click)="cambiarTipo('pie')">Circular</button>
+        <button (click)="cambiarTipo('doughnut')">Dona</button>
+    </div>
+
+    <!-- Sección de información y filtro -->
+    <div class="info-section">
+        <p>
+            Total de alumnos en actividades: <strong>{{ totalAlumnos }}</strong>
+        </p>
+        <label for="minimo">Filtrar por mínimo de alumnos:</label>
+        <input type="number" id="minimo" [(ngModel)]="filtroMinimo" placeholder="Ingrese el mínimo" />
+        <button (click)="filtrarPorMinimo()">Aplicar Filtro</button>
+    </div>
+
+    <!-- Gráfica -->
+    <canvas baseChart [datasets]="chartData" [labels]="chartLabels" [options]="chartOptions" [type]="chartType"></canvas>
+</div>

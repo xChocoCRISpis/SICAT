@@ -8,9 +8,9 @@ import { ProfileComponent } from '../profile/profile.component';
 import { AlumnosComponent } from '../alumnos/alumnos.component';
 import { EventosComponent } from '../eventos/eventos.component';
 import { EncargadosComponent } from '../encargados/encargados.component';
-
+import { IndicadoresComponent } from '../indicadores/indicadores.component';
 @Component({
-  selector: 'app-main-page',
+  selector: "app-main-page",
   standalone: true,
   imports: [
     NavBarComponent,
@@ -20,6 +20,7 @@ import { EncargadosComponent } from '../encargados/encargados.component';
     AlumnosComponent,
     EventosComponent,
     EncargadosComponent,
+    IndicadoresComponent,
   ],
   templateUrl: './main-page.component.html',
   styleUrl: './main-page.component.scss',
