@@ -22,7 +22,7 @@ export class EncargadosService {
     @InjectRepository(EncargadoDetalle)
     private encargadoDetalleRepository: Repository<EncargadoDetalle>,
     @InjectRepository(Actividad)
-    private encargadoActividadRepository: Repository<Actividad>,
+    private actividadRepository: Repository<Actividad>,
     @InjectRepository(Usuario)
     private usuarioRepository: Repository<Usuario>,
   ) {}
@@ -77,19 +77,68 @@ export class EncargadosService {
   }
   
   async createHorario(createHorarioDto: CreateHorarioDto) {
-    const horario = await this.horarioRepository.findOne({where: {Dia: createHorarioDto.Dia, Hora_inicio: createHorarioDto.Hora_inicio, Hora_fin: createHorarioDto.Hora_fin}})
-    if(horario) {
-      throw new HttpException('El horario ya existe',500);
+    // Verificar si el horario ya existe
+    let horario = await this.horarioRepository.findOne({
+      where: {
+        Dia: createHorarioDto.Dia,
+        Hora_inicio: createHorarioDto.Hora_inicio,
+        Hora_fin: createHorarioDto.Hora_fin,
+      },
+    });
+  
+    // Si no existe, crearlo
+    if (!horario) {
+      horario = await this.horarioRepository.create({
+        Dia: createHorarioDto.Dia,
+        Hora_inicio: createHorarioDto.Hora_inicio,
+        Hora_fin: createHorarioDto.Hora_fin,
+      });
+  
+      try {
+        await this.horarioRepository.save(horario);
+      } catch (error) {
+        throw new HttpException(
+          'Error al guardar el horario en la base de datos',
+          HttpStatus.INTERNAL_SERVER_ERROR,
+        );
+      }
     }
-
-    const newHorario = await this.horarioRepository.create(createHorarioDto);
-    if(!newHorario) {
-      throw new HttpException('Error al crear el horario', HttpStatus.INTERNAL_SERVER_ERROR);
+  
+    // Verificar si el encargado y la actividad existen
+    const encargado = await this.encargadoRepository.findOne({
+      where: { Id_encargado_pk: createHorarioDto.Id_encargado_fk },
+    });
+  
+    if (!encargado) {
+      throw new HttpException('El encargado no existe', HttpStatus.NOT_FOUND);
     }
-
-    return await this.horarioRepository.save(newHorario);
-  } 
-
+  
+    const actividad = await this.actividadRepository.findOne({
+      where: { Id_actividad_pk: createHorarioDto.Id_actividad_fk },
+    });
+  
+    if (!actividad) {
+      throw new HttpException('La actividad no existe', HttpStatus.NOT_FOUND);
+    }
+  
+    // Crear el registro en encargado_detalle
+    const encargadoDetalle = this.encargadoDetalleRepository.create({
+      Id_encargado_fk: createHorarioDto.Id_encargado_fk,
+      Id_horario_fk: horario.Id_horario_pk,
+      Id_actividad_fk: createHorarioDto.Id_actividad_fk,
+    });
+  
+    try {
+      await this.encargadoDetalleRepository.save(encargadoDetalle);
+      return { message: 'Horario y asignación creados exitosamente' };
+    } catch (error) {
+      throw new HttpException(
+        'Error al registrar el horario en encargado_detalle',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+  }
+  
   async getAllEncargados() {
     const encargados = await this.encargadoRepository
     .createQueryBuilder('encargado')
@@ -160,5 +209,70 @@ export class EncargadosService {
   
     return { message: 'Horario actualizado exitosamente' };
   }
-  
+
+
+
+  async deleteHorario(id: number) {
+    // Verificar si el horario existe
+    const horario = await this.horarioRepository.findOne({ where: { Id_horario_pk: id } });
+    if (!horario) {
+      throw new HttpException('Horario no encontrado', HttpStatus.NOT_FOUND);
+    }
+
+    try {
+      // Eliminar el horario
+      await this.horarioRepository.delete(id);
+      return { message: 'Horario eliminado exitosamente' };
+    } catch (error) {
+      console.log(error);
+      throw new HttpException(
+        'Error al eliminar el horario',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+  }
+
+  async deleteHorariosByActividadAndEncargado(idActividad: number, idEncargado: number) {
+    if (!idActividad || !idEncargado) {
+      throw new HttpException('Los parámetros actividad y encargado son obligatorios', HttpStatus.BAD_REQUEST);
+    }
+
+    // Verificar si existen detalles con la actividad y el encargado dados
+    const detalles = await this.encargadoDetalleRepository.find({
+      where: {
+        Id_actividad_fk: idActividad,
+        Id_encargado_fk: idEncargado,
+      },
+    });
+
+    if (detalles.length === 0) {
+      throw new HttpException(
+        'No se encontraron horarios asociados a esta actividad y encargado',
+        HttpStatus.NOT_FOUND,
+      );
+    }
+
+    // Obtener los IDs de los horarios relacionados
+    const horarioIds = detalles.map(detalle => detalle.Id_horario_fk);
+
+    try {
+      // Eliminar los registros en `encargados_detalle` relacionados
+      await this.encargadoDetalleRepository.delete({
+        Id_actividad_fk: idActividad,
+        Id_encargado_fk: idEncargado,
+      });
+
+      // Eliminar los horarios en la tabla `horarios`
+      await this.horarioRepository.delete(horarioIds);
+
+      return {
+        message: `Horarios eliminados para la actividad con ID ${idActividad} y el encargado con ID ${idEncargado}`,
+      };
+    } catch (error) {
+      throw new HttpException(
+        'Error al eliminar los horarios relacionados con la actividad y encargado',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+  }
 }

@@ -49,8 +49,37 @@ export class EncargadosController {
   updateHorario(@Body() updateHorarioDto: UpdateHorarioDto, @Query("horario") id: number, @Req() req: Request) {
     const usuario = req['Usuario'];
     if(usuario.Tipo === 1 || usuario.Tipo === 2) {
-      return this.encargadosService.updateHorario(updateHorarioDto,id);
+      if(id) {
+        return this.encargadosService.updateHorario(updateHorarioDto,id);
+      }
+      throw new HttpException('No se ha proporcionado un ID de horario', HttpStatus.BAD_REQUEST);
     }
     throw new HttpException('No tienes permisos para realizar esta acción', HttpStatus.FORBIDDEN);
   }
+
+
+  @Delete("horario")
+  deleteHorario(@Query("horario") id: number, @Req() req: Request ){
+    const usuario = req['Usuario'];
+    if(usuario.Tipo === 1 || usuario.Tipo === 2) {
+      if(id) {
+        return this.encargadosService.deleteHorario(id);
+      }
+      throw new HttpException('No se ha proporcionado un ID de horario', HttpStatus.BAD_REQUEST);
+    }
+    throw new HttpException('No tienes permisos para realizar esta acción', HttpStatus.FORBIDDEN);
+  }
+
+  @Delete("actividad")
+  deleteActividad(@Query("actividad") id: number, @Query("encargado") encargado: number, @Req() req: Request) {
+    const usuario = req['Usuario'];
+    if(id && encargado) {
+      if(usuario.Tipo === 1 || usuario.Tipo === 2) {
+        return this.encargadosService.deleteHorariosByActividadAndEncargado(id,encargado);
+      }
+      throw new HttpException('No tienes permisos para realizar esta acción', HttpStatus.FORBIDDEN);
+    }
+    throw new HttpException('No se han proporcionado un ID de actividad y un ID de encargado', HttpStatus.BAD_REQUEST);
+  }
+
 }

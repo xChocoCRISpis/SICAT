@@ -8,6 +8,7 @@ import { EncargadoDetalle } from 'src/entities/encargados_detalle.entity';
 import { Actividad } from 'src/entities/actividades.entity';
 import { AuthMiddleware } from 'src/middlewares/auth/auth.middleware';
 import { Usuario } from 'src/entities/usuarios.entity';
+import { CheckPermissionsMiddleware } from 'src/middlewares/permissions/permissions.middleware';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Usuario,Encargado, Horario, EncargadoDetalle, Actividad])],
@@ -21,6 +22,12 @@ export class EncargadosModule {
       {path:"encargados/horario",method:RequestMethod.POST},
       {path:"encargados",method:RequestMethod.PATCH},
       {path:"encargados/horario",method:RequestMethod.PUT},
+      {path:"encargados/actividad",method:RequestMethod.POST},
+      {path:"encargados/actividad",method:RequestMethod.DELETE},
+      {path:"encargados/horario",method:RequestMethod.DELETE},
+    )
+    consumer.apply(CheckPermissionsMiddleware).forRoutes(
+      {path:"encargados/actividad",method:RequestMethod.DELETE},
     )
   }
 }
