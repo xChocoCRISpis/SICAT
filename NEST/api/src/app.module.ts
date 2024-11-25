@@ -22,9 +22,12 @@ import { ImgBBService } from "./services/imgbb/imgbb.service";
 import { EventosModule } from './eventos/eventos.module';
 import { MailService } from './common/mail/mail.service';
 import { MailModule } from './common/mail/mail.module';
+<<<<<<< HEAD
 import { EncargadosModule } from './encargados/encargados.module';
 import { EstadisticasModule } from './estadisticas/estadisticas.module';
 import { CarrerasModule } from './carreras/carreras.module';
+=======
+>>>>>>> b5723ec155c0a57df4b796e32dc13ff8e5c7757f
 
 @Module({
   imports: [
@@ -57,9 +60,12 @@ import { CarrerasModule } from './carreras/carreras.module';
     ChecadorModule,
     EventosModule,
     MailModule,
+<<<<<<< HEAD
     EncargadosModule,
     EstadisticasModule,
     CarrerasModule,
+=======
+>>>>>>> b5723ec155c0a57df4b796e32dc13ff8e5c7757f
   ],
   controllers: [AppController, BitacoraController],
   providers: [AppService, ImgBBService, MailService],

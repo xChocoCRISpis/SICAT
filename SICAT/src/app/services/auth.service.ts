@@ -14,22 +14,6 @@ export class AuthService {
   private apiUrl = `${environment.server}/auth`;
 
   constructor(private http: HttpClient) {}
-  private handleError(error: any): Observable<never> {
-    let errorMessage = 'Ocurrió un error desconocido';
-    if (error.error instanceof ErrorEvent) {
-      // Error del cliente
-      errorMessage = `Error del cliente: ${error.error.message}`;
-    } else {
-      // Error del servidor
-      errorMessage = `Error del servidor: ${error.status} - ${error.statusText}`;
-      if (error.error?.message) {
-        errorMessage += ` - Detalles: ${error.error.message}`;
-      }
-    }
-    console.error(errorMessage);
-    return throwError(() => new Error(errorMessage));
-  }
-
 
   login(credentials: {usuario:string, contrasena: string}): Observable<any> {
 
