@@ -1,0 +1,28 @@
+<button (click)="openStatistic('alumnosPorActividad')">Alumnos por actividad</button>
+<button (click)="openStatistic('carreraActividades')">Carreras y actividades</button>
+<button (click)="openStatistic('alumnosPorTipoActividad')">Alumnos por tipo de actividad</button>
+<button (click)="openStatistic('alumnosPorSexoActividad')">Alumnos por sexo y actividad</button>
+<button (click)="openStatistic('alumnosPorTipoYActividad')">Alumnos por tipo y actividad</button>
+
+@if(isAllStatisticsClosed()) {
+    <h1>No hay estadísticas abiertas</h1>
+    <img src="img/correcaminos.png" alt="No hay estadísticas abiertas">
+}
+
+@switch (true) {
+    @case (stadisticOpen.alumnosPorActividad) {
+        <stat-alumnos-por-actividad />
+    }
+    @case (stadisticOpen.carreraActividades) {
+        <stat-carreras-actividades />
+    }
+    @case (stadisticOpen.alumnosPorTipoActividad) {
+        <stat-alumnos-tipo-actividad />
+    }
+    @case (stadisticOpen.alumnosPorSexoActividad) {
+        <stat-alumnos-sexo />
+    }
+    @case (stadisticOpen.alumnosPorTipoYActividad) {
+        <stat-alumnos-y-tipo-actividad />
+    }
+}

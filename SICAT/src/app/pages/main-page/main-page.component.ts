@@ -7,9 +7,8 @@ import { NavBarService } from '../../services/nav-bar.service';
 import { ProfileComponent } from '../profile/profile.component';
 import { AlumnosComponent } from '../alumnos/alumnos.component';
 import { EventosComponent } from '../eventos/eventos.component';
-
 @Component({
-  selector: 'app-main-page',
+  selector: "app-main-page",
   standalone: true,
   imports: [
     NavBarComponent,
