@@ -27,6 +27,9 @@ export class Usuario {
   @Column({type:'varchar',length:150})
   Correo:string;
 
+  @Column({type:'varchar',length:50, nullable:true})
+  Code_change_password:string;
+
   @OneToMany(() => Encargado, encargado => encargado.usuario)
   encargados: Encargado[];
 }

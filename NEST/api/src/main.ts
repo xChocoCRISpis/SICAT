@@ -1,6 +1,8 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import {ValidationPipe} from '@nestjs/common'
+import {ValidationPipe} from '@nestjs/common';
+import * as bodyParser from 'body-parser';
+
 
 
 
@@ -13,13 +15,10 @@ async function bootstrap() {
     credentials: true, // Si usas cookies, establece esto en true
   });
   //Validation Pipe Configuration
-  app.useGlobalPipes( 
-    new ValidationPipe({
-    whitelist: true,
-    forbidNonWhitelisted: true,
-    transform: true,
-    })
-  );
+  app.useGlobalPipes(new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true, transform: true }));
+
+  app.use(bodyParser.json());
+
 
   await app.listen(+process.env.PORT);
   console.log(`API ESCUCHANDO EN EL PUERTO: ${+process.env.PORT}`)

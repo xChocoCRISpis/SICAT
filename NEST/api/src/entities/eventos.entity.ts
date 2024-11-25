@@ -1,5 +1,6 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany, JoinColumn, ManyToOne } from 'typeorm';
 import { Participa } from './participa.entity';
+import { Actividad } from './actividades.entity';
 
 @Entity('tb_eventos')
 export class Evento {
@@ -20,4 +21,8 @@ export class Evento {
 
   @OneToMany(() => Participa, participa => participa.evento)
   participaciones: Participa[];
+
+  @ManyToOne(() => Actividad, actividad => actividad.eventos)
+  @JoinColumn({ name: 'Id_Actividad_fk' })
+  actividad: Actividad;
 }

@@ -1,84 +1,103 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
-import { Alumno } from '../entities/alumnos.entity';
-import { Carrera } from '../entities/carreras.entity';
-import { CreateAlumnoDto } from './dtos/create-alumno.dto';
-import { Usuario } from 'src/entities/usuarios.entity';
-import { Pertenece } from 'src/entities/pertenece.entity';
-import { Participa } from 'src/entities/participa.entity';
-import { Evento } from 'src/entities/eventos.entity';
-import { Actividad } from 'src/entities/actividades.entity';
+import { BadRequestException, Injectable, NotFoundException } from "@nestjs/common";
+import { InjectRepository } from "@nestjs/typeorm";
+import { Repository } from "typeorm";
+import { Alumno } from "../entities/alumnos.entity";
+import { Carrera } from "../entities/carreras.entity";
+import { CreateAlumnoDto } from "./dtos/create-alumno.dto";
+import { Usuario } from "src/entities/usuarios.entity";
+import { Pertenece } from "src/entities/pertenece.entity";
+import { Participa } from "src/entities/participa.entity";
+import { Evento } from "src/entities/eventos.entity";
+import { Actividad } from "src/entities/actividades.entity";
 
 @Injectable()
 export class AlumnosService {
   constructor(
-    @InjectRepository(Alumno)private readonly alumnoRepository: Repository<Alumno>,
-    @InjectRepository(Carrera)private readonly carreraRepository: Repository<Carrera>,
-    @InjectRepository(Usuario)private readonly usuarioRepository: Repository<Usuario>,
-    @InjectRepository(Pertenece)private readonly perteneceRepository: Repository<Pertenece>,
-    @InjectRepository(Participa)private readonly participaRepository: Repository<Participa>,
-    @InjectRepository(Evento)private readonly eventoRepository: Repository<Evento>,
-    @InjectRepository(Actividad)private readonly actividadRepository: Repository<Actividad>,
-  ){
+    @InjectRepository(Alumno) private readonly alumnoRepository: Repository<Alumno>,
+    @InjectRepository(Carrera) private readonly carreraRepository: Repository<Carrera>,
+    @InjectRepository(Usuario) private readonly usuarioRepository: Repository<Usuario>,
+    @InjectRepository(Pertenece) private readonly perteneceRepository: Repository<Pertenece>,
+    @InjectRepository(Participa) private readonly participaRepository: Repository<Participa>,
+    @InjectRepository(Evento) private readonly eventoRepository: Repository<Evento>,
+    @InjectRepository(Actividad) private readonly actividadRepository: Repository<Actividad>
+  ) {}
 
-  }
-
-  async findAllWithCarreras(
-    num_control?: string, 
-    nombre?: string, 
-    ap_paterno?: string, 
-    sexo?: string, 
-    semestre?: number, 
-    nombre_corto?: string,
-    page: number = 1,       // Página actual, por defecto 1
-    limit: number = 50      // Número de resultados por página, por defecto 10
+  async findAllFromActividad(
+    idActividad: number,
+    num_control?: string,
+    nombre?: string,
+    ap_paterno?: string,
+    sexo?: string,
+    semestre?: number,
+    page: number = 1,
+    limit: number = 50
   ) {
-    const query = this.alumnoRepository.createQueryBuilder('alumno')
-      .leftJoinAndSelect('alumno.carrera', 'carrera');
-  
-    // Aplicar los filtros opcionales
+    // Validar y sanitizar los valores de paginación
+    page = Number.isNaN(page) || page <= 0 ? 1 : Math.floor(page);
+    limit = Number.isNaN(limit) || limit <= 0 ? 50 : Math.floor(limit);
+
+    if (semestre !== undefined && (Number.isNaN(semestre) || semestre <= 0)) {
+      throw new BadRequestException("El valor de semestre no es válido");
+    }
+
+    const query = this.alumnoRepository
+      .createQueryBuilder("alumno")
+      .innerJoin("alumno.pertenencias", "pertenece")
+      .innerJoin("pertenece.actividad", "actividad")
+      .where("actividad.Id_actividad_pk = :idActividad", { idActividad });
+
+    // Aplicar filtros opcionales
     if (num_control) {
-      query.andWhere('alumno.Num_control = :num_control', { num_control });
+      query.andWhere("alumno.Num_control = :num_control", { num_control });
     }
     if (nombre) {
-      query.andWhere('alumno.Nombre LIKE :nombre', { nombre: `%${nombre}%` });
+      query.andWhere("alumno.Nombre LIKE :nombre", { nombre: `%${nombre}%` });
     }
     if (ap_paterno) {
-      query.andWhere('alumno.Ap_paterno LIKE :ap_paterno', { ap_paterno: `%${ap_paterno}%` });
+      query.andWhere("alumno.Ap_paterno LIKE :ap_paterno", { ap_paterno: `%${ap_paterno}%` });
     }
     if (sexo) {
-      query.andWhere('alumno.Sexo = :sexo', { sexo });
+      query.andWhere("alumno.Sexo = :sexo", { sexo });
     }
     if (semestre) {
-      query.andWhere('alumno.Semestre = :semestre', { semestre });
+      query.andWhere("alumno.Semestre = :semestre", { semestre });
     }
-    if (nombre_corto) {
-      query.andWhere('carrera.Nombre_corto LIKE :nombre_corto', { nombre_corto: `%${nombre_corto}%` });
-    }
-  
+
     // Aplicar paginación
     query.skip((page - 1) * limit).take(limit);
-  
-    const [alumnos, total] = await query.getManyAndCount();  // Obtener resultados y el total
-  
+
+    const [alumnos, total] = await query.getManyAndCount();
+
     if (!alumnos || alumnos.length === 0) {
-      throw new NotFoundException('No se encontraron alumnos');
+      throw new NotFoundException("No se encontraron alumnos asociados a esta actividad");
     }
-  
-    // Retornar la información paginada
+
     return {
       total,
       currentPage: page,
       totalPages: Math.ceil(total / limit),
-      alumnos: alumnos.map(alumno => this.mapAlumnoWithCarrera(alumno)),
+      alumnos: alumnos.map(alumno => this.mapAlumnoWithDetails(alumno)),
     };
   }
-  
+
+  // Método privado para mapear la información del alumno
+  private mapAlumnoWithDetails(alumno: Alumno) {
+    return {
+      id: alumno.Id_alumno_pk,
+      num_control: alumno.Num_control,
+      nombre: alumno.Nombre,
+      ap_paterno: alumno.Ap_paterno,
+      ap_materno: alumno.Ap_materno,
+      sexo: alumno.Sexo,
+      semestre: alumno.Semestre,
+      carrera: alumno.carrera ? alumno.carrera.Nombre : null,
+    };
+  }
+
   // Método privado para mapear la estructura del resultado
   private mapAlumnoWithCarrera(alumno: Alumno) {
     return {
-      id_alumno : alumno.Id_alumno_pk,
+      id_alumno: alumno.Id_alumno_pk,
       num_control: alumno.Num_control,
       nombre: alumno.Nombre,
       ap_paterno: alumno.Ap_paterno,
@@ -91,29 +110,28 @@ export class AlumnosService {
       },
     };
   }
-  
 
   // Método para obtener un alumno por ID
-  async findOne(num_control: string){
-    const alumno = await this.alumnoRepository.findOneBy({ Num_control:num_control });
-    if(!alumno) throw new NotFoundException('No se encontró el alumno con el numero de control proporcionado');
+  async findOne(num_control: string) {
+    const alumno = await this.alumnoRepository.findOneBy({ Num_control: num_control });
+    if (!alumno) throw new NotFoundException("No se encontró el alumno con el numero de control proporcionado");
 
     alumno.Foto = `${process.env.HOST_URL}alumnos/${alumno.Foto}`;
     console.log("Alumno por numero de control");
-    return alumno; 
+    return alumno;
   }
 
   // Método para obtener la información detallada de un alumno
   async getAlumnoDetail(id: number) {
     const alumno = await this.alumnoRepository
-  .createQueryBuilder('alumno')
-  .leftJoinAndSelect('alumno.pertenencias', 'pertenencias')
-  .leftJoinAndSelect('pertenencias.actividad', 'actividad')
-  .leftJoinAndSelect('alumno.participaciones', 'participaciones')
-  .leftJoinAndSelect('participaciones.evento', 'evento')
-  .leftJoinAndSelect('alumno.carrera', 'carrera')
-  .where('alumno.Id_alumno_pk = :id', { id })
-  .getOne();
+      .createQueryBuilder("alumno")
+      .leftJoinAndSelect("alumno.pertenencias", "pertenencias")
+      .leftJoinAndSelect("pertenencias.actividad", "actividad")
+      .leftJoinAndSelect("alumno.participaciones", "participaciones")
+      .leftJoinAndSelect("participaciones.evento", "evento")
+      .leftJoinAndSelect("alumno.carrera", "carrera")
+      .where("alumno.Id_alumno_pk = :id", { id })
+      .getOne();
 
     if (!alumno) {
       throw new NotFoundException(`No se encontró el alumno con el id ${id}`);
@@ -124,7 +142,7 @@ export class AlumnosService {
 
   // Método privado para mapear el resultado con la estructura deseada
   private mapAlumnoDetail(alumno: Alumno) {
-    if(!alumno.Foto) alumno.Foto = "alumno_default.jpg";
+    if (!alumno.Foto) alumno.Foto = "alumno_default.jpg";
     return {
       num_control: alumno.Num_control,
       nombre: alumno.Nombre,
@@ -161,17 +179,14 @@ export class AlumnosService {
 
     //Cuando se usa el array en el where con un mismo objeto se comporta como un AND
     //En objetos distintos los trata como un OR
-    const existAlumno = await this.alumnoRepository
-      .findOne({where:
-        [{Num_control: createAlumnoDto.Num_control},
-        {Correo: createAlumnoDto.Correo}]});
-    
-    if(existAlumno) 
-      throw new BadRequestException (`Ya existe este numero de control y/o email`);
+    const existAlumno = await this.alumnoRepository.findOne({
+      where: [{ Num_control: createAlumnoDto.Num_control }, { Correo: createAlumnoDto.Correo }],
+    });
 
-    const carrera = await this.carreraRepository
-      .findOneBy({ Id_carrera_pk: createAlumnoDto.carrera });
-    
+    if (existAlumno) throw new BadRequestException(`Ya existe este numero de control y/o email`);
+
+    const carrera = await this.carreraRepository.findOneBy({ Id_carrera_pk: createAlumnoDto.carrera });
+
     if (!carrera) {
       throw new BadRequestException(`Carrera con ID ${createAlumnoDto.carrera} no encontrada`);
     }
@@ -187,7 +202,7 @@ export class AlumnosService {
     const savedAlumno = await this.alumnoRepository.save(newAlumno);
 
     // Devolver el alumno guardado
-    return { message: 'Alumno creado correctamente', success: true, alumno: savedAlumno };
+    return { message: "Alumno creado correctamente", success: true, alumno: savedAlumno };
   }
 
   // Método para actualizar un alumno
@@ -199,5 +214,124 @@ export class AlumnosService {
   // Método para eliminar un alumno
   async remove(id: number): Promise<void> {
     await this.alumnoRepository.delete(id);
+  }
+
+  async findAllWithCarreras(
+    num_control?: string,
+    nombre?: string,
+    ap_paterno?: string,
+    sexo?: string,
+    semestre?: number,
+    nombre_corto?: string,
+    page: number = 1, // Página actual, por defecto 1
+    limit: number = 50 // Número de resultados por página, por defecto 10
+  ) {
+    const query = this.alumnoRepository.createQueryBuilder("alumno").leftJoinAndSelect("alumno.carrera", "carrera");
+
+    // Aplicar los filtros opcionales
+    if (num_control) {
+      query.andWhere("alumno.Num_control = :num_control", { num_control });
+    }
+    if (nombre) {
+      query.andWhere("alumno.Nombre LIKE :nombre", { nombre: `%${nombre}%` });
+    }
+    if (ap_paterno) {
+      query.andWhere("alumno.Ap_paterno LIKE :ap_paterno", { ap_paterno: `%${ap_paterno}%` });
+    }
+    if (sexo) {
+      query.andWhere("alumno.Sexo = :sexo", { sexo });
+    }
+    if (semestre) {
+      query.andWhere("alumno.Semestre = :semestre", { semestre });
+    }
+    if (nombre_corto) {
+      query.andWhere("carrera.Nombre_corto LIKE :nombre_corto", { nombre_corto: `%${nombre_corto}%` });
+    }
+
+    // Aplicar paginación
+    query.skip((page - 1) * limit).take(limit);
+
+    const [alumnos, total] = await query.getManyAndCount(); // Obtener resultados y el total
+
+    if (!alumnos || alumnos.length === 0) {
+      throw new NotFoundException("No se encontraron alumnos");
+    }
+
+    // Retornar la información paginada
+    return {
+      total,
+      currentPage: page,
+      totalPages: Math.ceil(total / limit),
+      alumnos: alumnos.map(alumno => this.mapAlumnoWithCarrera(alumno)),
+    };
+  }
+
+  async findAllFilterByEncargado(
+    usuarioId: number, // ID del encargado actual
+    actividadId?: number, // ID de la actividad (opcional, puede ser dinámico)
+    num_control?: string,
+    nombre?: string,
+    ap_paterno?: string,
+    sexo?: string,
+    semestre?: number,
+    nombre_corto?: string,
+    page: number = 1, // Página actual, por defecto 1
+    limit: number = 50 // Número de resultados por página, por defecto 50
+  ) {
+    console.log(usuarioId, actividadId, num_control, nombre, ap_paterno, sexo, semestre, nombre_corto, page, limit);
+    const query = this.alumnoRepository
+      .createQueryBuilder("alumno")
+      .leftJoinAndSelect("alumno.carrera", "carrera") // Relación con carrera
+      .innerJoin("alumno.pertenencias", "pertenencia", "pertenencia.Activo = 1") // Solo alumnos activos
+      .innerJoin("pertenencia.actividad", "actividad") // Relación con actividad
+      .innerJoin("actividad.detalles", "detalle") // Relación con detalles (EncargadoDetalle)
+      .innerJoin("detalle.encargado", "encargado") // Relación con encargado
+      .innerJoin("encargado.usuario", "usuario", "usuario.Id_usuario_pk = :usuarioId", { usuarioId }); // Relación con usuario
+
+      console.log(query.getSql());
+      // Si se proporciona actividadId, filtrar por ella
+    if (actividadId) {
+      query.andWhere("actividad.Id_actividad_pk = :actividadId", { actividadId });
+    }
+
+    console.log(`where actividad=${actividadId}\ln`, query[0]);
+
+    // Aplicar los filtros opcionales
+    if (num_control) {
+      query.andWhere("alumno.Num_control = :num_control", { num_control });
+    }
+    if (nombre) {
+      query.andWhere("alumno.Nombre LIKE :nombre", { nombre: `%${nombre}%` });
+    }
+    if (ap_paterno) {
+      query.andWhere("alumno.Ap_paterno LIKE :ap_paterno", { ap_paterno: `%${ap_paterno}%` });
+    }
+    if (sexo) {
+      query.andWhere("alumno.Sexo = :sexo", { sexo });
+    }
+    if (semestre) {
+      query.andWhere("alumno.Semestre = :semestre", { semestre });
+    }
+    if (nombre_corto) {
+      query.andWhere("carrera.Nombre_corto LIKE :nombre_corto", { nombre_corto: `%${nombre_corto}%` });
+    }
+
+    // Aplicar paginación
+    query.skip((page - 1) * limit).take(limit);
+
+    // Ejecutar la consulta
+    const [alumnos, total] = await query.getManyAndCount();
+
+    if (!alumnos || alumnos.length === 0) {
+      throw new NotFoundException("No se encontraron alumnos");
+    }
+
+    // Retornar la información paginada
+    return {
+      total,
+      currentPage: page,
+      totalPages: Math.ceil(total / limit),
+      alumnos: alumnos.map(alumno => this.mapAlumnoWithCarrera(alumno)),
+    };
   }
 }

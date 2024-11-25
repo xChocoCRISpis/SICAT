@@ -1,0 +1,12 @@
+<div class="eventos-container">
+    <div class="event-card" *ngFor="let evento of eventos" [ngClass]="{ active: isEventActive(evento.Fecha), ended: !isEventActive(evento.Fecha) }">
+        <h2>{{ evento.Nombre }}</h2>
+        <p class="status">{{ isEventActive(evento.Fecha) ? 'Activo' : 'Ya terminó' }}</p>
+        <div class="details">
+            <p><strong>Lugar:</strong> {{ evento.Lugar }}</p>
+            <p><strong>Fecha:</strong> {{ evento.Fecha | date: 'longDate' }}</p>
+            <p><strong>Hora:</strong> {{ evento.Hora }}</p>
+            <p><strong>Actividad Asociada:</strong> {{ evento.actividad?.Nombre }}</p>
+        </div>
+    </div>
+</div>

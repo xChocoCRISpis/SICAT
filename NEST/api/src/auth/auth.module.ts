@@ -6,10 +6,12 @@ import { Usuario } from 'src/entities/usuarios.entity';
 import { BitacoraSchemaModule } from 'src/schemas/bitacora/bitacora-schema.module';
 import { AuthMiddleware } from 'src/middlewares/auth/auth.middleware';
 import { ImgBBService } from 'src/services/imgbb/imgbb.service';
+import { MailModule } from 'src/common/mail/mail.module';
 
 @Module({
   imports:[TypeOrmModule.forFeature([Usuario]),
-  BitacoraSchemaModule],
+  BitacoraSchemaModule,
+  MailModule],
   controllers: [AuthController],
   providers: [AuthService,ImgBBService],
   exports:[AuthService]

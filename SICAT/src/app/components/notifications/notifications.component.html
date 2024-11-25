@@ -1,15 +1,15 @@
-
-@if(isEnabled){
-    <div class="notification {{type}}">
-      <img src="" alt="">
-      <div class="content">
-        <strong class="type">{{type.toUpperCase()}}:</strong> 
-        {{title}}
-        <p>{{message}}</p>
-      </div>
-      <div class="close-button" (click)="close()">
-        <span class="close" style="user-select: none;">✖️</span>
-      </div>
+@if (isEnabled) {
+  <div class="notification {{ type }}">
+    <img src="" alt="" />
+    <div class="content">
+      <strong class="type">{{ type.toUpperCase() }}:</strong>
+      {{ title }}
+      <p>{{ message }}</p>
     </div>
+    <div class="close-button" (click)="close()">
+      <span class="close" style="user-select: none">✖️</span>
+    </div>
+  </div>
+} @else {
+  <ng-template></ng-template>
 }
-@else{<ng-template></ng-template>}

@@ -1,8 +1,8 @@
 import { Component,OnInit } from '@angular/core';
-import { AuthService } from '../auth.service';
+import { AuthService } from '../services/auth.service'
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
-import { environment } from '../../environments/environment.development';
+import { environment } from '../../environments/environment';
 import {LoginServiceService} from './login-services/login-service.service'
 import { NotificationsComponent } from "../components/notifications/notifications.component";
 import { NotificationsService } from '../components/notifications/notifications.service';
@@ -18,6 +18,7 @@ import { NotificationsService } from '../components/notifications/notifications.
 export class LoginComponent implements OnInit {
     public version = environment.version;
     public formulario!: FormGroup;
+    public front = environment.front;
 
     constructor(
         private builder:FormBuilder,

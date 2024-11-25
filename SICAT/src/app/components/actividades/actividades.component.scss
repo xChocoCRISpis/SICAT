@@ -1,43 +1,72 @@
+* {
+  --background_color: #ece9e2;
+  --primary_color: #5a0a18; /* Marrón oscuro */
+  --text_color: #333; /* Gris oscuro para el texto */
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-*{
-  --background_color:#ece9e2;
-  background-color: var(--background_color);
+.no-activities {
+  display: flex;
+  justify-content: center;
+  align-items:center;
+  text-align: center;
+  width: 100vw;
+
+  .text {
+    font-size: 1.5rem;
+    color: var(--primary_color);
+    font-weight: bold;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
 }
 
 .actividad {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    padding: 20px;
-    margin-bottom: 20px;
-    background-color: var(--background_color); /* Fondo claro */
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-  
-    &:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 20px;
+  margin: 20px auto;
+  max-width: 600px;
+  background-color: #fff; /* Fondo blanco para destacar la actividad */
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  }
+
+  .text {
+    flex: 1; /* Toma el espacio disponible */
+    margin-right: 20px;
+
+    h2 {
+      font-size: 1.5rem;
+      color: var(--primary_color);
+      margin: 0 0 10px;
     }
-  
-    .text {
-      margin-right: 20px;
-      
-      h5 {
-        font-size: 1.2rem;
-        color: #5A0A18; /* Texto marrón oscuro */
-        margin: 0;
-      }
-    }
-  
-    .imagen {
-      img {
-        width: 100px;
-        height: 100px;
-        object-fit: cover;
-        border-radius: 10px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      }
+
+    h5 {
+      font-size: 1.2rem;
+      color: var(--text_color);
+      margin: 0;
     }
   }
-  
+
+  .imagen {
+    img {
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 10px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+  }
+}

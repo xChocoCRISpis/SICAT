@@ -12,23 +12,23 @@
       </label>
       <label>
         Num Control:
-        <input type="text" (input)="applyFilter('num_control', $event)">
+        <input type="text" (input)="applyFilter('num_control', $event)" />
       </label>
       <label>
         Nombre:
-        <input type="text" (input)="applyFilter('nombre', $event)">
+        <input type="text" (input)="applyFilter('nombre', $event)" />
       </label>
       <label>
         Ap. Paterno:
-        <input type="text" (input)="applyFilter('ap_paterno', $event)">
+        <input type="text" (input)="applyFilter('ap_paterno', $event)" />
       </label>
       <label>
         Semestre:
-        <input type="number" (input)="applyFilter('semestre', $event)">
+        <input type="number" (input)="applyFilter('semestre', $event)" />
       </label>
       <label>
         Carrera:
-        <input type="text" (input)="applyFilter('nombre_corto', $event)">
+        <input type="text" (input)="applyFilter('nombre_corto', $event)" />
       </label>
     </div>
   </div>
@@ -38,7 +38,7 @@
     <span>Página {{ currentPage }} de {{ totalPages }}</span>
     <button (click)="nextPage()" [disabled]="currentPage === totalPages">Siguiente</button>
   </div>
-  
+
   <div class="alumnos-section">
     <table>
       <thead>
@@ -69,7 +69,7 @@
       </tbody>
     </table>
   </div>
-  
+
   <div class="pagination">
     <button (click)="prevPage()" [disabled]="currentPage === 1">Anterior</button>
     <span>Página {{ currentPage }} de {{ totalPages }}</span>
@@ -77,9 +77,4 @@
   </div>
 </div>
 
-
-<alumno-detalle 
-  [open]="modalOpen" 
-  [id_alumno]="selectedAlumnoId"
-  (closeModal)="closeModal()">
-</alumno-detalle>
+<alumno-detalle [open]="modalOpen" [id_alumno]="selectedAlumnoId" (closeModal)="closeModal()"> </alumno-detalle>
