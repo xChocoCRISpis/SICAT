@@ -1,1 +1,20 @@
-<p>add-alumno-to-evento works!</p>
+<div class="modal">
+    <div class="modal-content">
+        <h2>Agregar Alumno a Evento</h2>
+
+        <div class="form-group">
+            <label for="evento">Seleccionar Evento:</label>
+            <select id="evento" [(ngModel)]="selectedEventoId">
+                <option [value]="null">-- Selecciona un evento --</option>
+                <option *ngFor="let evento of eventos" [value]="evento.Id_evento_pk">{{ evento.Nombre }} - Fecha: {{ evento.Fecha }}</option>
+            </select>
+        </div>
+
+        <div class="actions">
+            <button (click)="agregarAlumnoEvento()">Agregar</button>
+            <button (click)="cerrarModal()">Cancelar</button>
+        </div>
+    </div>
+</div>
+
+<notifications></notifications>

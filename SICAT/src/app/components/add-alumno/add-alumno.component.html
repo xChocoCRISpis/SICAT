@@ -91,7 +91,7 @@
             <label for="carrera">Carrera</label>
             <select id="carrera" [(ngModel)]="alumnoData.carrera" required>
                 <option value="" disabled>Seleccione</option>
-                <option *ngFor="let carrera of carreras" [value]="carrera.Id_carrera_pk">
+                <option *ngFor="let carrera of carreras" [value]="carrera.id">
                     {{ carrera.Nombre }}
                 </option>
             </select>

@@ -1,1 +1,24 @@
-<p>add-alumno-to-actividad works!</p>
+<div class="modal">
+    <div class="modal-content">
+        <h2>Agregar Alumno a Actividad</h2>
+
+        <div class="form-group">
+            <label for="actividad">Seleccionar Actividad:</label>
+            <select id="actividad" [(ngModel)]="selectedActividadId">
+                <option [value]="null">-- Selecciona una actividad --</option>
+                <option *ngFor="let actividad of actividades" [value]="actividad.Id_actividad_pk">
+                    {{ actividad.Nombre }}
+                    ({{ actividad.Tipo === 'CUL' ? 'Cultural' : actividad.Tipo === 'DEP' ? 'Deportiva' : 'Indefinido' }})
+                </option>
+            </select>
+        </div>
+
+        <div class="actions">
+            <button (click)="agregarAlumno()">Agregar</button>
+            <button (click)="cerrarModal()">Cancelar</button>
+        </div>
+    </div>
+</div>
+
+
+<notifications></notifications>

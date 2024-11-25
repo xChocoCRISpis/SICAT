@@ -1,50 +1,59 @@
 @if (open) {
-  <div class="modal">
-    <div class="modal-content">
-      <span class="close-btn" (click)="onCloseModal()">×</span>
+    <div class="modal">
+        <div class="modal-content">
+            <span class="close-btn" (click)="onCloseModal()">×</span>
 
-      @if (loading) {
-        <p>Cargando detalles del alumno...</p>
-      } @else if (error) {
-        <p class="error">{{ error }}</p>
-      } @else if (alumno) {
-        <div class="alumno-info">
-          <h2>Detalles del Alumno</h2>
+            @if (loading) {
+                <p>Cargando detalles del alumno...</p>
+            } @else if (error) {
+                <p class="error">{{ error }}</p>
+            } @else if (alumno) {
+                <div class="alumno-info">
+                    <h2>Detalles del Alumno</h2>
 
-          <div class="info">
-            <img src="{{ alumno.foto }}" alt="Foto_del_alumno" class="alumno-foto" />
-            <p><strong>Num Control:</strong> {{ alumno.num_control }}</p>
-            <p><strong>Nombre:</strong> {{ alumno.nombre }} {{ alumno.ap_paterno }} {{ alumno.ap_materno }}</p>
-            <p><strong>Sexo:</strong> {{ alumno.sexo }}</p>
-            <p><strong>Fecha Nac:</strong> {{ alumno.fecha_nac }}</p>
-            <p><strong>Semestre:</strong> {{ alumno.semestre }}</p>
-            <p><strong>Nivel:</strong> {{ alumno.nivel }}</p>
-            <p><strong>Teléfono:</strong> {{ alumno.telefono }}</p>
-            <p><strong>Correo:</strong> {{ alumno.correo }}</p>
-            <p><strong>Carrera:</strong> {{ alumno.carrera?.nombre }} ({{ alumno.carrera?.nombre_corto }})</p>
+                    <div class="info">
+                        <img src="{{ alumno.foto }}" alt="Foto_del_alumno" class="alumno-foto" />
+                        <p><strong>Num Control:</strong> {{ alumno.num_control }}</p>
+                        <p><strong>Nombre:</strong> {{ alumno.nombre }} {{ alumno.ap_paterno }} {{ alumno.ap_materno }}</p>
+                        <p><strong>Sexo:</strong> {{ alumno.sexo }}</p>
+                        <p><strong>Fecha Nac:</strong> {{ alumno.fecha_nac }}</p>
+                        <p><strong>Semestre:</strong> {{ alumno.semestre }}</p>
+                        <p><strong>Nivel:</strong> {{ alumno.nivel }}</p>
+                        <p><strong>Teléfono:</strong> {{ alumno.telefono }}</p>
+                        <p><strong>Correo:</strong> {{ alumno.correo }}</p>
+                        <p><strong>Carrera:</strong> {{ alumno.carrera?.nombre }} ({{ alumno.carrera?.nombre_corto }})</p>
 
-            @if (alumno.actividades && alumno.actividades.length > 0) {
-              <h3>Actividades</h3>
-              <ul>
-                @for (actividad of alumno.actividades; track actividad.id) {
-                  <li>{{ actividad.nombre }} ({{ actividad.tipo }}) - Horas: {{ actividad.horas }} - Activo: {{ actividad.activo ? 'Sí' : 'No' }}</li>
-                }
-              </ul>
+                        @if (alumno.actividades && alumno.actividades.length > 0) {
+                            <h3>Actividades</h3>
+                            <ul>
+                                @for (actividad of alumno.actividades; track actividad.id) {
+                                    <li>{{ actividad.nombre }} ({{ actividad.tipo }}) - Horas: {{ actividad.horas }} - Activo: {{ actividad.activo ? 'Sí' : 'No' }}</li>
+                                }
+                            </ul>
+                        }
+
+                        @if (alumno.eventos && alumno.eventos.length > 0) {
+                            <h3>Eventos</h3>
+                            <ul>
+                                @for (evento of alumno.eventos; track evento.id) {
+                                    <li>{{ evento.nombre }} - Fecha: {{ evento.fecha }}</li>
+                                }
+                            </ul>
+                        }
+                    </div>
+                </div>
+            } @else {
+                <p>No se encontraron detalles del alumno.</p>
             }
 
-            @if (alumno.eventos && alumno.eventos.length > 0) {
-              <h3>Eventos</h3>
-              <ul>
-                @for (evento of alumno.eventos; track evento.id) {
-                  <li>{{ evento.nombre }} - Fecha: {{ evento.fecha }}</li>
-                }
-              </ul>
+            <button (click)="toggleAddAlumnoToActividad()">Agregar a Actividad</button>
+            @if (openValues.openAddAlumnoToActividad) {
+                <add-alumno-to-actividad *ngIf="openValues.openAddAlumnoToActividad" [id_alumno]="id_alumno!" (closeModal)="toggleAddAlumnoToActividad()"></add-alumno-to-actividad>
             }
-          </div>
+            <button (click)="toggleAddAlumnoToEvento()">Agregar a Evento</button>
+            @if (openValues.openAddAlumnoToEvento) {
+                <add-alumno-to-evento *ngIf="openValues.openAddAlumnoToEvento" [id_alumno]="id_alumno!" (closeModal)="toggleAddAlumnoToEvento()"></add-alumno-to-evento>
+            }
         </div>
-      } @else {
-        <p>No se encontraron detalles del alumno.</p>
-      }
     </div>
-  </div>
 }

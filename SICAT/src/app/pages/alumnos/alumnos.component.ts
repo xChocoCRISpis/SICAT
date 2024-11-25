@@ -5,11 +5,13 @@ import { CommonModule } from '@angular/common';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { AlumnoComponent } from '../../components/alumno/alumno.component';
 import { AddAlumnoComponent } from '../../components/add-alumno/add-alumno.component';
+import { AddAlumnoToActividadComponent } from '../../components/add-alumno-to-actividad/add-alumno-to-actividad.component';
+import { AddAlumnoToEventoComponent } from '../../components/add-alumno-to-evento/add-alumno-to-evento.component';
 
 @Component({
   selector: 'alumnos',
   standalone: true,
-  imports: [CommonModule, FormsModule, AlumnoComponent, AddAlumnoComponent],
+  imports: [CommonModule, FormsModule, AlumnoComponent, AddAlumnoComponent, AddAlumnoToActividadComponent, AddAlumnoToEventoComponent],
   templateUrl: './alumnos.component.html',
   styleUrls: ['./alumnos.component.scss'],
 })
@@ -25,8 +27,21 @@ export class AlumnosComponent {
   selectedAlumnoId: number | null = null;
   modalOpen = false;
 
+  openValues = {
+    openAddAlumnoToActividad: false as boolean,
+    openAddAlumnoToEvento: false as boolean,
+    openAddAlumno: false as boolean,
+    openVerAlumnos: true as boolean
+  }
 
-  openAddAlumno:boolean = false;
+  open(key: keyof typeof this.openValues) {
+    Object.keys(this.openValues).forEach(k => {
+      this.openValues[k as keyof typeof this.openValues] = k === key;
+    });
+  }
+  
+
+  
 
   constructor(private alumnosService: AlumnosService, private http: HttpClient) {
     this.loadAlumnos();
