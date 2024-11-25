@@ -17,6 +17,8 @@ export class ProfileComponent {
 
   groupedHorarios: any[] = [];
 
+  qrCodeUrl: string = '';
+
   constructor(private profileService:ProfileService) {
 
   }
@@ -53,6 +55,8 @@ export class ProfileComponent {
           }
           return horario;
         });
+        this.qrCodeUrl = res.usuario.qr;
+        console.log(res);
         this.encargado = res.encargado;
         this.usuario = res.usuario;
         this.groupHorariosByDay();
