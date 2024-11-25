@@ -27,6 +27,8 @@ export class IndicadoresComponent {
     alumnosPorTipoYActividad: false,
   };
 
+  constructor(){}
+
   openStatistic(stat: keyof typeof this.stadisticOpen) {
     // Primero ponemos todas en false
     Object.keys(this.stadisticOpen).forEach(key => {
@@ -35,5 +37,9 @@ export class IndicadoresComponent {
 
     // Luego cambiamos solo la que nos interesa a true
     this.stadisticOpen[stat] = true;
+  }
+
+  isAllStatisticsClosed(): boolean {
+    return Object.values(this.stadisticOpen).every(value => value === false);
   }
 }
