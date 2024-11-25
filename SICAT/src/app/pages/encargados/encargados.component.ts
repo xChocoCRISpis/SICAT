@@ -20,13 +20,29 @@ export class EncargadosComponent implements OnInit {
   showAddEncargado: boolean = false;
   showAddUser: boolean = false;
 
-  openAddHorario:boolean = false;
+  openAddHorario: boolean = false;
+
+  openComponents = {
+    addEncargado: false,
+    addUser: false,
+    viewEncargados: true
+  }
 
   constructor(private encargadosService: EncargadosService) {}
 
   ngOnInit(): void {
     this.getAllEncargados();
   }
+
+  openComponent(component: keyof typeof this.openComponents) {
+    this.openComponents[component] = !this.openComponents[component];
+    Object.keys(this.openComponents).forEach(key => {
+      if (key !== component) {
+        this.openComponents[key as keyof typeof this.openComponents] = false;
+      }
+    });
+  }
+
 
   
   desformatearHorario(horario: string): string {

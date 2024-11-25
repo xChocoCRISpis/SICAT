@@ -137,7 +137,7 @@ export class AuthService {
     const token =localStorage.getItem("auth_token");
     if(!token) return throwError(() => new Error("Token de autenticación no encontrado. Inicie sesión."));
 
-    return this.http.post<any>(`${this.apiUrl}/user-type`, {headers:{Authorization:`Bearer ${token}`}}).pipe(
+    return this.http.get<any>(`${this.apiUrl}/user-type`, {headers:{Authorization:`Bearer ${token}`}}).pipe(
       catchError(this.handleError)
     );
   }
