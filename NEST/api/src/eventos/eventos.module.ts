@@ -6,10 +6,12 @@ import { Actividad } from 'src/entities/actividades.entity';
 import { Evento } from 'src/entities/eventos.entity';
 import { AuthMiddleware } from 'src/middlewares/auth/auth.middleware';
 import { Usuario } from 'src/entities/usuarios.entity';
+import { Alumno } from 'src/entities/alumnos.entity';
+import { Participa } from 'src/entities/participa.entity';
 
 @Module({
   imports:[
-    TypeOrmModule.forFeature([Actividad,Evento,Usuario]),
+    TypeOrmModule.forFeature([Actividad,Evento,Usuario, Participa,Alumno]),
   ],
   controllers: [EventosController],
   providers: [EventosService],

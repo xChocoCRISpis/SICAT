@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable, NotFoundException, UnauthorizedException } from "@nestjs/common";
+import { BadRequestException, Injectable, NotFoundException, Req, UnauthorizedException } from "@nestjs/common";
 import { CreateAuthDto } from "./dto/create-auth.dto";
 import { UpdateAuthDto } from "./dto/update-auth.dto";
 import { InjectRepository } from "@nestjs/typeorm";
@@ -276,4 +276,10 @@ export class AuthService {
   remove(id: number) {
     return `This action removes a #${id} auth`;
   }
+
+  findUserType(@Req() req: Request) {
+    const usuario = req["Usuario"];
+    return usuario.Tipo;
+  }
+
 }

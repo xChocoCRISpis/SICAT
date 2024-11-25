@@ -128,4 +128,18 @@ export class AuthService {
     );
   }
 
+
+  userType(): Observable<any> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+    });
+
+    const token =localStorage.getItem("auth_token");
+    if(!token) return throwError(() => new Error("Token de autenticación no encontrado. Inicie sesión."));
+
+    return this.http.post<any>(`${this.apiUrl}/user-type`, {headers:{Authorization:`Bearer ${token}`}}).pipe(
+      catchError(this.handleError)
+    );
+  }
+
 }

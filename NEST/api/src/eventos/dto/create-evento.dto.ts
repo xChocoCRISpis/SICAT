@@ -1,5 +1,5 @@
 import { Type } from "class-transformer";
-import { IsDate, IsInt, IsString, IsTimeZone, Length, Matches } from "class-validator";
+import { IsInt, IsString, Length, Matches } from "class-validator";
 
 export class CreateEventoDto {
     @IsString()
@@ -24,5 +24,4 @@ export class CreateEventoDto {
 
     @IsInt()
     readonly Id_Actividad:number;
-
 }

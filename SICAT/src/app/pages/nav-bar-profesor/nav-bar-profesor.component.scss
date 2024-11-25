@@ -1,0 +1,265 @@
+* {
+    font-family: 'Montserrat', sans-serif;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+h4 {
+    margin: 10px;
+    font-size: large;
+    font-weight: bold;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+header {
+    background-color: #5A0A18;
+    color: #a3753a;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    position: fixed;
+    top: 0;
+    z-index: 1;
+}
+
+.icon_menu {
+    cursor: pointer;
+    color: #a3753a;
+    display: flex;
+    align-items: center;
+    height: 75px;
+}
+
+.icon_menu i {
+    display: flex;
+    justify-content: center;
+    margin-right: auto;
+    width: 100px;
+    height: 50px;
+    align-items: center;
+}
+
+.icon_menu i:hover {
+    background-color: #810c20;
+}
+
+.menu_side {
+    position: fixed;
+    top: 75px;
+    bottom: 0;
+    left: 0;
+    width: 250px; /* Ajusta el ancho del menú */
+    transform: translateX(-250px); /* Menú oculto inicialmente */
+    transition: transform 0.3s ease-in-out;
+    z-index: 1;
+    overflow-y: auto;
+    background-color: #5A0A18;
+}
+
+.menu_side.active {
+    transform: translateX(0); /* Mostrar menú */
+}
+
+#content-wrapper {
+    flex: 1;
+    margin-top: 75px; /* Coincide con la altura del header */
+    margin-left: 0;
+    transition: margin-left 0.3s ease-in-out;
+    overflow-y: auto;
+    height: calc(100% - 75px); /* Resta la altura del header */
+}
+
+#content-wrapper.shifted {
+    margin-left: 250px; /* Coincide con el ancho del menú lateral */
+}
+
+#main_content {
+    padding: 70px;
+    height: 100%;
+}
+
+.options_menu .option, 
+.submenu-item {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    color: #a3753a;
+    text-decoration: none;
+    padding: 10px;
+    margin-top: 5px;
+    transition: background 0.3s ease;
+}
+
+.options_menu .option i, 
+.submenu-item i {
+    margin-right: 15px;
+}
+
+.options_menu .option:hover,
+.submenu-item:hover {
+    background: #810c20;
+    color: #fff;
+}
+
+.options_menu .selected {
+    background: #810c20;
+    color: #fff;
+}
+
+.submenu {
+    display: none;
+    padding-left: 20px;
+}
+
+.submenu.active {
+    display: block;
+}
+
+.submenu-item {
+    background-color: #5A0A18;
+    border-left: 2px solid transparent;
+}
+
+.submenu-item:hover {
+    background-color: #810c20;
+    color: #fff;
+    border-left: 2px solid #a3753a;
+}
+
+.submenu-item.selected {
+    background-color: #810c20;
+    color: #fff;
+    border-left: 2px solid #a3753a;
+}
+
+main {
+    margin-top: 75px;
+    padding: 20px;
+    transition: margin-left 0.3s ease-in-out;
+    background-color: #fcefd5;
+}
+
+main.menu-opened {
+    margin-left: 250px;
+}
+
+body{
+    background-color: #fcefd5;
+}
+
+/* Media queries para pantallas pequeñas (max-width: 768px) */
+@media (max-width: 768px) {
+    header {
+        padding: 0 12px; /* Reducir el padding en pantallas pequeñas */
+        height: 50px; /* Reducir altura del header en móviles */
+    }
+
+    .icon_menu {
+        height: 50px; /* Ajustar altura del icono en móviles */
+    }
+
+    .icon_menu i {
+        width: 30px; /* Reducir tamaño del icono en pantallas pequeñas */
+        height: 30px;
+        font-size: 20px;
+    }
+
+    .menu_side {
+        width: 200px; /* Reducir ancho del menú lateral en pantallas pequeñas */
+        top: 50px; /* Ajustar para que coincida con la altura del header */
+    }
+
+    #content-wrapper {
+        margin-top: 50px; /* Ajustar el margen superior para no superponerse al header */
+    }
+
+    #content-wrapper.shifted {
+        margin-left: 200px; /* Ajuste cuando el menú está abierto en pantallas pequeñas */
+    }
+
+    main.menu-opened {
+        margin-left: 200px; /* Ajustar el contenido cuando el menú está abierto */
+    }
+
+    .pagination {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+    }
+
+    .pagination button {
+        padding: 10px 15px;
+        font-size: 14px;
+    }
+
+    .pagination span {
+        font-size: 14px;
+        margin: 0 10px;
+    }
+
+    .alumno-info {
+        font-size: 14px; /* Reducir el tamaño de texto en la información del alumno */
+    }
+
+    .modal-content {
+        padding: 15px;
+        max-width: 90%; /* Aumentar el ancho máximo del modal para pantallas pequeñas */
+    }
+}
+
+/* Media queries para pantallas muy pequeñas (max-width: 480px) */
+@media (max-width: 480px) {
+    header {
+        padding: 0 8px; /* Más reducción del padding para pantallas muy pequeñas */
+        height: 45px; /* Reducir aún más la altura del header */
+    }
+
+    .icon_menu {
+        height: 45px; /* Ajustar la altura del icono */
+    }
+
+    .icon_menu i {
+        width: 25px; /* Hacer el icono más pequeño en pantallas muy pequeñas */
+        height: 25px;
+        font-size: 18px;
+    }
+
+    .menu_side {
+        width: 180px; /* Menú lateral más estrecho en pantallas pequeñas */
+        top: 45px; /* Ajustar el top del menú para que coincida con el header */
+    }
+
+    #content-wrapper {
+        margin-top: 45px; /* Asegurar que el contenido no se superponga con el header */
+    }
+
+    #content-wrapper.shifted {
+        margin-left: 180px; /* Ajuste cuando el menú está abierto */
+    }
+
+    main.menu-opened {
+        margin-left: 180px; /* Ajustar el contenido cuando el menú está abierto */
+    }
+
+    .modal-content {
+        padding: 10px;
+        max-width: 95%; /* Hacer el modal más ancho en pantallas pequeñas */
+    }
+
+    .pagination button {
+        padding: 8px 10px;
+        font-size: 12px;
+    }
+
+    .pagination span {
+        font-size: 12px;
+        margin: 0 5px;
+    }
+}

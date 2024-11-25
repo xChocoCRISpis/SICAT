@@ -9,6 +9,8 @@ import { AlumnosComponent } from '../alumnos/alumnos.component';
 import { EventosComponent } from '../eventos/eventos.component';
 import { EncargadosComponent } from '../encargados/encargados.component';
 import { IndicadoresComponent } from '../indicadores/indicadores.component';
+import { AuthService } from '../../services/auth.service';
+import { NavBarProfesorComponent } from '../nav-bar-profesor/nav-bar-profesor.component';
 @Component({
   selector: "app-main-page",
   standalone: true,
@@ -21,16 +23,24 @@ import { IndicadoresComponent } from '../indicadores/indicadores.component';
     EventosComponent,
     EncargadosComponent,
     IndicadoresComponent,
+    NavBarProfesorComponent
   ],
   templateUrl: './main-page.component.html',
   styleUrl: './main-page.component.scss',
 })
 export class MainPageComponent {
   public page: string = 'init';
+  public userType: number = 3;
 
-  constructor(private router: Router, private pages: NavBarService) {
+  constructor(private router: Router, private pages: NavBarService, private authService: AuthService) {
     this.pages.pageEmitter.subscribe((value) => {
       this.page = value.toString();
+    });
+  }
+
+  ngOnInit() {
+    this.authService.userType().subscribe((res) => {
+      this.userType = res.Tipo;
     });
   }
 
@@ -38,3 +48,4 @@ export class MainPageComponent {
     this.router.navigate(['404-not-found']);
   }
 }
+

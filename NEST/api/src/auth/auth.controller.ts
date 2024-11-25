@@ -1,4 +1,16 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, BadRequestException } from "@nestjs/common";
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  BadRequestException,
+  Req,
+  Query,
+  UnauthorizedException,
+} from "@nestjs/common";
 import { AuthService } from "./auth.service";
 import { CreateAuthDto } from "./dto/create-auth.dto";
 import { UpdateAuthDto } from "./dto/update-auth.dto";
@@ -30,8 +42,18 @@ export class AuthController {
     return this.authService.changePassword(changePasswordDto);
   }
 
+  @Get("user-type")
+  findUserType(@Req() req: Request) {
+    console.log(req)
+    const usuario = req["Usuario"];
+    if (!usuario || !usuario.Tipo) {
+      throw new UnauthorizedException("No se encontró información del usuario en el token");
+    }
+    return {Tipo:usuario.Tipo}
+  }
+
   @Patch("/password")
-  updatePassword(@Body() updatePasswordDto:UpdatePasswordDto){
+  updatePassword(@Body() updatePasswordDto: UpdatePasswordDto) {
     console.log(updatePasswordDto);
     return this.authService.updatePassword(updatePasswordDto);
   }
@@ -55,4 +77,6 @@ export class AuthController {
   remove(@Param("id") id: string) {
     return this.authService.remove(+id);
   }
+
+
 }

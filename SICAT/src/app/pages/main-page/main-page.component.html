@@ -1,5 +1,8 @@
-<app-nav-bar>
-  @switch (page) {
+
+{{userType}}
+@if (userType === 1 || userType === 2) {
+  <app-nav-bar>
+    @switch (page) {
     @case ('init') {
       <app-init> </app-init>
     }
@@ -31,3 +34,26 @@
     }
   }
 </app-nav-bar>
+}@else{
+  <nav-bar-profesor>
+    @switch (page) {
+      @case ('init') {
+        <app-init> </app-init>
+      }
+      @case ('dep') {
+        <h3>Actividades deportivas</h3>
+        <actividades [tipo]="'dep'"> </actividades>
+      }
+      @case ('cul') {
+        <h3>Actividades culturales</h3>
+        <actividades [tipo]="'cul'"> </actividades>
+      }
+      @case ('profile') {
+        <profile> </profile>
+      }
+      @default {
+        {{ notFound() }}
+      }
+    }
+  </nav-bar-profesor>
+}

@@ -1,12 +1,23 @@
+<button (click)="openModalEvento()">Crear Evento</button>
+
+@if(isModalOpenEvento) {
+    <add-evento (closeModal)="closeModalEvento()"></add-evento>
+}
+
 <div class="eventos-container">
-    <div class="event-card" *ngFor="let evento of eventos" [ngClass]="{ active: isEventActive(evento.Fecha), ended: !isEventActive(evento.Fecha) }">
+    <div class="event-card" *ngFor="let evento of eventos" [ngClass]="{ active: isEventActive(evento.Fecha), ended: !isEventActive(evento.Fecha) }" (click)="openModal(evento.Id_evento_pk)">
         <h2>{{ evento.Nombre }}</h2>
         <p class="status">{{ isEventActive(evento.Fecha) ? 'Activo' : 'Ya terminó' }}</p>
         <div class="details">
             <p><strong>Lugar:</strong> {{ evento.Lugar }}</p>
-            <p><strong>Fecha:</strong> {{ evento.Fecha | date: 'longDate' }}</p>
+            <p><strong>Fecha:</strong> {{ evento.Fecha | date: 'longDate':'':'es-ES' }}</p>
             <p><strong>Hora:</strong> {{ evento.Hora }}</p>
             <p><strong>Actividad Asociada:</strong> {{ evento.actividad?.Nombre }}</p>
         </div>
     </div>
 </div>
+
+@if(isModalOpen) {
+    <details-evento [id_evento]="selectedEvento" (closeModal)="closeModal()"></details-evento>
+}
+

@@ -1,0 +1,51 @@
+<header>
+    <div class="icon_menu">
+        <i class="bi bi-list" id="btn_open" (click)="toggleMenu()">
+            <h4>MENU</h4>
+        </i>
+    </div>
+</header>
+ñ
+<div class="menu_side" id="menu_side">
+    <div class="options_menu">
+        <div (click)="changePage('init')" class="option">
+            <i class="bi bi-house" title="Inicio"></i>
+            <h4>Inicio</h4>
+        </div>
+        <div class="option" (click)="toggleSubmenu('submenu_actividades')">
+            <i class="bi bi-calendar" title="Actividades"></i>
+            <h4>Actividades</h4>
+        </div>
+        <div class="submenu" id="submenu_actividades">
+            <div (click)="changePage('dep')" class="submenu-item">
+                <i class="bi bi-bicycle" title="Deportivas"></i>
+                <h4>Deportivas</h4>
+            </div>
+            <div (click)="changePage('cul')" class="submenu-item">
+                <i class="bi bi-palette" title="Culturales"></i>
+                <h4>Culturales</h4>
+            </div>
+        </div>
+        <div class="option">
+            <i class="bi bi-file-earmark-text" title="Reportes"></i>
+            <h4>Reportes</h4>
+        </div>
+        <div (click)="changePage('profile')" class="option">
+            <i class="bi bi-person-circle" title="Perfil"></i>
+            <h4>Perfil</h4>
+        </div>
+        <div (click)="logout()">
+            <div class="option">
+                <i class="bi bi-box-arrow-right" title="Salir"></i>
+                <h4>Salir</h4>
+            </div>
+        </div>
+    </div>
+</div>
+<body>
+    <main [class.menu-opened]="isMenuOpened">
+        <ng-content> </ng-content>
+    </main>
+</body>
+
+<!-- Corregido: Solo un main -->

@@ -5,6 +5,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Evento } from 'src/entities/eventos.entity';
 import { Repository } from 'typeorm';
 import { Actividad } from 'src/entities/actividades.entity';
+import { Participa } from 'src/entities/participa.entity';
+import { Alumno } from 'src/entities/alumnos.entity';
 
 @Injectable()
 export class EventosService {
@@ -14,6 +16,10 @@ export class EventosService {
     private readonly eventoRepo: Repository<Evento>,
     @InjectRepository(Actividad)
     private readonly actividadRepo: Repository<Actividad>,
+    @InjectRepository(Participa)
+    private readonly participaRepo: Repository<Participa>,
+    @InjectRepository(Alumno)
+    private readonly alumnoRepo: Repository<Alumno>,
   ){}
 
   async create(createEventoDto: CreateEventoDto) {
@@ -47,9 +53,18 @@ export class EventosService {
   }
 
   async findOne(id: number) {
-    const evento = await this.eventoRepo.findOne({relations:['actividad'], where:{Id_evento_pk:id}});
+    const evento = await this.eventoRepo.findOne({
+      where: { Id_evento_pk: id },
+      relations: ['actividad', 'participaciones', 'participaciones.alumno'],
+    });
+  
+    if (!evento) {
+      throw new Error(`Evento con ID ${id} no encontrado`);
+    }
+    
     return evento;
   }
+  
 
   async update(updateEventoDto: UpdateEventoDto) {
     // Busca el evento a actualizar

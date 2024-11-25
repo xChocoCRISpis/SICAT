@@ -1,0 +1,30 @@
+<div class="modal">
+    <div class="modal-content">
+        <span class="close-btn" (click)="cerrarModal()">×</span>
+
+        <h2>Detalles del Evento</h2>
+
+        <div *ngIf="loading">Cargando datos del evento...</div>
+        <div *ngIf="error">{{ error }}</div>
+
+        <div *ngIf="evento && !loading && !error">
+            <h3>{{ evento.Nombre }}</h3>
+            <p><strong>Lugar:</strong> {{ evento.Lugar }}</p>
+            <p><strong>Fecha:</strong> {{ evento.Fecha }}</p>
+            <p><strong>Hora:</strong> {{ evento.Hora }}</p>
+
+            <h4>Actividad</h4>
+            <p><strong>Nombre:</strong> {{ evento.actividad.Nombre }}</p>
+            <p><strong>Tipo:</strong> {{ evento.actividad.Tipo }}</p>
+
+            <h4>Participantes</h4>
+            <ul>
+                <li *ngFor="let participacion of evento.participaciones">
+                    <strong>{{ participacion.alumno.Nombre }} {{ participacion.alumno.Ap_paterno }} {{ participacion.alumno.Ap_materno }}</strong>
+                    <p><strong>Número de Control:</strong> {{ participacion.alumno.Num_control }}</p>
+                    <p><strong>Correo:</strong> {{ participacion.alumno.Correo }}</p>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

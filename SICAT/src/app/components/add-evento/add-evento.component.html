@@ -1,0 +1,41 @@
+<div class="modal">
+    <div class="modal-content">
+        <span class="close-btn" (click)="cerrarModal()">×</span>
+        <h2>Agregar Evento</h2>
+
+        <form>
+            <div class="form-group">
+                <label for="Nombre">Nombre:</label>
+                <input type="text" id="Nombre" [(ngModel)]="formData.Nombre" name="Nombre" required />
+            </div>
+
+            <div class="form-group">
+                <label for="Lugar">Lugar:</label>
+                <input type="text" id="Lugar" [(ngModel)]="formData.Lugar" name="Lugar" required />
+            </div>
+
+            <div class="form-group">
+                <label for="Fecha">Fecha:</label>
+                <input type="date" id="Fecha" [(ngModel)]="formData.Fecha" name="Fecha" required />
+            </div>
+
+            <div class="form-group">
+                <label for="Hora">Hora:</label>
+                <input type="time" id="Hora" [(ngModel)]="formData.Hora" name="Hora" required />
+            </div>
+
+            <div class="form-group">
+                <label for="Id_Actividad">Actividad:</label>
+                <select id="Id_Actividad" [(ngModel)]="formData.Id_Actividad" name="Id_Actividad" required>
+                    <option [value]="null" disabled>-- Selecciona una actividad --</option>
+                    <option *ngFor="let actividad of actividades" [value]="actividad.Id_actividad_pk">
+                        {{ actividad.Nombre }}
+                    </option>
+                </select>
+            </div>
+
+            <button type="button" (click)="createEvento()">Crear</button>
+            <button type="button" (click)="cerrarModal()">Cancelar</button>
+        </form>
+    </div>
+</div>
