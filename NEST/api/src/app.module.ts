@@ -24,6 +24,7 @@ import { MailService } from './common/mail/mail.service';
 import { MailModule } from './common/mail/mail.module';
 import { EncargadosModule } from './encargados/encargados.module';
 import { EstadisticasModule } from './estadisticas/estadisticas.module';
+import { CarrerasModule } from './carreras/carreras.module';
 
 @Module({
   imports: [
@@ -58,6 +59,7 @@ import { EstadisticasModule } from './estadisticas/estadisticas.module';
     MailModule,
     EncargadosModule,
     EstadisticasModule,
+    CarrerasModule,
   ],
   controllers: [AppController, BitacoraController],
   providers: [AppService, ImgBBService, MailService],

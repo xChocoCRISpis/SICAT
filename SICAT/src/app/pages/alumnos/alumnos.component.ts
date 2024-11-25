@@ -4,11 +4,12 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { AlumnoComponent } from '../../components/alumno/alumno.component';
+import { AddAlumnoComponent } from '../../components/add-alumno/add-alumno.component';
 
 @Component({
   selector: 'alumnos',
   standalone: true,
-  imports: [CommonModule, FormsModule, AlumnoComponent],
+  imports: [CommonModule, FormsModule, AlumnoComponent, AddAlumnoComponent],
   templateUrl: './alumnos.component.html',
   styleUrls: ['./alumnos.component.scss'],
 })
@@ -18,11 +19,14 @@ export class AlumnosComponent {
   paginatedAlumnos: any[] = [];
   filters: any = {};
   currentPage = 1;
-  itemsPerPage = 10;
+  itemsPerPage = 50;
   totalPages = 1;
   totalAlumnos = 0; // Para saber cuántos alumnos hay en total en la base de datos
   selectedAlumnoId: number | null = null;
   modalOpen = false;
+
+
+  openAddAlumno:boolean = false;
 
   constructor(private alumnosService: AlumnosService, private http: HttpClient) {
     this.loadAlumnos();

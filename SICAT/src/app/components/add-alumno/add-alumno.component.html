@@ -1,0 +1,109 @@
+<div class="container">
+    <h2 class="title">Agregar Nuevo Alumno</h2>
+
+    <!-- Mensaje de éxito -->
+    <div *ngIf="successMessage" class="success">
+        {{ successMessage }}
+    </div>
+
+    <!-- Mensaje de error -->
+    <div *ngIf="errorMessage" class="error">
+        {{ errorMessage }}
+    </div>
+
+    <div class="form">
+        <!-- Número de Control -->
+        <div class="form-group">
+            <label for="num_control">Número de Control</label>
+            <input maxlength="10" type="text" id="num_control" placeholder="1111111110" [value]="alumnoData.Num_control" (input)="onInputChange($event, 'Num_control')" required />
+        </div>
+
+        <!-- Nombre -->
+        <div class="form-group">
+            <label for="nombre">Nombre</label>
+            <input type="text" id="nombre" placeholder="Nombre del Alumno" [value]="alumnoData.Nombre" (input)="onInputChange($event, 'Nombre')" required />
+        </div>
+
+        <!-- Apellido Paterno -->
+        <div class="form-group">
+            <label for="ap_paterno">Apellido Paterno</label>
+            <input type="text" id="ap_paterno" placeholder="Apellido Paterno" [value]="alumnoData.Ap_paterno" (input)="onInputChange($event, 'Ap_paterno')" required />
+        </div>
+
+        <!-- Apellido Materno -->
+        <div class="form-group">
+            <label for="ap_materno">Apellido Materno</label>
+            <input type="text" id="ap_materno" placeholder="Apellido Materno" [value]="alumnoData.Ap_materno" (input)="onInputChange($event, 'Ap_materno')" required />
+        </div>
+
+        <!-- Sexo -->
+        <div class="form-group">
+            <label for="sexo">Sexo</label>
+            <select id="sexo" [value]="alumnoData.Sexo" (change)="onInputChange($event, 'Sexo')" required>
+                <option value="" disabled>Seleccione</option>
+                <option value="M">Masculino</option>
+                <option value="F">Femenino</option>
+            </select>
+        </div>
+
+        <!-- Fecha de Nacimiento -->
+        <div class="form-group">
+            <label for="fecha_nac">Fecha de Nacimiento</label>
+            <input type="date" id="fecha_nac" [value]="alumnoData.Fecha_nac" (input)="onInputChange($event, 'Fecha_nac')" required />
+        </div>
+
+        <!-- Nivel -->
+        <div class="form-group">
+            <label for="nivel">Nivel</label>
+            <select id="nivel" [value]="alumnoData.Nivel" (change)="onInputChange($event, 'Nivel')" required>
+                <option value="" disabled>Seleccione</option>
+                <option value="1">Primer nivel (Horas)</option>
+                <option value="2">Segundo nivel (Activo)</option>
+                <option value="3">Tercer nivel (Ex-alumno)</option>
+            </select>
+        </div>
+
+        <!-- Teléfono -->
+        <div class="form-group">
+            <label for="telefono">Teléfono</label>
+            <input maxlength="12" type="text" id="telefono" placeholder="87150816065" [value]="alumnoData.Telefono" (input)="onInputChange($event, 'Telefono')" required />
+        </div>
+
+        <!-- Correo -->
+        <div class="form-group">
+            <label for="correo">Correo</label>
+            <input type="email" id="correo" placeholder="correo@ejemplo.com" [value]="alumnoData.Correo" (input)="onInputChange($event, 'Correo')" required />
+        </div>
+
+        <!-- Semestre -->
+        <div class="form-group">
+            <label for="semestre">Semestre</label>
+            <select id="semestre" [value]="alumnoData.Semestre" (change)="onInputChange($event, 'Semestre')" required>
+                <option value="" disabled>Seleccione</option>
+                <option *ngFor="let semestre of semestres" [value]="semestre">
+                    {{ semestre }}
+                </option>
+            </select>
+        </div>
+
+        <!-- Carrera -->
+        <div class="form-group">
+            <label for="carrera">Carrera</label>
+            <select id="carrera" [(ngModel)]="alumnoData.carrera" required>
+                <option value="" disabled>Seleccione</option>
+                <option *ngFor="let carrera of carreras" [value]="carrera.Id_carrera_pk">
+                    {{ carrera.Nombre }}
+                </option>
+            </select>
+        </div>
+
+        <!-- Foto -->
+        <div class="form-group">
+            <label for="foto">Foto</label>
+            <input type="file" id="foto" (change)="onFileSelected($event)" accept="image/*" required />
+        </div>
+
+        <!-- Botón Crear -->
+        <button (click)="addAlumno()" class="btn btn-submit">Crear Alumno</button>
+    </div>
+</div>
