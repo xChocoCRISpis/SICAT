@@ -6,12 +6,13 @@ import { environment } from '../../environments/environment';
 import {LoginServiceService} from './login-services/login-service.service'
 import { NotificationsComponent } from "../components/notifications/notifications.component";
 import { NotificationsService } from '../components/notifications/notifications.service';
+import { LoaderComponent } from '../components/loader/loader.component';
 
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [ReactiveFormsModule, NotificationsComponent],
+  imports: [ReactiveFormsModule, NotificationsComponent,LoaderComponent],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
