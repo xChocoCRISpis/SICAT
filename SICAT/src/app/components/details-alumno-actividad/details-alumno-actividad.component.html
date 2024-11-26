@@ -1,1 +1,46 @@
-<p>details-alumno-actividad works!</p>
+<div *ngIf="open" class="modal">
+    <div class="modal-content">
+        <span class="close-btn" (click)="onCloseModal()">×</span>
+
+        <!-- Indicador de carga -->
+        <ng-container *ngIf="loading; else contentTemplate">
+            <p>Cargando detalles del alumno...</p>
+        </ng-container>
+
+        <!-- Contenido principal -->
+        <ng-template #contentTemplate>
+            <ng-container *ngIf="error; else detailsTemplate">
+                <p class="error">{{ error }}</p>
+            </ng-container>
+        </ng-template>
+
+        <!-- Detalles del alumno -->
+        <ng-template #detailsTemplate>
+            <div *ngIf="alumnoActividad">
+                <div class="alumno-info">
+                    <h2>Detalles del Alumno</h2>
+                    <div class="info">
+                        <img *ngIf="alumnoActividad.alumno.foto" [src]="alumnoActividad.alumno.foto" alt="Foto del alumno" class="alumno-foto" />
+                        <p><strong>Num Control:</strong> {{ alumnoActividad.alumno.num_control }}</p>
+                        <p><strong>Nombre:</strong> {{ alumnoActividad.alumno.nombre }} {{ alumnoActividad.alumno.ap_paterno }} {{ alumnoActividad.alumno.ap_materno }}</p>
+                        <p><strong>Sexo:</strong> {{ alumnoActividad.alumno.sexo }}</p>
+                        <p><strong>Semestre:</strong> {{ alumnoActividad.alumno.semestre }}</p>
+                        <p><strong>Carrera:</strong> {{ alumnoActividad.alumno.carrera?.nombre }} ({{ alumnoActividad.alumno.carrera?.nombre_corto }})</p>
+                    </div>
+
+                    <div class="actividad-info">
+                        <h3>Actividad</h3>
+                        <p><strong>Nombre:</strong> {{ alumnoActividad.actividad.nombre }}</p>
+                        <p><strong>Horas:</strong> {{ alumnoActividad.actividad.horas }}</p>
+                        <p><strong>Activo:</strong> {{ alumnoActividad.actividad.activo ? 'Sí' : 'No' }}</p>
+                    </div>
+                </div>
+            </div>
+
+            <p *ngIf="!alumnoActividad">No se encontraron detalles del alumno y actividad.</p>
+        </ng-template>
+
+        <!-- Opciones adicionales -->
+
+    </div>
+</div>

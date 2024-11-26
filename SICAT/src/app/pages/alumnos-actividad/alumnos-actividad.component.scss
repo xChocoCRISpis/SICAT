@@ -3,6 +3,14 @@
     overflow-x: auto;
 }
 
+
+tbody {
+    tr:hover {
+        background-color: #943545;
+        color: #ddd;
+    }
+}
+
 .alumnos-container {
     max-width: 1000px;
     margin: 0 auto;
@@ -12,7 +20,7 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.button{
+.button {
     padding: 10px;
     background-color: #5a0a18;
     color: #ddd;
@@ -22,7 +30,7 @@
     text-align: center;
     width: 25vw;
 
-    &:hover{
+    &:hover {
         background-color: #b2132d;
         color: #c0bdbd;
     }

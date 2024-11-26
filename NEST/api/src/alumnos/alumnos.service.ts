@@ -32,46 +32,45 @@ export class AlumnosService {
     page: number = 1,
     limit: number = 50
   ) {
-    // Validar y sanitizar los valores de paginación
-    page = Number.isNaN(page) || page <= 0 ? 1 : Math.floor(page);
-    limit = Number.isNaN(limit) || limit <= 0 ? 50 : Math.floor(limit);
-
-    if (semestre !== undefined && (Number.isNaN(semestre) || semestre <= 0)) {
-      throw new BadRequestException("El valor de semestre no es válido");
-    }
-
+    // Validar parámetros de paginación
+    page = Math.max(1, page);
+    limit = Math.max(1, limit);
+  
+    // Construir consulta inicial
     const query = this.alumnoRepository
-      .createQueryBuilder("alumno")
-      .innerJoin("alumno.pertenencias", "pertenece")
-      .innerJoin("pertenece.actividad", "actividad")
-      .where("actividad.Id_actividad_pk = :idActividad", { idActividad });
-
+      .createQueryBuilder('alumno')
+      .innerJoin('alumno.pertenencias', 'pertenece', 'pertenece.Activo = 1')
+      .innerJoin('pertenece.actividad', 'actividad', 'actividad.Id_actividad_pk = :idActividad', { idActividad })
+      .leftJoinAndSelect('alumno.carrera', 'carrera');
+  
     // Aplicar filtros opcionales
     if (num_control) {
-      query.andWhere("alumno.Num_control = :num_control", { num_control });
+      query.andWhere('alumno.Num_control LIKE :num_control', { num_control: `%${num_control}%` });
     }
     if (nombre) {
-      query.andWhere("alumno.Nombre LIKE :nombre", { nombre: `%${nombre}%` });
+      query.andWhere('alumno.Nombre LIKE :nombre', { nombre: `%${nombre}%` });
     }
     if (ap_paterno) {
-      query.andWhere("alumno.Ap_paterno LIKE :ap_paterno", { ap_paterno: `%${ap_paterno}%` });
+      query.andWhere('alumno.Ap_paterno LIKE :ap_paterno', { ap_paterno: `%${ap_paterno}%` });
     }
     if (sexo) {
-      query.andWhere("alumno.Sexo = :sexo", { sexo });
+      query.andWhere('alumno.Sexo = :sexo', { sexo });
     }
     if (semestre) {
-      query.andWhere("alumno.Semestre = :semestre", { semestre });
+      query.andWhere('alumno.Semestre = :semestre', { semestre });
     }
-
+  
     // Aplicar paginación
     query.skip((page - 1) * limit).take(limit);
-
+  
+    // Ejecutar consulta y obtener resultados
     const [alumnos, total] = await query.getManyAndCount();
-
+  
     if (!alumnos || alumnos.length === 0) {
-      throw new NotFoundException("No se encontraron alumnos asociados a esta actividad");
+      throw new NotFoundException('No se encontraron alumnos asociados a esta actividad.');
     }
-
+  
+    // Formatear respuesta
     return {
       total,
       currentPage: page,
@@ -79,6 +78,8 @@ export class AlumnosService {
       alumnos: alumnos.map(alumno => this.mapAlumnoWithDetails(alumno)),
     };
   }
+  
+  
 
   // Método privado para mapear la información del alumno
   private mapAlumnoWithDetails(alumno: Alumno) {
@@ -90,7 +91,10 @@ export class AlumnosService {
       ap_materno: alumno.Ap_materno,
       sexo: alumno.Sexo,
       semestre: alumno.Semestre,
-      carrera: alumno.carrera ? alumno.carrera.Nombre : null,
+      carrera: alumno.carrera ? {
+        nombre: alumno.carrera.Nombre,
+        nombre_corto: alumno.carrera.Nombre_corto
+      } : null,
     };
   }
 
@@ -334,4 +338,60 @@ export class AlumnosService {
       alumnos: alumnos.map(alumno => this.mapAlumnoWithCarrera(alumno)),
     };
   }
+
+  async findAlumnoActividad(idAlumno: number, idActividad: number) {
+    if (!idAlumno || !idActividad) {
+      throw new BadRequestException('El ID del alumno y el ID de la actividad son obligatorios.');
+    }
+  
+    const query = this.alumnoRepository
+      .createQueryBuilder('alumno')
+      .leftJoinAndSelect('alumno.carrera', 'carrera')
+      .leftJoinAndSelect('alumno.pertenencias', 'pertenece', 'pertenece.Activo = 1')
+      .leftJoinAndSelect('pertenece.actividad', 'actividad', 'actividad.Id_actividad_pk = :idActividad', { idActividad })
+      .where('alumno.Id_alumno_pk = :idAlumno', { idAlumno });
+  
+    // Ejecutar la consulta
+    const alumno = await query.getOne();
+  
+    // Verificar resultados
+    if (!alumno || !alumno.pertenencias || alumno.pertenencias.length === 0) {
+      throw new NotFoundException('No se encontró el alumno en esta actividad.');
+    }
+  
+    // Mapear la actividad específica
+    const actividad = alumno.pertenencias.find(
+      (pertenencia) => pertenencia.actividad?.Id_actividad_pk === idActividad,
+    );
+  
+    if (!actividad) {
+      throw new NotFoundException('La actividad asociada no fue encontrada.');
+    }
+  
+    return {
+      alumno: {
+        id: alumno.Id_alumno_pk,
+        num_control: alumno.Num_control,
+        nombre: alumno.Nombre,
+        ap_paterno: alumno.Ap_paterno,
+        ap_materno: alumno.Ap_materno,
+        sexo: alumno.Sexo,
+        semestre: alumno.Semestre,
+        carrera: alumno.carrera
+          ? {
+              nombre: alumno.carrera.Nombre,
+              nombre_corto: alumno.carrera.Nombre_corto,
+            }
+          : null,
+      },
+      actividad: {
+        id: actividad.actividad.Id_actividad_pk,
+        nombre: actividad.actividad.Nombre,
+        horas: actividad.Horas,
+        activo: actividad.Activo,
+      },
+    };
+  }
+  
+  
 }

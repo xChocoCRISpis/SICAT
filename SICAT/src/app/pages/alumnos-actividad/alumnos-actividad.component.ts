@@ -1,15 +1,15 @@
-import { HttpParams } from '@angular/common/http';
-import { Component, Input } from '@angular/core';
-import { AlumnosService } from '../alumnos/alumnos.service';
-import { CommonModule } from '@angular/common';
-import { AddAlumnoActividadComponent } from '../add-alumno-actividad/add-alumno-actividad.component';
-
+import { HttpParams } from "@angular/common/http";
+import { Component, Input } from "@angular/core";
+import { AlumnosService } from "../alumnos/alumnos.service";
+import { CommonModule } from "@angular/common";
+import { AddAlumnoActividadComponent } from "../add-alumno-actividad/add-alumno-actividad.component";
+import { DetailsAlumnoActividadComponent } from "../../components/details-alumno-actividad/details-alumno-actividad.component";
 @Component({
-  selector: 'app-alumnos-actividad',
+  selector: "app-alumnos-actividad",
   standalone: true,
-  imports: [CommonModule,AddAlumnoActividadComponent],
-  templateUrl: './alumnos-actividad.component.html',
-  styleUrls: ['./alumnos-actividad.component.scss'],
+  imports: [CommonModule, AddAlumnoActividadComponent, DetailsAlumnoActividadComponent],
+  templateUrl: "./alumnos-actividad.component.html",
+  styleUrls: ["./alumnos-actividad.component.scss"],
 })
 export class AlumnosActividadComponent {
   alumnos: any[] = [];
@@ -21,19 +21,21 @@ export class AlumnosActividadComponent {
   totalPages = 1;
   totalAlumnos = 0;
   loading = false;
-  errorMessage = '';
+  errorMessage = "";
 
   @Input() id_actividad: number | null = null;
-  @Input() name_actividad: string = '';
-  @Input() open_add_actividad:boolean=false;
-
+  @Input() name_actividad: string = "";
+  @Input() open_add_actividad: boolean = false;
+  @Input() id_alumno: number | null = null;
+  @Input() open_details_actividad: boolean = false;
+  
   constructor(private alumnosService: AlumnosService) {}
 
   ngOnInit() {
     if (this.id_actividad) {
       this.loadAlumnosByActividad(this.id_actividad);
     } else {
-      this.errorMessage = 'No se proporcionó un ID de actividad válido.';
+      this.errorMessage = "No se proporcionó un ID de actividad válido.";
     }
   }
 
@@ -43,27 +45,41 @@ export class AlumnosActividadComponent {
 
   closeDialog(): void {
     this.open_add_actividad = false;
+    this.id_actividad = null;
+    this.name_actividad = "";
   }
+
+  openDialogDetails(id: number): void {
+    this.open_details_actividad = true;
+    this.id_alumno = id;
+  }
+  
+  closeDialogDetails(): void {
+    this.open_details_actividad = false;
+    this.id_alumno = null;
+  }
+  
 
   loadAlumnosByActividad(idActividad: number) {
     this.loading = true;
-    this.errorMessage = '';
+    this.errorMessage = "";
     const params = new HttpParams()
-      .set('id', idActividad.toString())
-      .set('page', this.currentPage)
-      .set('limit', this.itemsPerPage);
+      .set("id", idActividad.toString())
+      .set("page", this.currentPage)
+      .set("limit", this.itemsPerPage);
 
     this.alumnosService.getAlumnosByActividad(params).subscribe({
       next: (res: any) => {
+        console.log(res);
         this.alumnos = res.alumnos || [];
         this.filteredAlumnos = [...this.alumnos];
         this.totalAlumnos = res.total || 0;
         this.updatePagination();
         this.loading = false;
       },
-      error: (error) => {
-        console.error('Error al cargar alumnos por actividad:', error);
-        this.errorMessage = 'No se pudieron cargar los alumnos. Intente nuevamente.';
+      error: error => {
+        console.error("Error al cargar alumnos por actividad:", error);
+        this.errorMessage = "No se pudieron cargar los alumnos. Intente nuevamente.";
         this.loading = false;
       },
     });
@@ -73,13 +89,13 @@ export class AlumnosActividadComponent {
     const target = event.target as HTMLInputElement;
     this.filters[filterKey] = target.value;
 
-    this.filteredAlumnos = this.alumnos.filter((alumno) => {
-      return Object.keys(this.filters).every((key) => {
+    this.filteredAlumnos = this.alumnos.filter(alumno => {
+      return Object.keys(this.filters).every(key => {
         if (!this.filters[key]) return true;
-        if (key === 'semestre') {
+        if (key === "semestre") {
           return alumno[key] === parseInt(this.filters[key], 10);
         }
-        if (key === 'nombre_corto') {
+        if (key === "nombre_corto") {
           return alumno.carrera?.nombre_corto?.includes(this.filters[key]);
         }
         return alumno[key]?.includes(this.filters[key]);

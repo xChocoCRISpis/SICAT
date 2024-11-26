@@ -36,5 +36,19 @@ export class AlumnosService {
     return this.http.post<any>(`${this.apiUrl}/create`, formData, { headers });
   }
 
+  getDetalleActividad(actividadId: number, alumnoId: number): Observable<any> {
+    const headers: HttpHeaders = new HttpHeaders({ 
+      Authorization: `Bearer ${localStorage.getItem("auth_token")}` 
+    });
+    
+    const params = new HttpParams()
+      .set('actividad', actividadId)
+      .set('alumno', alumnoId);
+
+    return this.http.get<any>(`${this.apiUrl}/detalle-actividad`, { 
+      params: params, 
+      headers: headers 
+    });
+  }
 
 }

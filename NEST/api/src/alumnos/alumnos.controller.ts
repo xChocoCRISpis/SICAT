@@ -114,4 +114,18 @@ export class AlumnosController {
         nombre_corto,
       );
   }
+
+  @Get('detalle-actividad')
+  async getAlumnoActividad(
+    @Query('alumno') idAlumno: number,
+    @Query('actividad') idActividad: number,
+  ) {
+    const errors = [];
+    if(!idAlumno)
+      throw new BadRequestException('Es requerido el campo "alumno" por query param');
+    if(!idActividad)
+      throw new BadRequestException('Es requerido el campo "actividad" por query param');
+
+    return await this.alumnosService.findAlumnoActividad(+idAlumno, +idActividad);
+  }
 }

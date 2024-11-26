@@ -10,7 +10,7 @@ import { LOCALE_ID } from '@angular/core';
 
 @NgModule({
   imports: [BrowserModule, AppRoutingModule, HttpClientModule],
-  declarations: [AppComponent, LoginComponent, InitComponent],
+  declarations: [],
   providers: [
     AuthService,
     { provide: LOCALE_ID, useValue: 'es-ES' }
