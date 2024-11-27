@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject, TemplateRef, ViewChild } from '@angular/core';
 import { AlumnosService } from './alumnos.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -7,6 +7,8 @@ import { AlumnoComponent } from '../../components/alumno/alumno.component';
 import { AddAlumnoComponent } from '../../components/add-alumno/add-alumno.component';
 import { AddAlumnoToActividadComponent } from '../../components/add-alumno-to-actividad/add-alumno-to-actividad.component';
 import { AddAlumnoToEventoComponent } from '../../components/add-alumno-to-evento/add-alumno-to-evento.component';
+import { ContentNavBarService } from '../../services/content-nav-bar.service';
+
 
 @Component({
   selector: 'alumnos',
@@ -32,6 +34,18 @@ export class AlumnosComponent {
     openAddAlumnoToEvento: false as boolean,
     openAddAlumno: false as boolean,
     openVerAlumnos: true as boolean
+  }
+
+  @ViewChild('navBarContent') navBarContent!: TemplateRef<any>;
+
+  contentNavBarService = inject(ContentNavBarService);
+
+  ngAfterViewInit() {
+    this.contentNavBarService.setContent(this.navBarContent);
+  }
+
+  ngOnDestroy() {
+    this.contentNavBarService.clearContent();
   }
 
   open(key: keyof typeof this.openValues) {

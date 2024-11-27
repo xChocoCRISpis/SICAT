@@ -1,32 +1,37 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { NavBarService,Pages } from '../../services/nav-bar.service'
+import { MessengerStatesService } from '../../services/messenger-states.service';
+import { UpNavBarComponent } from '../../components/up-nav-bar/up-nav-bar.component';
 
 
 @Component({
   selector: 'app-nav-bar',
   standalone: true,
-  imports: [],
+  imports: [UpNavBarComponent],
   templateUrl: './nav-bar.component.html',
   styleUrl: './nav-bar.component.scss'
 })
 export class NavBarComponent {
   isMenuOpened = false;
+ 
 
-  constructor(private router: Router,
-    private pages:NavBarService
-  ){}
-  toggleMenu(): void {
-    const menuSide = document.getElementById('menu_side');
-    this.isMenuOpened = !this.isMenuOpened;
-    if (menuSide) {
-      menuSide.classList.toggle('active');
-    }
+  constructor(
+    private router: Router,
+    private pages: NavBarService,
+    private messengerStatesService: MessengerStatesService
+  ) {
+   
   }
-
-  /* navigateTo(url: string): void {
-    this.router.navigateByUrl(url);
-  } */
+  ngOnInit(): void {
+    this.messengerStatesService.menuState$.subscribe((state: boolean) => {
+      this.isMenuOpened = state;
+      const menuSide = document.getElementById('menu_side');
+      if (menuSide) {
+        menuSide.classList.toggle('active', state);
+      }
+    });
+  }
 
   toggleSubmenu(id: string): void {
     const submenu = document.getElementById(id);
@@ -49,5 +54,14 @@ export class NavBarComponent {
 
   changePage(page:Pages){
     this.pages.loadComponent(page);
+  }
+
+  toggleMenu(): void {
+    this.isMenuOpened = !this.isMenuOpened;
+    const menuSide = document.getElementById('menu_side');
+    if (menuSide) {
+      menuSide.classList.toggle('active');
+    }
+    this.messengerStatesService.setMenuState(this.isMenuOpened);
   }
 }

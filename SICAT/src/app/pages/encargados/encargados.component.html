@@ -1,10 +1,10 @@
+<ng-template #navBarContent>
+    <button (click)="openComponent('addEncargado')">Agregar encargado</button>
+    <button (click)="openComponent('addUser')">Agregar usuario</button>
+    <button (click)="openComponent('viewEncargados')">ver encargados</button>
+</ng-template>
+
 <div class="container">
-    <button class="btn btn-primary" (click)="openComponent('addEncargado')">Agregar encargado</button>
-
-    <button class="btn btn-primary" (click)="openComponent('addUser')">Agregar usuario</button>
-
-    <button class="btn btn-primary" (click)="openComponent('viewEncargados')">ver encargados</button>
-
     @switch (true) {
         @case (openComponents.addEncargado) {
             <add-encargado></add-encargado>
@@ -41,8 +41,8 @@
                         <td>{{ encargado.Ap_materno }}</td>
                         <td>{{ encargado.usuario?.Correo || 'Sin asignar' }}</td>
                         <!--                 <td>
-                    <button class="btn btn-delete" (click)="deleteEncargado(encargado.Id_encargado_pk, $event)">Eliminar</button>
-                </td> -->
+            <button class="btn btn-delete" (click)="deleteEncargado(encargado.Id_encargado_pk, $event)">Eliminar</button>
+          </td> -->
                     </tr>
                 </tbody>
             </table>

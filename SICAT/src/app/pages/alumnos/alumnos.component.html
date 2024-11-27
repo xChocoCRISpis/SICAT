@@ -1,7 +1,11 @@
-<button (click)="open('openAddAlumno')">registrar alumno</button>
+
+
+<ng-template #navBarContent>
+    <button (click)="open('openAddAlumno')">registrar alumno</button>
 <!-- <button (click)="open('openAddAlumnoToActividad')">registrar alumno a actividad</button>
 <button (click)="open('openAddAlumnoToEvento')">registrar alumno a evento</button> -->
 <button (click)="open('openVerAlumnos')">ver alumnos</button>
+</ng-template>
 
 @switch (true) {
     @case (openValues.openVerAlumnos) {

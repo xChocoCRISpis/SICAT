@@ -15,7 +15,13 @@
 
   <!-- Código QR alineado a la derecha -->
   <div class="qr-container">
-    <img [src]="qrCodeUrl" alt="Código QR" class="qr-image" />
+    @if(qrCodeUrl) {
+      <img [src]="qrCodeUrl" alt="Código QR" class="qr-image" />
+    } @else {
+      <img src="img/not-found-dino.png" alt="Código QR" class="qr-image" />
+      <p>No hay código QR disponible</p>
+    }
+
   </div>
 
   <!-- Información de los horarios en tabla -->

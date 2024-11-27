@@ -18,6 +18,7 @@ export class AlumnoComponent implements OnInit {
   @Input() open: boolean = false;
   @Input() id_alumno: number | null = null;
   @Output() closeModal = new EventEmitter<void>();
+  @Output() errorEvent = new EventEmitter<string>();
 
 
   openValues = {
@@ -76,5 +77,9 @@ export class AlumnoComponent implements OnInit {
 
   onCloseModal() {
     this.closeModal.emit();
+  }
+
+  handleImageError(event: Event): void {
+    (event.target as HTMLImageElement).src = 'img/user-default.png';
   }
 }

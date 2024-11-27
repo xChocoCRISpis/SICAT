@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, ViewChild } from "@angular/core";
 import { EventosService } from "./eventos.service";
 import { CreateEventoDto } from "../../interfaces/create-eventos.interface";
 import { UpdateEventoDto } from "../../interfaces/update-evento.interface";
@@ -7,7 +7,8 @@ import { DetailsEventoComponent } from "../../components/details-evento/details-
 import { AddEventoComponent } from "../../components/add-evento/add-evento.component";
 import { registerLocaleData } from '@angular/common';
 import localeEs from '@angular/common/locales/es';
-
+import { ContentNavBarService } from "../../services/content-nav-bar.service";
+import { TemplateRef, inject } from "@angular/core";
 registerLocaleData(localeEs, 'es-ES');
 
 @Component({
@@ -23,6 +24,8 @@ export class EventosComponent {
   isModalOpen: boolean = false;
   isModalOpenEvento: boolean = false;
 
+  contentNavBarService = inject(ContentNavBarService);
+
   openModalEvento() {
     this.isModalOpenEvento = true;
   } 
@@ -30,6 +33,17 @@ export class EventosComponent {
   closeModalEvento() {
     this.isModalOpenEvento = false;
   } 
+
+  @ViewChild('navBarContent') navBarContent!: TemplateRef<any>;
+
+  ngAfterViewInit() {
+    this.contentNavBarService.setContent(this.navBarContent);
+  }
+
+  ngOnDestroy() {
+    this.contentNavBarService.clearContent();
+  }
+
 
   closeModal() {
     this.isModalOpen = false;

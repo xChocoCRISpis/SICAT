@@ -1,4 +1,6 @@
-<button (click)="openModalEvento()">Crear Evento</button>
+<ng-template #navBarContent>
+    <button (click)="openModalEvento()">Crear Evento</button>
+</ng-template>
 
 @if(isModalOpenEvento) {
     <add-evento (closeModal)="closeModalEvento()"></add-evento>

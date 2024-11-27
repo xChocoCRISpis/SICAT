@@ -1,15 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
 import { EncargadosService } from '../../services/encargados.service';
 import { CommonModule } from '@angular/common';
 import { HorarioFormatter } from '../../common/horario-formatter';
 import { AddEncargadoComponent } from '../../components/add-encargado/add-encargado.component';
 import { AddUserComponent } from '../../components/add-user/add-user.component';
 import { AddUserHorarioComponent } from '../../components/add-user-horario/add-user-horario.component';
+import { UpNavBarComponent } from '../../components/up-nav-bar/up-nav-bar.component';
+import { ContentNavBarComponent } from '../../components/content-nav-bar/content-nav-bar.component';
+import { ContentNavBarService } from '../../services/content-nav-bar.service';
 
 @Component({
   selector: 'encargados',
   standalone: true,
-  imports: [CommonModule, AddEncargadoComponent, AddUserComponent, AddUserHorarioComponent],
+  imports: [CommonModule, AddEncargadoComponent, AddUserComponent, AddUserHorarioComponent,UpNavBarComponent, ContentNavBarComponent],
   templateUrl: './encargados.component.html',
   styleUrl: './encargados.component.scss'
 })
@@ -28,18 +31,32 @@ export class EncargadosComponent implements OnInit {
     viewEncargados: true
   }
 
-  constructor(private encargadosService: EncargadosService) {}
+  @ViewChild('navBarContent') navBarContent!: TemplateRef<any>;
+
+  constructor(
+    private encargadosService: EncargadosService,
+    private contentNavBarService: ContentNavBarService
+  ) {}
 
   ngOnInit(): void {
     this.getAllEncargados();
   }
 
+  ngAfterViewInit() {
+    this.contentNavBarService.setContent(this.navBarContent);
+  }
+
+  ngOnDestroy() {
+    this.contentNavBarService.clearContent();
+  }
+
   openComponent(component: keyof typeof this.openComponents) {
-    this.openComponents[component] = !this.openComponents[component];
     Object.keys(this.openComponents).forEach(key => {
       if (key !== component) {
         this.openComponents[key as keyof typeof this.openComponents] = false;
       }
+      //TODO:Hardcoding :)
+      this.openComponents[component] = true;
     });
   }
 

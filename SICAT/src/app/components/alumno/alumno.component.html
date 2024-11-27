@@ -12,7 +12,11 @@
                     <h2>Detalles del Alumno</h2>
 
                     <div class="info">
-                        <img src="{{ alumno.foto }}" alt="Foto_del_alumno" class="alumno-foto" />
+                        @if(alumno.foto) {
+                            <img src="{{ alumno.foto }}" alt="Foto_del_alumno" class="alumno-foto" (error)="handleImageError($event)" />
+                        } @else {
+                            <img src="img/user-default.png" alt="Foto_del_alumno" class="alumno-foto" />
+                        }
                         <p><strong>Num Control:</strong> {{ alumno.num_control }}</p>
                         <p><strong>Nombre:</strong> {{ alumno.nombre }} {{ alumno.ap_paterno }} {{ alumno.ap_materno }}</p>
                         <p><strong>Sexo:</strong> {{ alumno.sexo }}</p>

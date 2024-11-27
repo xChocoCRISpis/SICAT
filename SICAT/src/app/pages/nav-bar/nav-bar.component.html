@@ -1,12 +1,7 @@
-<header>
-  <div class="icon_menu">
-    <i class="bi bi-list" id="btn_open" (click)="toggleMenu()">
-      <h4>MENU</h4>
-    </i>
-  </div>
-</header>
-ñ
-<div class="menu_side" id="menu_side">
+<up-nav-bar>
+</up-nav-bar>
+
+<div class="menu_side" [class.opened]="isMenuOpened" id="menu_side">
   <div class="options_menu">
     <div (click)="changePage('init')" class="option">
       <i class="bi bi-house" title="Inicio"></i>
@@ -58,10 +53,6 @@
     </div>
   </div>
 </div>
-<body>
-  <main [class.menu-opened]="isMenuOpened">
-    <ng-content> </ng-content>
-  </main>
-</body>
-
-<!-- Corregido: Solo un main -->
+<div class="content-wrapper" [class.menu-opened]="isMenuOpened">
+  <ng-content></ng-content>
+</div>

@@ -72,14 +72,15 @@ export class AddAlumnoToActividadComponent {
           title: 'Éxito',
           message: 'Alumno agregado a la actividad exitosamente.',
         });
-        this.cerrarModal(); // Cierra la modal tras guardar
+        this.cerrarModal();
       },
-      error: () => {
+      error: (error) => {
         this.notificationsService.notify({
           type: 'error',
           title: 'Error',
-          message: 'No se pudo agregar al alumno a la actividad. Inténtalo más tarde.',
+          message: error.error?.message || error.message || 'No se pudo agregar al alumno a la actividad. Inténtalo más tarde.',
         });
+        this.cerrarModal();
       },
     });
   }

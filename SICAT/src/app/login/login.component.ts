@@ -110,7 +110,7 @@ export class LoginComponent implements OnInit {
           });
           
           localStorage.clear();
-          this.router.navigate(['/login']);
+          this.router.navigate(['']);
         }
       });
   }

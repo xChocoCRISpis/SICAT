@@ -23,7 +23,7 @@ import { NavBarProfesorComponent } from '../nav-bar-profesor/nav-bar-profesor.co
     EventosComponent,
     EncargadosComponent,
     IndicadoresComponent,
-    NavBarProfesorComponent
+    NavBarProfesorComponent,
   ],
   templateUrl: './main-page.component.html',
   styleUrl: './main-page.component.scss',
