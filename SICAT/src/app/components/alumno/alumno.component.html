@@ -11,38 +11,59 @@
                 <div class="alumno-info">
                     <h2>Detalles del Alumno</h2>
 
-                    <div class="info">
-                        @if(alumno.foto) {
-                            <img src="{{ alumno.foto }}" alt="Foto_del_alumno" class="alumno-foto" (error)="handleImageError($event)" />
-                        } @else {
-                            <img src="img/user-default.png" alt="Foto_del_alumno" class="alumno-foto" />
-                        }
-                        <p><strong>Num Control:</strong> {{ alumno.num_control }}</p>
-                        <p><strong>Nombre:</strong> {{ alumno.nombre }} {{ alumno.ap_paterno }} {{ alumno.ap_materno }}</p>
-                        <p><strong>Sexo:</strong> {{ alumno.sexo }}</p>
-                        <p><strong>Fecha Nac:</strong> {{ alumno.fecha_nac }}</p>
-                        <p><strong>Semestre:</strong> {{ alumno.semestre }}</p>
-                        <p><strong>Nivel:</strong> {{ alumno.nivel }}</p>
-                        <p><strong>Teléfono:</strong> {{ alumno.telefono }}</p>
-                        <p><strong>Correo:</strong> {{ alumno.correo }}</p>
-                        <p><strong>Carrera:</strong> {{ alumno.carrera?.nombre }} ({{ alumno.carrera?.nombre_corto }})</p>
+                    <div class="info-container">
+                        <div class="foto-container">
+                            @if(alumno.foto) {
+                                <img [src]="alumno.foto" [alt]="'Foto de ' + alumno.nombre" class="alumno-foto" (error)="handleImageError($event)" />
+                            } @else {
+                                <img src="assets/img/user-default.png" alt="Foto por defecto" class="alumno-foto" />
+                            }
+                        </div>
+                        
+                        <div class="datos-personales">
+                            <p><span class="label">Num Control:</span> {{ alumno.num_control }}</p>
+                            <p><span class="label">Nombre:</span> {{ alumno.nombre }} {{ alumno.ap_paterno }} {{ alumno.ap_materno }}</p>
+                            <p><span class="label">Sexo:</span> {{ alumno.sexo }}</p>
+                            <p><span class="label">Fecha Nac:</span> {{ alumno.fecha_nac }}</p>
+                            <p><span class="label">Semestre:</span> {{ alumno.semestre }}</p>
+                            <p><span class="label">Nivel:</span> {{ alumno.nivel }}</p>
+                            <p><span class="label">Teléfono:</span> {{ alumno.telefono }}</p>
+                            <p><span class="label">Correo:</span> {{ alumno.correo }}</p>
+                            <p><span class="label">Carrera:</span> {{ alumno.carrera?.nombre }} ({{ alumno.carrera?.nombre_corto }})</p>
+                        </div>
+                    </div>
 
-                        @if (alumno.actividades && alumno.actividades.length > 0) {
-                            <h3>Actividades</h3>
-                            <ul>
-                                @for (actividad of alumno.actividades; track actividad.id) {
-                                    <li>{{ actividad.nombre }} ({{ actividad.tipo }}) - Horas: {{ actividad.horas }} - Activo: {{ actividad.activo ? 'Sí' : 'No' }}</li>
-                                }
-                            </ul>
+                    <div class="secciones-container">
+                        @if (alumno.actividades?.length > 0) {
+                            <div class="seccion">
+                                <h3>Actividades</h3>
+                                <div class="lista-container">
+                                    @for (actividad of alumno.actividades; track actividad.id) {
+                                        <div class="lista-item">
+                                            <span class="item-nombre">{{ actividad.nombre }}</span>
+                                            <span class="item-tipo">({{ actividad.tipo }})</span>
+                                            <span class="item-horas">{{ actividad.horas }} horas</span>
+                                            <span class="item-estado" [class.activo]="actividad.activo">
+                                                {{ actividad.activo ? 'Activo' : 'Inactivo' }}
+                                            </span>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
                         }
-
+                        
                         @if (alumno.eventos && alumno.eventos.length > 0) {
-                            <h3>Eventos</h3>
-                            <ul>
-                                @for (evento of alumno.eventos; track evento.id) {
-                                    <li>{{ evento.nombre }} - Fecha: {{ evento.fecha }}</li>
-                                }
-                            </ul>
+                            <div class="seccion">
+                                <h3>Eventos</h3>
+                                <div class="lista-container">
+                                    @for (evento of alumno.eventos; track evento.id) {
+                                        <div class="lista-item">
+                                            <span class="item-nombre">{{ evento.nombre }}</span>
+                                            <span class="item-fecha">{{ evento.fecha }}</span>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
                         }
                     </div>
                 </div>

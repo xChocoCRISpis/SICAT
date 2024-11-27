@@ -1,91 +1,101 @@
 <ng-template #navBarContent>
-    <button (click)="openComponent('addEncargado')">Agregar encargado</button>
-    <button (click)="openComponent('addUser')">Agregar usuario</button>
-    <button (click)="openComponent('viewEncargados')">ver encargados</button>
+    <div class="button-group">
+        <button (click)="openComponent('addEncargado')">Agregar encargado</button>
+        <button (click)="openComponent('addUser')">Agregar usuario</button>
+        <button (click)="openComponent('viewEncargados')">Ver encargados</button>
+    </div>
 </ng-template>
 
-
-
-<div class="container">
-    @switch (true) {
-        @case (openComponents.addEncargado) {
-            <add-encargado></add-encargado>
-        }
-        @case (openComponents.addUser) {
-            <add-user></add-user>
-        }
-        @case (openComponents.viewEncargados) {
-            <div class="header">
-                <h2>Lista de Encargados</h2>
-            </div>
-
-            <!-- Mensaje de error -->
-            <div *ngIf="errorMessage" class="error">
-                {{ errorMessage }}
-            </div>
-
-            <!-- Tabla de encargados -->
-            <table class="table" *ngIf="encargados.length > 0">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Nombre</th>
-                        <th>Apellido Paterno</th>
-                        <th>Apellido Materno</th>
-                        <th>Correo</th>
-                        <!--                 <th>Acciones</th>
- -->
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let encargado of encargados" (click)="showDetails(encargado)" class="hoverable">
-                        <td>{{ encargado.Id_encargado_pk }}</td>
-                        <td>{{ encargado.Nombre }}</td>
-                        <td>{{ encargado.Ap_paterno }}</td>
-                        <td>{{ encargado.Ap_materno }}</td>
-                        <td>{{ encargado.usuario?.Correo || 'Sin asignar' }}</td>
-                        <!--                 <td>
-            <button class="btn btn-delete" (click)="deleteEncargado(encargado.Id_encargado_pk, $event)">Eliminar</button>
-          </td> -->
-                    </tr>
-                </tbody>
-            </table>
-
-            <!-- Mensaje cuando no hay encargados -->
-            <div *ngIf="encargados.length === 0 && !errorMessage" class="no-data">No hay encargados disponibles.</div>
-
-            <!-- Modal para detalles -->
-            <div class="modal" *ngIf="selectedEncargado">
-                <div class="modal-content">
-                    <!-- Botón de cerrar -->
-                    <button class="close-btn" (click)="closeDetails()"><i class="fas fa-times"></i></button>
-
-                    <h2>Detalles del Encargado</h2>
-                    <p><strong>ID:</strong> {{ selectedEncargado.Id_encargado_pk }}</p>
-                    <p><strong>Nombre:</strong> {{ selectedEncargado.Nombre }}</p>
-                    <p><strong>Apellido Paterno:</strong> {{ selectedEncargado.Ap_paterno }}</p>
-                    <p><strong>Apellido Materno:</strong> {{ selectedEncargado.Ap_materno }}</p>
-                    <p><strong>Correo:</strong> {{ selectedEncargado.usuario?.Correo || 'Sin asignar' }}</p>
-
-                    <div class="horarios-actividades">
-                        <h3>Horarios y Actividades</h3>
-                        <button (click)="openAddHorario = !openAddHorario" class ="button-modal">Agregar horario</button>
-
-                        @if (openAddHorario) {
-                            <add-user-horario (onClose)="openAddHorario = false" [idEncargado]="selectedEncargado.Id_encargado_pk"></add-user-horario>
-                        }
-                        <ul>
-                            <li *ngFor="let detalle of selectedEncargado.detalles">
-                                <p>
-                                    <strong>Horario:</strong> {{ desformatearHorario(detalle.horario?.Dia) }} <br />
-                                    {{ detalle.horario?.Hora_inicio }} - {{ detalle.horario?.Hora_fin }}
-                                </p>
-                                <p><strong>Actividad:</strong> {{ detalle.actividad?.Nombre }} ({{ detalle.actividad?.Tipo }})</p>
-                            </li>
-                        </ul>
-                    </div>
+<div class="container-container">
+    <div class="container">
+        @switch (true) {
+            @case (openComponents.addEncargado) {
+                <add-encargado></add-encargado>
+            }
+            @case (openComponents.addUser) {
+                <add-user></add-user>
+            }
+            @case (openComponents.viewEncargados) {
+                <div class="header">
+                    <h2>Lista de Encargados</h2>
                 </div>
-            </div>
+
+                @if (errorMessage) {
+                    <div class="error">{{ errorMessage }}</div>
+                }
+
+                @if (encargados.length > 0) {
+                    <div class="table-container">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Nombre</th>
+                                    <th>Apellido Paterno</th>
+                                    <th>Apellido Materno</th>
+                                    <th>Correo</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let encargado of encargados" (click)="showDetails(encargado)">
+                                    <td>{{ encargado.Id_encargado_pk }}</td>
+                                    <td>{{ encargado.Nombre }}</td>
+                                    <td>{{ encargado.Ap_paterno }}</td>
+                                    <td>{{ encargado.Ap_materno }}</td>
+                                    <td>{{ encargado.usuario?.Correo || 'Sin asignar' }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                } @else {
+                    @if (!errorMessage) {
+                        <div class="no-data">No hay encargados disponibles.</div>
+                    }
+                }
+
+                @if (selectedEncargado) {
+                    <div class="modal">
+                        <div class="modal-content">
+                            <button class="close-btn" (click)="closeDetails()">
+                                <i class="fas fa-times"></i>
+                            </button>
+
+                            <h2>Detalles del Encargado</h2>
+                            <div class="details-content">
+                                <p><strong>ID:</strong> {{ selectedEncargado.Id_encargado_pk }}</p>
+                                <p><strong>Nombre:</strong> {{ selectedEncargado.Nombre }}</p>
+                                <p><strong>Apellido Paterno:</strong> {{ selectedEncargado.Ap_paterno }}</p>
+                                <p><strong>Apellido Materno:</strong> {{ selectedEncargado.Ap_materno }}</p>
+                                <p><strong>Correo:</strong> {{ selectedEncargado.usuario?.Correo || 'Sin asignar' }}</p>
+                            </div>
+
+                            <div class="horarios-actividades">
+                                <h3>Horarios y Actividades</h3>
+                                <button (click)="openAddHorario = !openAddHorario">Agregar horario</button>
+
+                                @if (openAddHorario) {
+                                    <add-user-horario (onClose)="openAddHorario = false" [idEncargado]="selectedEncargado.Id_encargado_pk"> </add-user-horario>
+                                }
+
+                                <ul class="horarios-list">
+                                    <li *ngFor="let detalle of selectedEncargado.detalles">
+                                        <p>
+                                            <strong>Horario:</strong>
+                                            {{ desformatearHorario(detalle.horario?.Dia) }} <br />
+                                            {{ detalle.horario?.Hora_inicio }} - {{ detalle.horario?.Hora_fin }}
+                                        </p>
+                                        <p>
+                                            <strong>Actividad:</strong>
+                                            {{ detalle.actividad?.Nombre }}
+                                            ({{ detalle.actividad?.Tipo }})
+                                        </p>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
         }
-    }
+    </div>
 </div>

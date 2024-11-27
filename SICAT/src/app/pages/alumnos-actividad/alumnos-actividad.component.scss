@@ -283,7 +283,7 @@ button:disabled {
             &:hover {
                 td {
                     background-color: #f8f9fa;
-                    color: var(--accent);
+                    color: var(--accent-color);
                 }
             }
 
@@ -418,5 +418,24 @@ button:disabled {
     .filters input,
     .filters select {
         font-size: 0.9rem;
+    }
+}
+
+button {
+    background: var(--primary);
+    color: white;
+    border: none;
+    padding: 0.7rem 1.2rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+
+    &:hover {
+        background: var(--primary-dark);
+        transform: scale(1.05);
+    }
+
+    &:active {
+        transform: scale(0.95);
     }
 }

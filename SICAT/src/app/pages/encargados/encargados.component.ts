@@ -9,7 +9,6 @@ import { UpNavBarComponent } from "../../components/up-nav-bar/up-nav-bar.compon
 import { ContentNavBarComponent } from "../../components/content-nav-bar/content-nav-bar.component";
 import { ContentNavBarService } from "../../services/content-nav-bar.service";
 import { FormsModule } from "@angular/forms";
-
 @Component({
   selector: "encargados",
   standalone: true,
@@ -20,7 +19,7 @@ import { FormsModule } from "@angular/forms";
     AddUserHorarioComponent,
     UpNavBarComponent,
     ContentNavBarComponent,
-    FormsModule,
+    FormsModule
   ],
   templateUrl: "./encargados.component.html",
   styleUrl: "./encargados.component.scss",
