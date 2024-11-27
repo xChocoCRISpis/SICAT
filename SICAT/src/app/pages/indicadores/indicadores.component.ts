@@ -7,6 +7,7 @@ import { StatCarrerasActividadesComponent } from "../../components/stadistics/st
 import { CommonModule } from "@angular/common"; 
 import { ContentNavBarComponent } from "../../components/content-nav-bar/content-nav-bar.component";
 import { ContentNavBarService } from "../../services/content-nav-bar.service";
+import { LoaderComponent } from "../../components/loader/loader.component";
 @Component({
   selector: "indicadores",
   standalone: true,
@@ -17,7 +18,8 @@ import { ContentNavBarService } from "../../services/content-nav-bar.service";
     StatAlumnosTipoYActividadComponent,
     StatCarrerasActividadesComponent,
     CommonModule,
-    ContentNavBarComponent
+    ContentNavBarComponent,
+    LoaderComponent
   ],
   templateUrl: "./indicadores.component.html",
   styleUrl: "./indicadores.component.scss",
@@ -37,6 +39,8 @@ export class IndicadoresComponent {
   constructor(    
     private contentNavBarService: ContentNavBarService
   ){}
+
+  loading = true;
 
   ngAfterViewInit() {
     this.contentNavBarService.setContent(this.navBarContent);

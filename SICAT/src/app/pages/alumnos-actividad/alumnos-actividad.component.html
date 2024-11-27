@@ -14,37 +14,37 @@
         } @else {
             <div class="filter-section">
                 <h2>Filtrar Alumnos</h2>
-                <div>
-                    <label>
-                        Sexo:
-                        <select (change)="applyFilter('sexo', $event)">
-                            <option value="">Todos</option>
-                            <option value="M">Masculino</option>
-                            <option value="F">Femenino</option>
-                        </select>
-                    </label>
-                    <label>
-                        Num Control:
-                        <input type="text" (input)="applyFilter('num_control', $event)" />
-                    </label>
-                    <label>
-                        Nombre:
-                        <input type="text" (input)="applyFilter('nombre', $event)" />
-                    </label>
-                    <label>
-                        Ap. Paterno:
-                        <input type="text" (input)="applyFilter('ap_paterno', $event)" />
-                    </label>
-                    <label>
-                        Semestre:
-                        <input type="number" (input)="applyFilter('semestre', $event)" />
-                    </label>
-                    <label>
-                        Carrera:
-                        <input type="text" (input)="applyFilter('nombre_corto', $event)" />
-                    </label>
+                <div class="filters">
+                  <label>
+                    <span>Sexo:</span>
+                    <select (change)="applyFilter('sexo', $event)">
+                      <option value="">Todos</option>
+                      <option value="M">Masculino</option>
+                      <option value="F">Femenino</option>
+                    </select>
+                  </label>
+                  <label>
+                    <span>Num Control:</span>
+                    <input type="text" (input)="applyFilter('num_control', $event)" />
+                  </label>
+                  <label>
+                    <span>Nombre:</span>
+                    <input type="text" (input)="applyFilter('nombre', $event)" />
+                  </label>
+                  <label>
+                    <span>Ap. Paterno:</span>
+                    <input type="text" (input)="applyFilter('ap_paterno', $event)" />
+                  </label>
+                  <label>
+                    <span>Semestre:</span>
+                    <input type="number" (input)="applyFilter('semestre', $event)" />
+                  </label>
+                  <label>
+                    <span>Carrera:</span>
+                    <input type="text" (input)="applyFilter('nombre_corto', $event)" />
+                  </label>
                 </div>
-            </div>
+              </div>
 
             <div class="pagination">
                 <button (click)="prevPage()" [disabled]="currentPage === 1">Anterior</button>

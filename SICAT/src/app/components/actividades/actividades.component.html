@@ -1,25 +1,28 @@
-@if (actividades.length === 0) {
-  <div class="no-activities">
-    <div class="text">No tienes actividades {{ tipo === 'dep' ? 'deportivas' : 'culturales' }} asociadas</div>
-  </div>
-} @else {
-  @if (id !== 0) {
-    <app-alumnos-actividad [id_actividad]="id" [name_actividad]="name"></app-alumnos-actividad>
-  } @else {
-    @for (actividad of actividades; track $index) {
-      <div class="actividad" (click)="id = actividad.Id_actividad_pk; name = actividad.Nombre">
-        <div class="text">
-          <!-- <h2>ID: {{ actividad.Id_actividad_pk }}</h2> -->
-          <h5>{{ actividad.Nombre }}</h5>
+<div class="activities-container">
+
+    @if (actividades.length === 0) {
+        <div class="no-activities">
+            <div class="text">No tienes actividades {{ tipo === 'dep' ? 'deportivas' : 'culturales' }} asociadas</div>
         </div>
-        <div class="imagen">
-          @if (actividad.Tipo === 'DEP') {
-            <i class="bi bi-trophy icon" ></i>
-          } @else {
-            <i class="bi bi-music-note icon"></i>
-          }
-        </div>
-      </div>
+    } @else {
+        @if (id !== 0) {
+            <app-alumnos-actividad [id_actividad]="id" [name_actividad]="name"></app-alumnos-actividad>
+        } @else {
+            <div class="stats-grid">
+                @for (actividad of actividades; track $index) {
+                    <div class="stat-card" (click)="id = actividad.Id_actividad_pk; name = actividad.Nombre">
+                        <div class="card-icon">
+                            <i class="bi" [ngClass]="{'bi-trophy': actividad.Tipo === 'DEP', 'bi-music-note': actividad.Tipo === 'CUL'}"></i>
+                        </div>
+                        <div class="card-content">
+                            <h3>{{ actividad.Nombre }}</h3>
+                            <div class="card-type">
+                                {{ actividad.Tipo === 'DEP' ? 'Deportiva' : 'Cultural' }}
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
     }
-  }
-}
+</div>

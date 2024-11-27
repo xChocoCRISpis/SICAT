@@ -1,163 +1,422 @@
 .table-container {
   width: 100%;
-  overflow-x: auto; /* Permite el scroll horizontal si es necesario */
+  overflow-x: auto;
+}
+
+
+tbody {
+  tr:hover {
+      color: var(--accent);
+  }
 }
 
 .alumnos-container {
-    max-width: 1000px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #f5f5f5;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-  
-  .filters {
-    margin-bottom: 20px;
-    display: flex;
-    gap: 10px;
-  }
-  
-  .filters input {
-    padding: 10px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    width: 200px;
-  }
-  
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-  }
-  
-  th, td {
-    padding: 10px;
-    border: 1px solid #ddd;
-    text-align: left;
-  }
+  max-width: 1000px;
+  margin: 0 auto;
+  background-color: #f5f5f5;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
 
-  th {
-    background-color: #5A0A18;
-    color: white;
-  }
-  
-  tr:nth-child(even) {
-    background-color: #f2f2f2;
-  }
-  
-  .pagination {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 20px;
-  }
-  
-  button {
-    padding: 10px;
-    background-color: #5A0A18;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  button:disabled {
-    background-color: #ccc;
-  }
-  
-  .alumnos-list {
-    width: 100%;
-    max-width: 800px;
-    margin: 0 auto;
-  }
-  
-  table {
-    width: 100%;
-    border-collapse: collapse;
-  }
-  
-  th, td {
-    padding: 10px;
-    border-bottom: 1px solid #ddd;
-  }
-  
-  button {
-    padding: 5px 10px;
-    background-color: #5A0A18;
-    color: white;
-    border: none;
-    cursor: pointer;
-    border-radius: 5px;
-  }
-  
-  button:hover {
-    background-color: #98313C;
-  }
-  
-  tr:hover{
-    background-color: #af7f87;
-  }
+.button {
+  padding: 10px;
+  background-color: #5a0a18;
+  color: #ddd;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  text-align: center;
+  width: 25vw;
 
-  /* Media queries para pantallas pequeñas (max-width: 768px) */
-@media (max-width: 768px) {
-  .alumnos-container {
-    padding: 15px;
-    margin: 0 10px;
-  }
-
-  .filters {
-    flex-direction: column; /* Hacer que los filtros se apilen verticalmente */
-    gap: 5px;
-  }
-
-  .filters input {
-    width: 100%; /* Ajustar el ancho de los inputs al 100% */
-  }
-
-  table {
-    font-size: 14px; /* Reducir el tamaño del texto en la tabla */
-  }
-
-  th, td {
-    padding: 8px;
-  }
-
-  button {
-    width: 100%; /* Botones ocupan el ancho completo en móviles */
-    padding: 10px;
-  }
-
-  .pagination {
-    flex-direction: column;
-    align-items: center; /* Centrar los botones de paginación */
+  &:hover {
+      background-color: var(--primary-color);
+      color: var(--accent);
   }
 }
 
-/* Media queries para pantallas muy pequeñas (max-width: 480px) */
-@media (max-width: 480px) {
-  .alumnos-container {
-    padding: 10px;
-    margin: 0 5px;
-  }
+.filters {
+  margin-bottom: 20px;
+  display: flex;
+  gap: 10px;
+}
 
-  table {
-    font-size: 12px; /* Reducir más el tamaño de la tabla */
-  }
+.filters input {
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  width: 200px;
+}
 
-  th, td {
-    padding: 6px;
+table {
+  width: 100%;
+  margin-top: 20px;
+}
+
+th,
+td {
+  padding: 10px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+th {
+  background-color: #5a0a18;
+  color: white;
+}
+
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.pagination {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+button {
+  padding: 10px;
+  background-color: #5a0a18;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:disabled {
+  background-color: #ccc;
+}
+
+/* Media queries */
+@media (max-width: 768px) {
+  .filters {
+      flex-direction: column;
+      gap: 5px;
   }
 
   .filters input {
-    padding: 8px;
+      width: 100%;
+  }
+
+  table {
+      font-size: 14px;
+  }
+
+  th,
+  td {
+      padding: 8px;
   }
 
   button {
-    padding: 8px;
-    font-size: 14px;
+      width: 100%;
+      padding: 10px;
   }
 
   .pagination {
-    gap: 10px;
+      flex-direction: column;
+      align-items: center;
+  }
+}
+
+@media (max-width: 480px) {
+  table {
+      font-size: 12px;
+  }
+
+  th,
+  td {
+      padding: 6px;
+  }
+
+  .filters input {
+      padding: 8px;
+  }
+
+  button {
+      padding: 8px;
+      font-size: 14px;
+  }
+
+  .pagination {
+      gap: 10px;
+  }
+}
+
+.filter-section {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+  margin-bottom: 2rem;
+  border: 1px solid var(--primary-color);
+  transition: all 0.3s ease;
+
+  &:hover {
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+      transform: translateY(-2px);
+  }
+
+  h2 {
+      color: var(--accent);
+      font-size: 1.3rem;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+
+      i {
+          color: var(--primary-color);
+      }
+  }
+
+  .filters {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+
+      label {
+          display: flex;
+          flex-direction: column;
+          gap: 0.5rem;
+
+          span {
+              color: var(--primary-color);
+              font-weight: 500;
+              font-size: 0.95rem;
+              margin-bottom: 0.25rem;
+          }
+
+          select,
+          input {
+              padding: 0.75rem 1rem;
+              border: 2px solid #e5e7eb;
+              border-radius: 8px;
+              font-size: 0.95rem;
+              transition: all 0.2s ease;
+              background-color: #f8fafc;
+
+              &:hover {
+                  border-color: var(--primary-color);
+              }
+
+              &:focus {
+                  outline: none;
+                  border-color: var(--accent);
+                  background-color: white;
+                  box-shadow: 0 0 0 3px rgba(90, 10, 24, 0.1);
+              }
+          }
+
+          &::after {
+              content: '';
+              position: absolute;
+              bottom: 0;
+              left: 0;
+              width: 0;
+              height: 2px;
+              background: var(--accent);
+              transition: width 0.3s ease;
+          }
+
+          &:hover::after {
+              width: 100%;
+          }
+      }
+  }
+}
+
+.table-container {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border: 1px solid var(--primary-color);
+  margin-top: 2rem;
+
+  table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      table-layout: fixed;
+
+      th, td {
+          &:nth-child(1) { width: 12%; } // Num Control
+          &:nth-child(2) { width: 12%; } // Nombre
+          &:nth-child(3) { width: 12%; } // Ap. Paterno
+          &:nth-child(4) { width: 12%; } // Ap. Materno
+          &:nth-child(5) { width: 8%; }  // Sexo
+          &:nth-child(6) { width: 8%; }  // Semestre
+          &:nth-child(7) { width: 18%; } // Carrera
+          &:nth-child(8) { width: 18%; } // Nombre Corto Carrera
+      }
+
+      th {
+          background-color: var(--primary-color);
+          color: white;
+          padding: 1rem;
+          text-align: left;
+          font-weight: 500;
+          position: sticky;
+          top: 0;
+          z-index: 10;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+      }
+
+      td {
+          padding: 1rem;
+          border-bottom: 1px solid #eee;
+          color: var(--primary-color);
+          background: white;
+          position: relative;
+          z-index: 1;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+      }
+
+      tbody tr {
+          cursor: pointer;
+          transition: all 0.3s ease;
+
+          &:hover {
+              td {
+                  background-color: #f8f9fa;
+                  color: var(--accent);
+              }
+          }
+
+          &:last-child td {
+              border-bottom: none;
+          }
+      }
+  }
+
+  .alumnos-section {
+      overflow-x: auto;
+      margin: 1rem 0;
+      
+      table {
+          min-width: 1200px; // Asegura que la tabla tenga un ancho mínimo
+      }
+  }
+}
+
+@keyframes slideIn {
+  from {
+      opacity: 0;
+      transform: translateX(-10px);
+  }
+
+  to {
+      opacity: 1;
+      transform: translateX(0);
+  }
+}
+
+
+.filters {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-bottom: 20px;
+  background: var(--surface);
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+
+  label {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+
+      span {
+          color: var(--primary-color);
+          font-weight: bold;
+      }
+
+      input,
+      select {
+          padding: 0.75rem;
+          border: 2px solid #e5e7eb;
+          border-radius: 8px;
+          font-size: 1rem;
+          transition: all 0.3s ease;
+          background-color: var(--background);
+          color: var(--text);
+
+          &:hover {
+              border-color: var(--primary-color);
+          }
+
+          &:focus {
+              border-color: var(--accent);
+              outline: none;
+              background-color: var(--surface);
+              box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+          }
+      }
+  }
+}
+
+/* Paginación */
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 20px;
+
+  button {
+      background: var(--primary-color);
+      color: var(--surface);
+      border: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+
+      &:hover {
+          background: var(--primary-dark);
+      }
+
+      &:disabled {
+          background: #ccc;
+          cursor: not-allowed;
+      }
+  }
+
+  span {
+      align-self: center;
+      color: var(--text);
+      font-weight: bold;
+  }
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+  .filters {
+      grid-template-columns: 1fr;
+      gap: 0.75rem;
+  }
+
+  table {
+      font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  table {
+      font-size: 0.8rem;
+
+      th,
+      td {
+          padding: 0.6rem;
+      }
+  }
+
+  .filters input,
+  .filters select {
+      font-size: 0.9rem;
   }
 }

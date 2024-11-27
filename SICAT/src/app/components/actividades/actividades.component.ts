@@ -2,7 +2,7 @@ import { Component, Input, Output } from '@angular/core';
 import {ActividadesService} from './actividades.service'
 import { timeInterval } from 'rxjs';
 import { AlumnosActividadComponent } from '../../pages/alumnos-actividad/alumnos-actividad.component';
-
+import { CommonModule } from '@angular/common';
 interface Actividad {
   Id_actividad_pk: number;
   Nombre: string;
@@ -13,7 +13,7 @@ interface Actividad {
 @Component({
   selector: 'actividades',
   standalone: true,
-  imports: [AlumnosActividadComponent],
+  imports: [AlumnosActividadComponent, CommonModule],
   templateUrl: './actividades.component.html',
   styleUrl: './actividades.component.scss'
 })

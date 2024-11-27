@@ -20,6 +20,7 @@ export class LoginComponent implements OnInit {
   public version = environment.version;
   public formulario!: FormGroup;
   public front = environment.front;
+  mostrarContrasena = false;
 
   constructor(
     private builder: FormBuilder,
@@ -113,5 +114,9 @@ export class LoginComponent implements OnInit {
           this.router.navigate(['']);
         }
       });
+  }
+
+  toggleMostrarContrasena() {
+    this.mostrarContrasena = !this.mostrarContrasena;
   }
 }

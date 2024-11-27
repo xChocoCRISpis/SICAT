@@ -1,58 +1,65 @@
-
 @if (userType === 1 || userType === 2) {
-  <app-nav-bar>
-    @switch (page) {
-    @case ('init') {
-      <app-init> </app-init>
-    }
-    @case ('dep') {
-      <h3>Actividades deportivas</h3>
-      <actividades [tipo]="'dep'"> </actividades>
-    }
-    @case ('cul') {
-      <h3>Actividades culturales</h3>
-      <actividades [tipo]="'cul'"> </actividades>
-    }
-    @case ('profile') {
-      <profile> </profile>
-    }
-    @case ('alumnos') {
-      <alumnos> </alumnos>
-    }
-    @case ('eventos') {
-      <eventos></eventos>
-    }
-    @case ('encargados') {
-      <encargados></encargados>
-    }
-    @case ('indicadores') {
-      <indicadores></indicadores>
-    }
-    @default {
-      {{ notFound() }}
-    }
-  }
-</app-nav-bar>
-}@else{
-  <nav-bar-profesor>
-    @switch (page) {
-      @case ('init') {
-        <app-init> </app-init>
-      }
-      @case ('dep') {
-        <h3>Actividades deportivas</h3>
-        <actividades [tipo]="'dep'"> </actividades>
-      }
-      @case ('cul') {
-        <h3>Actividades culturales</h3>
-        <actividades [tipo]="'cul'"> </actividades>
-      }
-      @case ('profile') {
-        <profile> </profile>
-      }
-      @default {
-        {{ notFound() }}
-      }
-    }
-  </nav-bar-profesor>
+    <app-nav-bar>
+        @switch (page) {
+            @case ('init') {
+                <app-init> </app-init>
+            }
+            @case ('dep') {
+                <div class="header">
+                    <h2>Actividades deportivas</h2>
+                    <actividades [tipo]="'dep'"> </actividades>
+                </div>
+            }
+            @case ('cul') {
+                <div class="header">
+                    <h2>Actividades culturales</h2>
+                    <actividades [tipo]="'cul'"> </actividades>
+                </div>
+            }
+            @case ('profile') {
+                <profile> </profile>
+            }
+            @case ('alumnos') {
+                <alumnos> </alumnos>
+            }
+            @case ('eventos') {
+                <eventos></eventos>
+            }
+            @case ('encargados') {
+                <encargados></encargados>
+            }
+            @case ('indicadores') {
+                <indicadores></indicadores>
+            }
+            @default {
+                {{ notFound() }}
+            }
+        }
+    </app-nav-bar>
+} @else {
+    <nav-bar-profesor>
+        @switch (page) {
+            @case ('init') {
+                <app-init> </app-init>
+            }
+            @case ('dep') {
+                <div class="header">
+                    <h3>Actividades deportivas</h3>
+                    <actividades [tipo]="'dep'"> </actividades>
+                </div>
+            }
+            @case ('cul') {
+                <div class="header">
+                    <h2>Actividades culturales</h2>
+                    <actividades [tipo]="'cul'"> </actividades>
+                </div>
+            }
+            @case ('profile') {
+                <profile> </profile>
+            }
+            @default {
+                {{ notFound() }}
+            }
+        }
+    </nav-bar-profesor>
 }

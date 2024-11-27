@@ -4,6 +4,8 @@
     <button (click)="openComponent('viewEncargados')">ver encargados</button>
 </ng-template>
 
+
+
 <div class="container">
     @switch (true) {
         @case (openComponents.addEncargado) {
@@ -13,7 +15,9 @@
             <add-user></add-user>
         }
         @case (openComponents.viewEncargados) {
-            <h1 class="title">Lista de Encargados</h1>
+            <div class="header">
+                <h2>Lista de Encargados</h2>
+            </div>
 
             <!-- Mensaje de error -->
             <div *ngIf="errorMessage" class="error">
@@ -54,7 +58,7 @@
             <div class="modal" *ngIf="selectedEncargado">
                 <div class="modal-content">
                     <!-- Botón de cerrar -->
-                    <button class="close-btn" (click)="closeDetails()">&times;</button>
+                    <button class="close-btn" (click)="closeDetails()"><i class="fas fa-times"></i></button>
 
                     <h2>Detalles del Encargado</h2>
                     <p><strong>ID:</strong> {{ selectedEncargado.Id_encargado_pk }}</p>
@@ -65,20 +69,21 @@
 
                     <div class="horarios-actividades">
                         <h3>Horarios y Actividades</h3>
-                        <button (click)="openAddHorario = !openAddHorario">Agregar horario</button>
+                        <button (click)="openAddHorario = !openAddHorario" class ="button-modal">Agregar horario</button>
+
+                        @if (openAddHorario) {
+                            <add-user-horario (onClose)="openAddHorario = false" [idEncargado]="selectedEncargado.Id_encargado_pk"></add-user-horario>
+                        }
+                        <ul>
+                            <li *ngFor="let detalle of selectedEncargado.detalles">
+                                <p>
+                                    <strong>Horario:</strong> {{ desformatearHorario(detalle.horario?.Dia) }} <br />
+                                    {{ detalle.horario?.Hora_inicio }} - {{ detalle.horario?.Hora_fin }}
+                                </p>
+                                <p><strong>Actividad:</strong> {{ detalle.actividad?.Nombre }} ({{ detalle.actividad?.Tipo }})</p>
+                            </li>
+                        </ul>
                     </div>
-                    @if (openAddHorario) {
-                        <add-user-horario (onClose)="openAddHorario = false" [idEncargado]="selectedEncargado.Id_encargado_pk"></add-user-horario>
-                    }
-                    <ul>
-                        <li *ngFor="let detalle of selectedEncargado.detalles">
-                            <p>
-                                <strong>Horario:</strong> {{ desformatearHorario(detalle.horario?.Dia) }} <br />
-                                {{ detalle.horario?.Hora_inicio }} - {{ detalle.horario?.Hora_fin }}
-                            </p>
-                            <p><strong>Actividad:</strong> {{ detalle.actividad?.Nombre }} ({{ detalle.actividad?.Tipo }})</p>
-                        </li>
-                    </ul>
                 </div>
             </div>
         }

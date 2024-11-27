@@ -14,7 +14,8 @@
           </label>
           <label>
             <i class="bi bi-key"></i>
-            <input type="password" name="password" formControlName="contrasena" placeholder="Contraseña" />
+            <input [type]="mostrarContrasena ? 'text' : 'password'" name="password" formControlName="contrasena" placeholder="Contraseña" />
+            <i class="bi" [class.bi-eye]="!mostrarContrasena" [class.bi-eye-slash]="mostrarContrasena" (click)="toggleMostrarContrasena()"></i>
           </label>
           <a href="{{ front }}/change-password">¿Olvidaste tu contraseña?</a>
           <input name="btnLogin" type="submit" value="Iniciar Sesión" />

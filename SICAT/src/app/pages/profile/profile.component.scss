@@ -3,24 +3,41 @@
     max-width: 1000px;
     margin: 0 auto;
     padding: 20px;
-    font-family: Arial, sans-serif;
     background-color: #f5f5f5;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.no-qr{
-    color: #5A0A18;
-    font-size: 0.7rem;
+    animation: fadeIn 0.5s ease-out;
 }
 
 .usuario-section {
     margin-bottom: 20px;
-    padding-right: 200px; /* Dejar espacio para el QR */
+    padding-right: 200px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 .usuario-info {
-    position: relative; /* Hacer el contenedor relativo para que el QR se posicione dentro */
+    position: relative;
+
+    h2 {
+        color: var(--primary-color);
+        font-size: 1.8rem;
+        margin-bottom: 20px;
+        border-bottom: 2px solid var(--accent-color);
+        padding-bottom: 10px;
+    }
+
+    p {
+        margin-bottom: 10px;
+        font-size: 1rem;
+        
+        strong {
+            color: var(--secondary-color);
+            margin-right: 10px;
+        }
+    }
 }
 
 .qr-container {
@@ -28,6 +45,11 @@
     top: 10%;
     right: 10%;
     width: 150px;
+    text-align: center;
+    background: #fff;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 .qr-image {
@@ -37,11 +59,30 @@
     border: 1px solid #ddd;
 }
 
-.horarios-section {
-    margin-top: 40px;
+.no-qr {
+    color: var(--primary-color);
+    font-size: 0.7rem;
+    padding: 10px;
+    background-color: #f8f9fa;
+    border-radius: 5px;
 }
 
-/* Ajustar el ancho de la columna del día */
+.horarios-section {
+    margin-top: 40px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+
+    h2 {
+        color: var(--primary-color);
+        font-size: 1.8rem;
+        margin-bottom: 20px;
+        border-bottom: 2px solid var(--accent-color);
+        padding-bottom: 10px;
+    }
+}
+
 table {
     width: 100%;
     border-collapse: collapse;
@@ -49,99 +90,64 @@ table {
 }
 
 th, td {
-    padding: 10px;
+    padding: 12px;
     text-align: left;
     border-bottom: 1px solid #ddd;
 }
 
 th {
-    background-color: #5A0A18;
+    background-color: var(--primary-color);
     color: white;
-}
+    font-weight: 600;
 
-/* Reducir el ancho de la columna del día */
-th:first-child,
-td:first-child {
-    width: 15%;
+    &:first-child {
+        border-top-left-radius: 8px;
+    }
+
+    &:last-child {
+        border-top-right-radius: 8px;
+    }
 }
 
 tr:nth-child(even) {
-    background-color: #f2f2f2;
+    background-color: #f8f9fa;
 }
 
-/* Hover por actividad en lugar de por fila completa */
-td .actividad-item {
-    padding: 5px 0;
-    transition: background-color 0.3s;
+tr:hover {
+    background-color: #e9ecef;
 }
 
-td .actividad-item:hover {
-    background-color: #ddd;
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
-/* Hover de la fila sin afectar todas las actividades */
-tr:hover td .actividad-item {
-    background-color: transparent;
-}
-
-/* Media queries para pantallas pequeñas (max-width: 768px) */
 @media (max-width: 768px) {
     .profile-container {
         padding: 15px;
-        margin: 0 10px;
-        box-shadow: none; /* Eliminar sombra en pantallas pequeñas */
     }
 
     .usuario-section {
-        padding-right: 0; /* Eliminar espacio extra en pantallas pequeñas */
+        padding-right: 15px;
     }
 
     .qr-container {
-        position: static; /* Hacer que el QR se coloque debajo de la información */
-        margin: 20px 0;
-        width: 100px; /* Reducir tamaño del QR */
-    }
-
-    .qr-image {
+        position: relative;
+        top: auto;
+        right: auto;
         width: 100%;
-        height: auto;
-    }
-
-    table {
-        font-size: 14px; /* Reducir tamaño de texto en tablas */
+        max-width: 200px;
+        margin: 20px auto;
     }
 
     th, td {
         padding: 8px;
-    }
-
-    th:first-child,
-    td:first-child {
-        width: auto; /* Ajustar ancho de la columna del día */
-    }
-}
-
-/* Media queries para pantallas muy pequeñas (max-width: 480px) */
-@media (max-width: 480px) {
-    .profile-container {
-        padding: 10px;
-        margin: 0 5px;
-    }
-
-    .qr-container {
-        width: 80px; /* Reducir aún más el tamaño del QR */
-        margin: 15px 0;
-    }
-
-    table {
-        font-size: 12px; /* Reducir aún más el tamaño de la tabla */
-    }
-
-    th, td {
-        padding: 6px;
-    }
-
-    .horarios-section {
-        margin-top: 20px; /* Reducir espacio en secciones */
+        font-size: 0.9rem;
     }
 }
