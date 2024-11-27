@@ -8,19 +8,127 @@
     display: flex;
     justify-content: center;
     align-items: center;
-}
+    z-index: 1000;
 
-.modal-content {
-    background: white;
-    padding: 20px;
-    border-radius: 5px;
-    width: 500px;
-    max-width: 90%;
+    &-content {
+        background: white;
+        padding: 2rem;
+        border-radius: 12px;
+        width: 90%;
+        max-width: 500px;
+        height: auto;
+        min-height: 400px;
+        max-height: 80vh;
+        position: relative;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+        overflow-y: auto;
+
+        h2 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+            text-align: center;
+        }
+    }
 }
 
 .close-btn {
     position: absolute;
-    top: 10px;
-    right: 10px;
+    top: 1rem;
+    right: 1rem;
+    font-size: 1.5rem;
     cursor: pointer;
+    color: #666;
+    transition: color 0.3s ease;
+
+    &:hover {
+        color: var(--primary);
+    }
 }
+
+form {
+    .form-group {
+        margin-bottom: 1.5rem;
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+            font-weight: 500;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background-color: #f8fafc;
+
+            &:focus {
+                outline: none;
+                border-color: var(--primary);
+                box-shadow: 0 0 0 3px rgba(90, 10, 24, 0.1);
+            }
+
+            &:hover {
+                border-color: var(--primary);
+            }
+        }
+
+        select {
+            cursor: pointer;
+            
+            option {
+                padding: 0.5rem;
+            }
+        }
+    }
+}
+
+.button-container {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 2rem;
+
+    .button-modal {
+        align-items: baseline;
+        padding: 0.75rem 1.5rem;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        text-align: center;
+        display: inline-block;
+
+            &:hover {
+                background-color: var(--primary-dark);
+                transform: translateY(-2px);
+            }
+        
+
+    
+
+        &:active {
+            transform: translateY(0);
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .modal-content {
+        padding: 1.5rem;
+        width: 95%;
+    }
+
+    .button-container {
+        flex-direction: column;
+        
+        .button-modal {
+            width: 100%;
+        }
+    }
+}
+

@@ -71,7 +71,7 @@
 
                             <div class="horarios-actividades">
                                 <h3>Horarios y Actividades</h3>
-                                <button (click)="openAddHorario = !openAddHorario">Agregar horario</button>
+                                <button (click)="openAddHorario = !openAddHorario" class="button-modal">Agregar horario</button>
 
                                 @if (openAddHorario) {
                                     <add-user-horario (onClose)="openAddHorario = false" [idEncargado]="selectedEncargado.Id_encargado_pk"> </add-user-horario>

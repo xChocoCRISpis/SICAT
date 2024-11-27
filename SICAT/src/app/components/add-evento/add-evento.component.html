@@ -33,9 +33,10 @@
                     </option>
                 </select>
             </div>
-
-            <button type="button" (click)="createEvento()">Crear</button>
-            <button type="button" (click)="cerrarModal()">Cancelar</button>
+            <div class="button-container">
+                <div type="button" (click)="createEvento()" class="button-modal">Crear</div>
+                <div type="button" (click)="cerrarModal()" class="button-modal">Cancelar</div>
+            </div>
         </form>
     </div>
 </div>

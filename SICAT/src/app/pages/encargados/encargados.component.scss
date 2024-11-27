@@ -573,3 +573,176 @@ button {
         cursor: not-allowed;
     }
 }
+
+// Modal
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  text-align: center;
+  
+  &-content {
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    width: 90%;
+    max-width: 600px;
+    max-height: 80vh;
+    overflow-y: auto;
+    position: relative;
+    
+    h2 {
+    
+      color: var(--primary);
+      margin-bottom: 1.5rem;
+      font-size: 1.5rem;
+    }
+    
+    .close-btn {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: none;
+      border: none;
+      color: var(--text);
+      padding: 0.5rem;
+      cursor: pointer;
+      
+      &:hover {
+        color: var(--primary);
+        transform: scale(1.1);
+      }
+    }
+  }
+}
+
+// Contenido de detalles
+.details-content {
+  margin-bottom: 2rem;
+  
+  p {
+    margin: 0.5rem 0;
+    color: var(--text);
+    
+    strong {
+      color: var(--primary);
+      margin-right: 0.5rem;
+    }
+  }
+}
+
+// Sección de horarios y actividades
+.horarios-actividades {
+  h3 {
+    color: var(--primary);
+    margin: 1.5rem 0 1rem;
+    font-size: 1.2rem;
+  }
+  
+  .horarios-list {
+    list-style: none;
+    padding: 0;
+    margin: 1rem 0;
+    
+    li {
+      background: #f8f9fa;
+      padding: 1rem;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+      border: 1px solid #eee;
+      
+      &:hover {
+        border-color: var(--primary);
+      }
+      
+      p {
+        margin: 0.5rem 0;
+        
+        strong {
+          color: var(--primary);
+          margin-right: 0.5rem;
+        }
+      }
+    }
+  }
+}
+
+// Media queries para el modal
+@media (max-width: 768px) {
+  .modal-content {
+    width: 95%;
+    padding: 1.5rem;
+    
+    h2 {
+      font-size: 1.3rem;
+    }
+  }
+  
+  .horarios-list li {
+    padding: 0.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .modal-content {
+    padding: 1rem;
+    
+    h2 {
+      font-size: 1.2rem;
+    }
+  }
+  
+  .details-content p,
+  .horarios-list li p {
+    font-size: 0.9rem;
+  }
+}
+
+.button-modal {
+    color: black;
+    background-color: rgb(206, 202, 202);
+    &:hover {
+        color: rgb(58, 57, 57);
+    }
+}
+
+
+.header {
+    text-align: center;
+    margin-bottom: 3rem;
+
+    h2 {
+        color: var(--primary-color);
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+        position: relative;
+
+        &:after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background-color: var(--accent-color);
+        }
+    }
+
+    p {
+        color: var(--text-color);
+        font-size: 1.1rem;
+        max-width: 800px;
+        margin: 0 auto;
+        line-height: 1.6;
+    }
+}

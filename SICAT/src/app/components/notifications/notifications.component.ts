@@ -62,27 +62,27 @@ export class NotificationsComponent implements OnInit, OnDestroy{
     }
 
     const errorStyle: NotificationStyles = {
-      backgroundColor: '#FFAEA2B3',
-      borderColor: '#d9534f',
-      color: '#402929B5',
-      closeButtonBg: '#f2f2fff',
-      closeButtonHv: '#fff',
+      backgroundColor: 'rgba(255, 174, 162, 0.95)',
+      borderColor: '#ff4444',
+      color: '#842029',
+      closeButtonBg: 'rgba(255, 255, 255, 0.1)',
+      closeButtonHv: 'rgba(255, 255, 255, 0.2)',
     };
 
     const checkStyle: NotificationStyles = {
-      backgroundColor: '#B5F0E6B3',
-      borderColor: '#5bc0de',
-      color: '#354543B5',
-      closeButtonBg: '#f2f2f2b3',
-      closeButtonHv: '#00000b3',
+      backgroundColor: 'rgba(181, 240, 230, 0.95)',
+      borderColor: '#00C851',
+      color: '#0f5132',
+      closeButtonBg: 'rgba(255, 255, 255, 0.1)',
+      closeButtonHv: 'rgba(255, 255, 255, 0.2)',
     };
 
     const neutralStyle: NotificationStyles = {
-      backgroundColor: '#FCF6F6B3',
-      borderColor: '#5bc0de',
-      color: '#2B2E31B5',
-      closeButtonBg: '#f2f2f2b3',
-      closeButtonHv: '#00000b3',
+      backgroundColor: 'rgba(252, 246, 246, 0.95)',
+      borderColor: '#0099CC',
+      color: '#055160',
+      closeButtonBg: 'rgba(255, 255, 255, 0.1)',
+      closeButtonHv: 'rgba(255, 255, 255, 0.2)',
     };
 
     let selectedStyle: NotificationStyles;

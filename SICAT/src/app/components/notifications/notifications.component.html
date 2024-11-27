@@ -1,13 +1,24 @@
 @if (isEnabled) {
   <div class="notification {{ type }}">
-    <img src="" alt="" />
+    <div class="icon {{ type }}">
+      @switch (type) {
+        @case ('error') {
+          <i class="fas fa-exclamation-circle"></i>
+        }
+        @case ('check') {
+          <i class="fas fa-check-circle"></i>
+        }
+        @case ('info') {
+          <i class="fas fa-info-circle"></i>
+        }
+      }
+    </div>
     <div class="content">
-      <strong class="type">{{ type.toUpperCase() }}:</strong>
-      {{ title }}
+      <strong>{{ title }}</strong>
       <p>{{ message }}</p>
     </div>
     <div class="close-button" (click)="close()">
-      <span class="close" style="user-select: none">✖️</span>
+      <i class="fas fa-times"></i>
     </div>
   </div>
 } @else {

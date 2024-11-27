@@ -70,12 +70,16 @@
             } @else {
                 <p>No se encontraron detalles del alumno.</p>
             }
-
-            <button (click)="toggleAddAlumnoToActividad()">Agregar a Actividad</button>
+            <div class="button-container">
+            <div class="button-modal" (click)="toggleAddAlumnoToActividad()">Agregar a Actividad</div>
+            </div>
             @if (openValues.openAddAlumnoToActividad) {
                 <add-alumno-to-actividad *ngIf="openValues.openAddAlumnoToActividad" [id_alumno]="id_alumno!" (closeModal)="toggleAddAlumnoToActividad()"></add-alumno-to-actividad>
             }
-            <button (click)="toggleAddAlumnoToEvento()">Agregar a Evento</button>
+            <div class="button-container">
+
+            <div  class="button-modal"(click)="toggleAddAlumnoToEvento()">Agregar a Evento</div>
+            </div>
             @if (openValues.openAddAlumnoToEvento) {
                 <add-alumno-to-evento *ngIf="openValues.openAddAlumnoToEvento" [id_alumno]="id_alumno!" (closeModal)="toggleAddAlumnoToEvento()"></add-alumno-to-evento>
             }

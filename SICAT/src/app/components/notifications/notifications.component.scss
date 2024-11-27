@@ -8,15 +8,18 @@
 .notification {
     z-index: 1000;
     position: fixed;
-    top: 50%;
+    bottom: 40px;
     left: 50%;
-    transform: translate(-50%, 300%);
+    transform: translateX(-50%);
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 15px;
     border-radius: 5px;
     margin-bottom: 20px;
+    min-width: 320px;
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
 
     /* Dynamic background, border, and text colors using CSS variables */
     background-color: var(--notification-background, #d9edf7); /* Default to info */
@@ -30,11 +33,62 @@
     //Transicion
     transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
     opacity: 1;
+
+    // Mejora de animación
+    animation: slideUpIn 0.5s ease-out forwards;
+
+    .icon {
+        width: 24px;
+        height: 24px;
+        margin-right: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        
+        &.error {
+            background-color: rgba(255, 0, 0, 0.1);
+            color: #d9534f;
+        }
+        
+        &.check {
+            background-color: rgba(0, 255, 0, 0.1);
+            color: #5cb85c;
+        }
+        
+        &.info {
+            background-color: rgba(0, 0, 255, 0.1);
+            color: #5bc0de;
+        }
+    }
+
+    .content {
+        strong {
+            display: block;
+            margin-bottom: 4px;
+            font-size: 16px;
+        }
+
+        p {
+            opacity: 0.8;
+            line-height: 1.4;
+        }
+    }
 }
 
 .notification.hidden {
-    opacity: 0;
-    transform: translateY(300%);
+    animation: slideDownOut 0.5s ease-in forwards;
+}
+
+@keyframes slideDownOut {
+    from {
+        transform: translate(-50%, 0);
+        opacity: 1;
+    }
+    to {
+        transform: translate(-50%, 100%);
+        opacity: 0;
+    }
 }
 
 .notification .close-button {
@@ -64,21 +118,6 @@
     z-index: 2;
 }
 
-.notification .icon {
-    font-size: 24px;
-    margin-right: 15px;
-}
-
-.notification .content {
-    flex-grow: 1;
-}
-
-.notification .content p {
-    margin: 0;
-    font-size: 14px;
-    color: var(--notification-text-color, #666); /* Dynamic text color */
-}
-
 /* Info Notification Styling */
 .notification.info {
     background-color: var(--notification-background, #d9edf7);
@@ -88,21 +127,27 @@
 /* Responsive styling */
 @media (max-width: 768px) {
     .notification {
-        position: fixed;
         bottom: 20px;
-        left: 50%;
-        transform: translateX(-50%) translateY(300%);
-        width: 50%;
-        height: 12%;
-        max-height: 400px;
+        transform: translateX(-50%);
+        width: 90%;
         max-width: 400px;
-        font-size: 14px;
-        padding: 10px;
     }
 
     .notification .close-button {
         width: 20px;
         height: 20px;
         font-size: 14px;
+    }
+}
+
+// Nuevas animaciones
+@keyframes slideUpIn {
+    from {
+        transform: translate(-50%, 100%);
+        opacity: 0;
+    }
+    to {
+        transform: translate(-50%, 0);
+        opacity: 1;
     }
 }
